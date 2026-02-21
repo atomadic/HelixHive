@@ -1,0 +1,88 @@
+name: 🔧 Ensure HelixHive Directory Structure
+
+on:
+  workflow_dispatch:
+    inputs:
+      create_dummy_coset:
+        description: 'Create dummy coset table if missing?'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+  push:
+    branches: [ main, develop ]
+    paths:
+      - '.github/workflows/ensure-structure.yml'
+
+jobs:
+  ensure-structure:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create required directories
+        run: |
+          # List of directories to ensure existence
+          dirs=(
+            "helixdb"
+            "vectors"
+            "marketplace/agents"
+            "requests"
+            "model_proposals"
+            "data"
+            "checkpoints"
+            "products"
+            "logs"
+            ".github/workflows"
+            "tests"
+          )
+
+          for dir in "${dirs[@]}"; do
+            if [ ! -d "$dir" ]; then
+              mkdir -p "$dir"
+              echo "✅ Created missing directory: $dir"
+            else
+              echo "✓ Directory exists: $dir"
+            fi
+          done
+
+      - name: Check for coset table
+        id: coset
+        run: |
+          if [ ! -f "data/leech_coset_leaders.npy" ]; then
+            echo "missing=true" >> $GITHUB_OUTPUT
+          else
+            echo "missing=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create dummy coset table (if requested)
+        if: github.event.inputs.create_dummy_coset == 'true' && steps.coset.outputs.missing == 'true'
+        run: |
+          echo "⚠️  Creating dummy coset table (error correction will be disabled)"
+          python -c "import numpy as np; np.save('data/leech_coset_leaders.npy', np.zeros((4096, 24), dtype=np.int8))"
+          echo "✅ Created dummy coset table"
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "🔧 Auto-create missing directories and files"
+          git push

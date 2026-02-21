@@ -1,6 +1,8 @@
 """
-Immune System for HelixHive – monitors agent health, detects anomalies,
-and generates healing proposals.
+Immune System for HelixHive Phase 2 – monitors agent health, detects anomalies,
+and generates healing proposals for council consideration.
+Focused on behavioral anomalies (high failures, low fitness) – low‑level Golay repair
+is handled by the self‑repair engine.
 """
 
 import logging
@@ -9,8 +11,8 @@ from typing import List, Dict, Any, Optional
 import numpy as np
 
 from agent import Agent
-import helixdb
-from memory import LeechProjection
+from helixdb_git_adapter import HelixDBGit
+from memory import LeechErrorCorrector
 
 logger = logging.getLogger(__name__)
 
@@ -20,13 +22,13 @@ class ImmuneSystem:
     Monitors agent health and generates healing proposals.
     """
 
-    def __init__(self, db: 'helixdb.HelixDB', genome: Any):
+    def __init__(self, db: HelixDBGit, genome: Any):
         self.db = db
         self.genome = genome
         # Load thresholds from genome
         self.failure_threshold = genome.data.get('immune', {}).get('failure_threshold', 5)
-        self.anomaly_threshold = genome.data.get('immune', {}).get('anomaly_threshold', 2.0)  # std deviations
-        self.healing_cooldown = genome.data.get('immune', {}).get('healing_cooldown', 3600)  # seconds
+        self.anomaly_threshold = genome.data.get('immune', {}).get('anomaly_threshold', 2.0)
+        self.healing_cooldown = genome.data.get('immune', {}).get('healing_cooldown', 3600)
         self.max_healing_proposals = genome.data.get('immune', {}).get('max_per_heartbeat', 3)
 
         # In-memory cache of last healing times (agent_id -> timestamp)
@@ -42,7 +44,7 @@ class ImmuneSystem:
         fail_props = self._check_failures(agents)
         proposals.extend(fail_props)
 
-        # Check anomalies
+        # Check anomalies (low fitness, etc.)
         anomaly_props = self._check_anomalies(agents)
         proposals.extend(anomaly_props)
 
@@ -66,69 +68,44 @@ class ImmuneSystem:
                 if now - last < self.healing_cooldown:
                     continue
 
-                # Generate proposal
                 proposal = self._generate_healing_proposal(agent, reason=f"High failure count: {agent.failures}")
                 proposals.append(proposal)
                 self.last_healing[agent.agent_id] = now
-                logger.info(f"Immune: generated healing proposal for agent {agent.agent_id} due to failures")
+                logger.info(f"Immune: healing proposal for {agent.agent_id} due to failures")
         return proposals
 
     def _check_anomalies(self, agents: List[Agent]) -> List[Dict[str, Any]]:
         """
-        Detect agents whose Leech vector deviates significantly from the population centroid.
+        Detect agents with unusually low fitness or other behavioral anomalies.
         """
         if len(agents) < 3:
-            return []  # Not enough agents for meaningful anomaly detection
-
-        # Collect Leech vectors
-        leech_vecs = []
-        valid_agents = []
-        for agent in agents:
-            vec = agent.leech_vec
-            if vec is not None:
-                leech_vecs.append(vec)
-                valid_agents.append(agent)
-
-        if len(valid_agents) < 3:
             return []
 
-        # Compute centroid (mean)
-        centroid = np.mean(leech_vecs, axis=0)
-
-        # Compute distances and standard deviation
-        distances = [np.linalg.norm(v - centroid) for v in leech_vecs]
-        mean_dist = np.mean(distances)
-        std_dist = np.std(distances)
-
-        if std_dist == 0:
-            return []
-
+        # Compute average fitness from fitness history
         proposals = []
         now = time.time()
-        for agent, vec, dist in zip(valid_agents, leech_vecs, distances):
-            z_score = (dist - mean_dist) / std_dist
-            if z_score > self.anomaly_threshold:
+        for agent in agents:
+            if not agent.fitness_history:
+                continue
+            # Get recent fitness (last 5)
+            recent = [f['fitness'] for f in agent.fitness_history[-5:]]
+            avg_fitness = sum(recent) / len(recent)
+            if avg_fitness < 0.3:  # threshold
                 # Check cooldown
                 last = self.last_healing.get(agent.agent_id, 0)
                 if now - last < self.healing_cooldown:
                     continue
-
-                proposal = self._generate_healing_proposal(
-                    agent,
-                    reason=f"Anomalous Leech vector (z-score: {z_score:.2f})"
-                )
+                proposal = self._generate_healing_proposal(agent, reason=f"Low average fitness: {avg_fitness:.2f}")
                 proposals.append(proposal)
                 self.last_healing[agent.agent_id] = now
-                logger.info(f"Immune: generated healing proposal for agent {agent.agent_id} due to anomaly")
-
+                logger.info(f"Immune: healing proposal for {agent.agent_id} due to low fitness")
         return proposals
 
     def _generate_healing_proposal(self, agent: Agent, reason: str) -> Dict[str, Any]:
         """
         Create a proposal to heal an agent.
-        The proposal will be added to the blackboard for council consideration.
         """
-        # Simple healing: reset prompt to default (from genome) and reduce failures
+        # Simple healing: reset prompt to default and reduce failures
         default_prompt = self.genome.data.get('default_prompt', 'You are a helpful agent.')
         proposal = {
             'type': 'agent',
@@ -138,37 +115,31 @@ class ImmuneSystem:
             'changes': {
                 'agent_id': agent.agent_id,
                 'prompt': default_prompt,
-                'traits': agent.traits,  # keep traits? Or reset to defaults? We'll keep traits.
-                # Optionally reset failures count
+                # Optionally reset failures count (handled in application)
             },
-            # We'll also include a note to reset failures after approval (handled in proposal application)
+            'timestamp': time.time()
         }
         return proposal
 
 
-# Standalone function for orchestrator to call
-def immune_check(db: 'helixdb.HelixDB', agents: List[Agent], genome: Any) -> List[Dict]:
+# -------------------------------------------------------------------------
+# Standalone function for orchestrator
+# -------------------------------------------------------------------------
+
+def immune_check(db: HelixDBGit, agents: List[Agent], genome: Any) -> List[Dict]:
     """
     Run immune system check and return healing proposals.
-    These proposals should be added to the blackboard for processing in the next heartbeat.
+    These proposals are added as nodes and will be processed by the proposals engine.
     """
     immune = ImmuneSystem(db, genome)
     proposals = immune.run_check(agents)
 
-    # Add proposals to blackboard (as messages)
+    # Add proposals to database as 'Proposal' nodes
     for prop in proposals:
-        # Create a message node in HelixDB
-        msg_id = db.add_node(
-            label='Message',
-            properties={
-                'type': 'proposal',
-                'agent_id': None,
-                'text': prop['description'],
-                'phase': genome.data.get('helicity', {}).get('current_phase', 0),
-                'timestamp': time.time(),
-                'proposal_data': prop  # store the actual proposal
-            }
-        )
-        logger.debug(f"Added healing proposal as message {msg_id}")
+        prop_id = f"heal_{int(time.time())}_{prop['changes']['agent_id'][-8:]}"
+        prop['id'] = prop_id
+        prop['status'] = 'pending'
+        db.update_properties(prop_id, prop)
+        logger.debug(f"Added healing proposal {prop_id}")
 
     return proposals

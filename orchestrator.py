@@ -1,238 +1,182 @@
 #!/usr/bin/env python3
 """
-HelixHive Orchestrator – Heartbeat loop and main entry point.
-Manages atomic transactions, checkpoint/rollback, and coordination of all subsystems.
+HelixHive GitHub‑Native Orchestrator – Heartbeat loop.
+
+Sequence:
+1. Acquire data lock (if needed – actually deferred to commit)
+2. Load database from git
+3. Run Golay self‑repair engine
+4. Load agents into memory
+5. Run product pipeline (4‑round enhancement)
+6. Run marketplace sync
+7. Commit all changes to git
+8. Log metrics
 """
 
-import argparse
-import logging
 import os
 import sys
 import time
-import shutil
-import tempfile
+import json
+import logging
+import signal
 from pathlib import Path
+from typing import Dict, Any
 
-import yaml
-
+# HelixHive modules
+from golay_self_repair import GolaySelfRepairEngine
+from helixdb_git_adapter import HelixDBGit
 from agent import Agent
-from council import Council
+from pipeline import run_pipeline
+from marketplace_sync import sync_marketplace  # new module (to be created)
 from genome import Genome
 from config import Config
-import helixdb
-from proposals import process_proposals
-from immune import immune_check
-from pipeline import run_pipeline
-from revelation import RevelationEngine
-from helical import update_phase
-from fitness import FitnessPredictor
-from user_requests import process_pending_requests
-from model_proposals import process_pending_models, handle_approved_model
-import memory
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s | %(levelname)s | %(name)s | %(message)s')
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s | %(levelname)s | %(name)s | %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
 logger = logging.getLogger(__name__)
 
-REPO_ROOT = Path(__file__).parent
-PRODUCTS_DIR = REPO_ROOT / "products"
-HELIXDB_DIR = REPO_ROOT / "helixdb"
-CHECKPOINT_DIR = REPO_ROOT / "checkpoints"
-REQUESTS_DIR = REPO_ROOT / "requests"
-MODELS_DIR = REPO_ROOT / "model_proposals"
+# Timeout for the entire heartbeat (seconds)
+HEARTBEAT_TIMEOUT = 240  # 4 minutes
 
-for d in [PRODUCTS_DIR, HELIXDB_DIR, CHECKPOINT_DIR, REQUESTS_DIR, MODELS_DIR]:
-    d.mkdir(exist_ok=True)
+class TimeoutError(Exception):
+    pass
 
+def timeout_handler(signum, frame):
+    raise TimeoutError("Heartbeat timed out")
 
-def heartbeat():
-    logger.info("❤️ Heartbeat started")
-    genome = Genome.load()
-    config = Config.load()
+def heartbeat(simulate: bool = False):
+    """Main heartbeat function."""
+    logger.info("❤️ HelixHive GitHub‑native heartbeat started")
 
-    # Check for consecutive failures
-    consecutive_failures = genome.data.get('consecutive_failures', 0)
-    if consecutive_failures >= 3:
-        logger.error("Too many failures, attempting recovery")
-        _restore_from_checkpoint()
-        genome.data['consecutive_failures'] = 0
-        genome.save()
+    # Set global timeout
+    signal.signal(signal.SIGALRM, timeout_handler)
+    signal.alarm(HEARTBEAT_TIMEOUT)
 
-    with tempfile.TemporaryDirectory(prefix="helixhive_") as tmpdir:
-        tmp_path = Path(tmpdir)
-        logger.debug(f"Working in {tmp_path}")
-
-        # Copy live data to temp
-        live_helixdb = HELIXDB_DIR
-        live_genome = REPO_ROOT / "genome.yaml"
-        temp_helixdb = tmp_path / "helixdb"
-        temp_genome = tmp_path / "genome.yaml"
-
-        if live_helixdb.exists():
-            shutil.copytree(live_helixdb, temp_helixdb)
-        else:
-            temp_helixdb.mkdir()
-        if live_genome.exists():
-            shutil.copy(live_genome, temp_genome)
-
-        os.chdir(tmp_path)
-
-        # Reload genome and config from temp
-        genome = Genome.load()
-        config = Config.load()
-        genome.data['tick'] = genome.data.get('tick', 0) + 1
-        tick = genome.data['tick']
-        logger.info(f"Tick {tick}")
-
-        db = helixdb.HelixDB(str(temp_helixdb))
-
-        # Load agents
-        agents = []
-        for node in db.query_nodes_by_label('Agent'):
-            agent = Agent.load_from_db(db, node.id)
-            if agent:
-                agents.append(agent)
-
-        # Create seed agent if none
-        if not agents:
-            logger.info("No agents found, creating seed agent")
-            seed = Agent(role="founder", prompt="I am the founding agent.")
-            seed.save_to_db(db)
-            agents = [seed]
-
-        # Immune check
-        try:
-            immune_check(db, agents, genome)
-        except Exception as e:
-            logger.warning(f"Immune check failed: {e}")
-
-        # Process pending user requests
-        try:
-            process_pending_requests(db, genome, config)
-        except Exception as e:
-            logger.warning(f"User requests processing failed: {e}")
-
-        # Process pending model proposals
-        try:
-            process_pending_models(db, genome, config)
-        except Exception as e:
-            logger.warning(f"Model proposals processing failed: {e}")
-
-        # Process proposals (including those from immune, user, model)
-        try:
-            proposal_results = process_proposals(db, agents, genome, config)
-            logger.info(f"Processed {len(proposal_results)} proposals")
-        except Exception as e:
-            logger.error(f"Proposals processing failed: {e}")
-            proposal_results = []
-
-        # Run product pipeline if enabled
-        if genome.data.get('pipeline', {}).get('enabled', False) and agents:
-            try:
-                niche = genome.data.get('niche', 'AI_coding_agents')
-                run_pipeline(niche, agents, genome, config, db)
-            except Exception as e:
-                logger.error(f"Product pipeline failed: {e}")
-
-        # Update helical phase
-        try:
-            update_phase(genome, db)
-        except Exception as e:
-            logger.warning(f"Helical phase update failed: {e}")
-
-        # Retrain world model occasionally
-        if tick % 10 == 0:
-            try:
-                predictor = FitnessPredictor(db, genome)
-                predictor.world_model.train()
-            except Exception as e:
-                logger.warning(f"World model training failed: {e}")
-
-        # Memory consolidation
-        if tick % 100 == 0:
-            try:
-                cutoff = time.time() - 30 * 24 * 3600  # 30 days
-                db.consolidate(cutoff)
-            except Exception as e:
-                logger.warning(f"Consolidation failed: {e}")
-
-        # Save genome and commit DB
-        try:
-            genome.save()
-            db.commit()
-        except Exception as e:
-            logger.error(f"Commit failed: {e}")
-            raise
-
-        # Create checkpoint
-        checkpoint_dir = CHECKPOINT_DIR / f"backup_{int(time.time())}"
-        checkpoint_dir.mkdir()
-        if live_helixdb.exists():
-            shutil.copytree(live_helixdb, checkpoint_dir / "helixdb")
-        if live_genome.exists():
-            shutil.copy(live_genome, checkpoint_dir / "genome.yaml")
-
-        # Replace live with temp
-        if live_helixdb.exists():
-            shutil.rmtree(live_helixdb)
-        shutil.move(temp_helixdb, live_helixdb)
-        shutil.move(temp_genome, live_genome)
-
-        # Clean old checkpoints
-        checkpoints = sorted(CHECKPOINT_DIR.glob("backup_*"))
-        for cp in checkpoints[:-5]:
-            shutil.rmtree(cp)
-
-        genome.data['consecutive_failures'] = 0
-        genome.save()
-        logger.info("✅ Heartbeat completed")
-
-
-def _restore_from_checkpoint():
-    checkpoints = sorted(CHECKPOINT_DIR.glob("backup_*"))
-    if not checkpoints:
-        return
-    latest = checkpoints[-1]
-    logger.info(f"Restoring from {latest}")
-    if (latest / "helixdb").exists():
-        if HELIXDB_DIR.exists():
-            shutil.rmtree(HELIXDB_DIR)
-        shutil.copytree(latest / "helixdb", HELIXDB_DIR)
-    if (latest / "genome.yaml").exists():
-        shutil.copy(latest / "genome.yaml", REPO_ROOT / "genome.yaml")
-
-
-def spawn_agent(role, prompt):
-    genome = Genome.load()
-    agent = Agent(role=role, prompt=prompt)
-    db = helixdb.HelixDB(str(HELIXDB_DIR))
-    agent.save_to_db(db)
-    db.commit()
-    logger.info(f"✅ Agent '{role}' spawned with ID {agent.agent_id}")
-
-
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--tick", action="store_true", help="Run one heartbeat")
-    parser.add_argument("--spawn-agent", nargs=2, metavar=("ROLE", "PROMPT"), help="Create a new agent")
-    args = parser.parse_args()
+    start_time = time.time()
+    metrics = {
+        "tick": 0,
+        "agents_loaded": 0,
+        "vectors_repaired": 0,
+        "products_created": 0,
+        "marketplace_updated": False,
+        "changes_committed": False,
+        "elapsed_seconds": 0,
+        "errors": []
+    }
 
     try:
-        if args.tick:
-            heartbeat()
-        elif args.spawn_agent:
-            spawn_agent(args.spawn_agent[0], args.spawn_agent[1])
-        else:
-            parser.print_help()
-    except Exception as e:
-        logger.exception("Unhandled exception")
+        # Load genome and config
+        genome = Genome.load()
+        config = Config.load()
+        tick = genome.data.get('tick', 0) + 1
+        metrics["tick"] = tick
+        logger.info(f"Tick {tick}")
+
+        # Initialize database adapter
+        db = HelixDBGit()
+        db.load_all()   # loads all nodes and vectors into memory
+
+        # --- Step 1: Golay self‑repair ---
         try:
-            genome = Genome.load()
-            genome.data['consecutive_failures'] = genome.data.get('consecutive_failures', 0) + 1
+            repair_engine = GolaySelfRepairEngine(db, tick)
+            repair_metrics = repair_engine.run_cycle()
+            metrics["vectors_repaired"] = repair_metrics["vectors_repaired"]
+            logger.info(f"Repair: {repair_metrics['vectors_repaired']} vectors repaired")
+        except Exception as e:
+            logger.exception("Repair engine failed")
+            metrics["errors"].append("repair_failed")
+
+        # --- Step 2: Load agents into memory (as Agent objects) ---
+        try:
+            agents = []
+            agent_nodes = db.get_nodes_by_type("Agent")
+            for node_id, data in agent_nodes.items():
+                # Convert to Agent object (needs properties and vector)
+                agent = Agent.from_dict(data)  # assuming Agent has from_dict
+                # The vector is already in data["leech_vector"]
+                agents.append(agent)
+            metrics["agents_loaded"] = len(agents)
+            logger.info(f"Loaded {len(agents)} agents")
+        except Exception as e:
+            logger.exception("Agent loading failed")
+            metrics["errors"].append("agent_load_failed")
+            agents = []   # proceed with empty list
+
+        # --- Step 3: Product pipeline (if enabled) ---
+        if genome.data.get('pipeline', {}).get('enabled', True) and agents:
+            try:
+                niche = genome.data.get('niche', 'general')
+                # pipeline updates db directly (via db.update_*)
+                products = run_pipeline(niche, agents, genome, config, db, simulate=simulate)
+                metrics["products_created"] = len(products)
+                logger.info(f"Pipeline created {len(products)} products")
+            except Exception as e:
+                logger.exception("Pipeline failed")
+                metrics["errors"].append("pipeline_failed")
+
+        # --- Step 4: Marketplace sync (generate index) ---
+        try:
+            changed = sync_marketplace(db, simulate=simulate)
+            metrics["marketplace_updated"] = changed
+            if changed:
+                logger.info("Marketplace index updated")
+        except Exception as e:
+            logger.exception("Marketplace sync failed")
+            metrics["errors"].append("marketplace_failed")
+
+        # --- Step 5: Commit all changes to git ---
+        try:
+            if not simulate:
+                # Generate a summary string for commit message
+                summary = f"repaired={metrics['vectors_repaired']}, products={metrics['products_created']}"
+                db.commit(tick, summary)
+                metrics["changes_committed"] = True
+                logger.info("Changes committed")
+            else:
+                logger.info("Simulation mode: skipping commit")
+                metrics["changes_committed"] = False
+        except Exception as e:
+            logger.exception("Commit failed")
+            metrics["errors"].append("commit_failed")
+
+        # --- Step 6: Update genome tick and save ---
+        try:
+            genome.data['tick'] = tick
             genome.save()
-        except:
-            pass
-        sys.exit(1)
+        except Exception as e:
+            logger.exception("Genome save failed")
+            metrics["errors"].append("genome_save_failed")
+
+        # Final metrics
+        metrics["elapsed_seconds"] = time.time() - start_time
+        logger.info(f"✅ Heartbeat completed in {metrics['elapsed_seconds']:.2f}s")
+
+    except TimeoutError:
+        logger.error("Heartbeat timed out")
+        metrics["errors"].append("timeout")
+    except Exception as e:
+        logger.exception("Unhandled exception in heartbeat")
+        metrics["errors"].append("unhandled")
+    finally:
+        signal.alarm(0)  # disable alarm
+
+    # Output structured metrics (could be used by monitoring)
+    print(json.dumps(metrics))
+    return metrics
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--tick", action="store_true", help="Run one heartbeat")
+    parser.add_argument("--simulate", action="store_true", help="Simulation mode (no LLM, no commit)")
+    args = parser.parse_args()
+
+    if args.tick:
+        heartbeat(simulate=args.simulate)
+    else:
+        parser.print_help()

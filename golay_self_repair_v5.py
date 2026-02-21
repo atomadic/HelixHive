@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """
-HelixHive Codebase Self‑Healing Engine v5.0 (FINAL)
+HelixHive Codebase Self‑Healing Engine v5.0 (FINAL – Robust Edition)
 
 Full‑stack autonomous repair for Python codebases:
 - Multi‑tool linting & security (Ruff, Black, Bandit, Semgrep)
 - AST‑based custom fixes for Helix‑specific issues
-- PAC‑Leech coherence monitoring via code embeddings
+- PAC‑Leech coherence monitoring via code embeddings (using SHA‑512)
 - VIGIL reflective state machine (EmoBank, RBT diagnosis)
 - Deterministic auto‑fixes + creative rotor mutations (proposals)
 - JSONL structured logging + HTML report
 - Meta‑self‑repair: engine tunes itself from repair history
+- Defensive programming: all external inputs validated, fallbacks in place
 - Zero placeholders, fully production‑ready.
 """
 
@@ -38,21 +39,34 @@ import libcst as cst
 from libcst import matchers as m
 
 # -----------------------------------------------------------------------------
-# PAC‑Leech code embedding (fast, deterministic)
+# PAC‑Leech code embedding (fast, deterministic, robust)
 # -----------------------------------------------------------------------------
 
 def code_to_leech_vector(code_snippet: str) -> np.ndarray:
     """
-    Convert a code snippet to a 24D vector using a non‑cryptographic hash.
-    The vector is normalized to [-0.5, 0.5] range.
+    Convert a code snippet to a 24D vector using a SHA‑512 hash.
+    Returns a normalized vector in [-0.5, 0.5]. If the hash is too short,
+    falls back to a deterministic random generator seeded by the hash.
     """
-    h = hashlib.sha256(code_snippet.encode('utf-8')[:2000]).digest()
-    vec = np.zeros(24, dtype=np.float64)
-    for i in range(24):
-        # Take two bytes at a time to spread entropy
-        b = (h[2*i] << 8) | h[2*i+1] if 2*i+1 < len(h) else h[2*i]
-        vec[i] = (b / 65535.0) - 0.5
-    return vec
+    try:
+        # Use SHA‑512 to get 64 bytes (enough for 24 two‑byte pairs)
+        hash_bytes = hashlib.sha512(code_snippet.encode('utf-8')[:2000]).digest()
+        vec = np.zeros(24, dtype=np.float64)
+        # Ensure we don't exceed hash length (should be 64, but check anyway)
+        max_pairs = min(24, len(hash_bytes) // 2)
+        for i in range(max_pairs):
+            b = (hash_bytes[2*i] << 8) | hash_bytes[2*i+1]
+            vec[i] = (b / 65535.0) - 0.5
+        # If we need more values, seed a PRNG from the hash and generate remaining
+        if max_pairs < 24:
+            seed = int.from_bytes(hash_bytes, byteorder='big')
+            rng = np.random.RandomState(seed)
+            vec[max_pairs:] = rng.uniform(-0.5, 0.5, 24 - max_pairs)
+        return vec
+    except Exception as e:
+        # Last resort: return a zero vector with a warning
+        logging.getLogger("HelixRepair").warning(f"code_to_leech_vector failed: {e}, using zeros")
+        return np.zeros(24, dtype=np.float64)
 
 # -----------------------------------------------------------------------------
 # VIGIL Reflective State Machine
@@ -425,7 +439,7 @@ class CodebaseRepairEngine:
                 self.logger.error(f"Cannot read {rel}: {e}")
                 continue
 
-            # Compute Leech vector
+            # Compute Leech vector (robust)
             leech = code_to_leech_vector(original)
             coherence_vectors.append(leech)
 

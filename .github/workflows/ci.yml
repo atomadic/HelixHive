@@ -29,7 +29,7 @@ on:
         type: boolean
 
 env:
-  PYTHON_VERSION: '3.10'
+  PYTHON_VERSION: '3.12'
   HELIX_DATA_PATH: ${{ github.workspace }}/test_data
 
 jobs:
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.10, 3.11]  # Test multiple Python versions
+        python-version: [3.11, 3.12]  # Test multiple Python versions
       fail-fast: false  # Don't cancel all if one fails
 
     steps:

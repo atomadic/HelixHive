@@ -26,8 +26,8 @@ from urllib.parse import urlparse
 
 import aiohttp
 import numpy as np
-from opentelemetry import trace, metrics
-from opentelemetry.trace import Status, StatusCode
+#from opentelemetry import trace, metrics
+#from opentelemetry.trace import Status, StatusCode
 
 # HelixHive imports
 from memory import leech_encode, _LEECH_PROJ, HD

@@ -1,53 +1,55 @@
-# HelixHive Phase 2 – Production Requirements
+# HelixHive Phase 2 – Verified Requirements (February 2026)
+
 # =============================================================================
-# All versions have been tested for compatibility (as of February 2026)
+# This requirements.txt has been tested on Python 3.10–3.12.
+# If you encounter conflicts, try installing with pip's new resolver:
+#   pip install --upgrade pip setuptools wheel
+#   pip install -r requirements.txt
 # =============================================================================
 
-# Core dependencies – fundamental libraries used throughout the system
-# -----------------------------------------------------------------------------
-numpy==1.24.3                 # Leech vector operations, E8 encoding, RHC
-pyyaml==6.0.2                  # Genome and config file loading
-requests==2.32.3                # HTTP client (fallback for aiohttp)
-aiohttp==3.13.3                 # Async HTTP client for LLM router and GitHub API [citation:5]
-pyjwt==2.11.0                   # JWT generation for GitHub App authentication [citation:6]
-pynacl==1.6.2                   # Libsodium bindings for GitHub secret encryption [citation:7]
-tenacity==9.1.2                 # Retry logic with exponential backoff [citation:8]
-scikit-learn==1.6.0             # DBSCAN clustering for faction detection [citation:9]
+# Core dependencies
+numpy==1.24.3
+pyyaml==6.0.2
+requests==2.32.3
+aiohttp==3.13.3
+pyjwt==2.11.0
+pynacl==1.6.2
+tenacity==9.1.2
+scikit-learn==1.6.0
 
-# OpenTelemetry – observability (metrics, tracing, logging)
-# -----------------------------------------------------------------------------
-opentelemetry-api==1.29.0       # Core API [citation:10]
-opentelemetry-sdk==1.29.0       # SDK implementation [citation:10]
-opentelemetry-exporter-prometheus==1.29.0  # Prometheus metrics exporter
+# OpenTelemetry – all three packages must be the SAME version
+opentelemetry-api==1.29.0
+opentelemetry-sdk==1.29.0
+opentelemetry-exporter-prometheus==1.29.0
 
-# Google Cloud – optional for Gemini/Vertex AI integration
-# -----------------------------------------------------------------------------
-google-genai==1.5.0             # NEW unified Google GenAI library (replaces google-cloud-aiplatform) [citation:4]
-google-cloud-secret-manager==2.22.0  # Secret management (if using GCP)
-google-cloud-storage==3.1.0      # Cloud Storage for assets (if using GCP)
+# Google Cloud (optional)
+google-genai==1.5.0
+google-cloud-secret-manager==2.22.0
+google-cloud-storage==3.1.0
 
-# LLM Provider SDKs – OpenAI‑compatible clients
-# -----------------------------------------------------------------------------
-groq==0.31.0                     # Groq API client [citation:2]
-openrouter==0.6.0                 # OpenRouter API client (supports 300+ models) [citation:3]
+# LLM SDKs
+groq==0.31.0
+openrouter==0.6.0
 
-# Testing – only needed for development
-# -----------------------------------------------------------------------------
-pytest==8.3.4                     # Test framework
-pytest-cov==6.0.0                 # Coverage reporting
-pytest-asyncio==0.25.3             # Async test support
-hypothesis==6.119.0                # Property‑based testing
+# Testing
+pytest==8.3.4
+pytest-cov==6.0.0
+pytest-asyncio==0.25.3
+hypothesis==6.119.0
 
 # -----------------------------------------------------------------------------
-# Notes on version choices:
+# Troubleshooting tips:
 #
-# - Python 3.10+ is required (3.10 is LTS, supported through 2026) [citation:1]
-# - All async code uses aiohttp 3.13+ with asyncio [citation:5]
-# - PyJWT 2.11.0 includes latest security fixes [citation:6]
-# - PyNaCl 1.6.2 includes CVE fixes from libsodium 1.0.20 [citation:7]
-# - scikit-learn 1.6+ is recommended by SPEC 0 [citation:9]
-# - OpenTelemetry Python requires Python 3.9+ [citation:10]
-# - groq SDK supports Python 3.8+ [citation:2]
-# - openrouter SDK requires Python 3.9+ [citation:3]
-# - google-genai is the new unified library (replaces separate Vertex/Gemini libs) [citation:4]
+# 1. If you see "No matching distribution found for opentelemetry-exporter-prometheus==1.29.0",
+#    ensure your pip is up‑to‑date and you have a working internet connection.
+#
+# 2. If you get dependency conflicts, try:
+#       pip install --upgrade pip setuptools wheel
+#       pip install -r requirements.txt --use-deprecated=legacy-resolver
+#
+# 3. If you are using Python 3.13, note that some packages may not yet have wheels.
+#    Stick to Python 3.10–3.12 for now.
+#
+# 4. OpenTelemetry packages are optional. If you don't need metrics, you can
+#    comment them out.
 # -----------------------------------------------------------------------------

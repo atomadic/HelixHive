@@ -1,73 +1,134 @@
-# HelixHive Genome
-# Phase 1 Refactored – with constitution and model proposal defaults
+# HelixHive Genome – Phase 2 Production Configuration
+# All tunable parameters for the agent community.
+# Changes to protected keys require supermajority vote.
 
+# System tick counter (auto‑incremented)
 tick: 0
+
+# Consecutive heartbeat failures (for auto‑recovery)
 consecutive_failures: 0
 
+# ----------------------------------------------------------------------
+# Helical Phase Management
+# ----------------------------------------------------------------------
 helicity:
-  current_phase: 0
-  flip_interval: 50
+  current_phase: 0                # 0 = expansion, 1 = refinement
+  flip_interval: 50                # Heartbeats between phase flips
   last_flip_tick: 0
-  mutation_bias: 0.05
-  invariance_tolerance: 0.1
+  mutation_bias: 0.05              # Bias added during mutation based on phase
+  invariance_tolerance: 0.1        # Maximum allowed drift after flip (Leech distance)
 
+# ----------------------------------------------------------------------
+# Council Governance
+# ----------------------------------------------------------------------
 council:
   weights:
-    guardian: 2
+    guardian: 2                    # Guardian has veto power
     visionary: 1.5
-    # others default to 1
+    skeptic: 1.0
+    pragmatist: 1.0
+    innovator: 1.0
+    harmonizer: 1.0
 
+# ----------------------------------------------------------------------
+# Ethics & Forbidden Patterns
+# ----------------------------------------------------------------------
 ethics:
   forbidden_patterns:
     - "hate speech"
     - "illegal"
+    - "discriminatory"
+    - "violent"
 
+# ----------------------------------------------------------------------
+# Constitution (Protected Parameters)
+# ----------------------------------------------------------------------
 constitution:
   protected:
     - "ethics.forbidden_patterns"
     - "council.weights.guardian"
     - "constitution.protected"
-  amend_threshold: 5/6
-  supermajority: 0.833
+  supermajority_threshold: 0.833    # 5/6
 
+# ----------------------------------------------------------------------
+# Evo2 Generator Settings
+# ----------------------------------------------------------------------
 evo2:
   enabled: true
-  fitness_weights:
-    e8_consistency: 0.3
-    leech_similarity: 0.4
-    novelty_bonus: 0.2
-    phase_alignment: 0.1
   temperature: 0.8
   max_tokens: 1000
+  fitness_weights:
+    leech_similarity: 0.5
+    novelty_bonus: 0.3
+    phase_alignment: 0.2
 
+# ----------------------------------------------------------------------
+# Product Pipeline
+# ----------------------------------------------------------------------
 pipeline:
   enabled: true
-  refinement_rounds: 3
+  refinement_rounds: 4               # Phase 2: 4 rounds
   max_product_words: 1500
 
+# ----------------------------------------------------------------------
+# Immune System
+# ----------------------------------------------------------------------
 immune:
-  failure_threshold: 5
-  anomaly_threshold: 2.0
-  healing_cooldown: 3600
+  failure_threshold: 5               # Max failures before healing
+  anomaly_threshold: 2.0              # Z‑score for Leech anomaly
+  healing_cooldown: 3600              # Seconds between healing proposals
   max_per_heartbeat: 3
 
+# ----------------------------------------------------------------------
+# Market (Trait Trading)
+# ----------------------------------------------------------------------
 market:
-  min_reputation: 10
-  auction_duration: 3600
+  min_reputation: 10                  # Required to list/sell
+  auction_duration: 3600               # Seconds
   max_listings_per_agent: 5
 
+# ----------------------------------------------------------------------
+# Revelation Engine
+# ----------------------------------------------------------------------
 revelation:
   enabled: true
-  generate_interval: 10
+  generate_interval: 10                # Heartbeats between synthetic proposals
 
+# ----------------------------------------------------------------------
+# Model Proposals (Daughter Spawning)
+# ----------------------------------------------------------------------
 model_proposals:
   min_validation_score: 0.7
   spawn_repo: true
   template_repo: "helixhive-template"
 
-# GitHub App settings (to be overridden by environment or config)
-github_app_id: ""
+# ----------------------------------------------------------------------
+# GitHub App Integration
+# ----------------------------------------------------------------------
+github_app_id: ""                      # Override via environment or secrets
 github_private_key_path: ""
 github_installation_id: ""
-template_owner: ""
-daughter_owner: "”
+template_owner: ""                     # GitHub org/user owning the template repo
+daughter_owner: ""                     # Where daughters are spawned (defaults to template_owner)
+
+# ----------------------------------------------------------------------
+# Mutation & Evolution
+# ----------------------------------------------------------------------
+mutation:
+  base_rate: 0.1                       # Base mutation rate for traits
+
+# ----------------------------------------------------------------------
+# Default Agent Settings
+# ----------------------------------------------------------------------
+default_prompt: "You are a helpful agent in the HelixHive community."
+default_traits:
+  creativity: 0.5
+  thoroughness: 0.5
+  cooperativeness: 0.5
+  ambition: 0.5
+  curiosity: 0.5
+
+# ----------------------------------------------------------------------
+# Niche (for product pipeline)
+# ----------------------------------------------------------------------
+niche: "AI_coding_agents"              # Default niche

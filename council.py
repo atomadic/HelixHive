@@ -1,10 +1,15 @@
 """
-Council – governance and voting for HelixHive.
-Implements weighted voting with fitness, constitutional checks, and guardian veto.
+Council – governance and voting for HelixHive Phase 2.
+Implements weighted voting with fitness, constitutional checks (supermajority, protected keys),
+guardian veto, and audit‑grade vote recording.
 """
 
 import logging
+import time
 from typing import Dict, List, Tuple, Any, Optional
+
+from genome import Genome
+from helixdb_git_adapter import HelixDBGit
 
 logger = logging.getLogger(__name__)
 
@@ -12,8 +17,9 @@ logger = logging.getLogger(__name__)
 class Council:
     """
     HelixHive Council with six fixed members.
-    Each member has a base weight and may have additional weight based on fitness.
-    Guardian has veto power.
+    Each member has a base weight, may have additional weight based on proposal fitness,
+    and may have preferences for certain tags.
+    Constitution defines protected parameters and supermajority thresholds.
     """
 
     MEMBERS = ["visionary", "skeptic", "pragmatist", "innovator", "guardian", "harmonizer"]
@@ -28,8 +34,14 @@ class Council:
         "harmonizer": ["consensus", "balanced", "harmonious"]
     }
 
-    def __init__(self, genome: Any):
+    def __init__(self, genome: Genome, db: HelixDBGit):
+        """
+        Args:
+            genome: Genome object containing council weights and constitution.
+            db: Database adapter for recording votes.
+        """
         self.genome = genome
+        self.db = db
         self.weights = self.DEFAULT_WEIGHTS.copy()
         if 'council' in genome.data and 'weights' in genome.data['council']:
             self.weights.update(genome.data['council']['weights'])
@@ -82,15 +94,15 @@ class Council:
                 return "yes", f"Matches preference: {tag}"
         return "no", "No matching preference"
 
-    def vote(self, proposal: Dict[str, Any]) -> Tuple[bool, str]:
+    def vote(self, proposal: Dict[str, Any]) -> Tuple[bool, str, Dict]:
         """
         Conduct a council vote on a proposal.
-        Returns (approved, transcript).
+        Returns (approved, transcript, vote_record).
         """
         # Constitutional check
         allowed, reason = self._check_constitutional(proposal)
         if not allowed:
-            return False, f"Constitutional veto: {reason}"
+            return False, f"Constitutional veto: {reason}", {}
 
         votes = []
         reasons = []
@@ -104,29 +116,34 @@ class Council:
         guardian_index = self.MEMBERS.index("guardian")
         if votes[guardian_index] == "no":
             transcript = self._format_transcript(votes, reasons, veto=True)
-            return False, transcript
+            self._record_vote(proposal, votes, reasons, approved=False, veto=True)
+            return False, transcript, self._last_record
 
         # Weighted vote with fitness multiplier
         fitness = proposal.get('fitness_score', 0.5)
         total_weight = 0
         yes_weight = 0
+        member_weights = {}
         for i, member in enumerate(self.MEMBERS):
             base = self.weights.get(member, 1)
-            # Apply fitness multiplier (e.g., weight = base * (1 + fitness))
             w = base * (1 + fitness)
+            member_weights[member] = w
             total_weight += w
             if votes[i] == "yes":
                 yes_weight += w
 
         # Determine if supermajority needed
-        required = self.supermajority if proposal.get('type') == 'genome' and any(
-            k in self.protected_keys for k in proposal.get('changes', {}).get('parameters', {})
-        ) else 0.6
+        needs_super = (proposal.get('type') == 'genome' and
+                       any(k in self.protected_keys for k in proposal.get('changes', {}).get('parameters', {})))
+        required = self.supermajority if needs_super else 0.6
 
         approved = (yes_weight / total_weight) >= required
 
         transcript = self._format_transcript(votes, reasons, veto=False)
-        return approved, transcript
+        self._record_vote(proposal, votes, reasons, approved, veto=False,
+                          member_weights=member_weights, yes_weight=yes_weight, total_weight=total_weight,
+                          required=required)
+        return approved, transcript, self._last_record
 
     def _format_transcript(self, votes: List[str], reasons: List[str], veto: bool = False) -> str:
         lines = ["=== COUNCIL VOTE TRANSCRIPT ==="]
@@ -135,5 +152,49 @@ class Council:
         if veto:
             lines.append("GUARDIAN VETO – Proposal rejected.")
         else:
-            lines.append(f"Vote result: {'APPROVED' if (sum(1 for v in votes if v=='yes') >= 4) else 'REJECTED'}")
+            # Simple outcome, actual approval determined elsewhere
+            lines.append("Vote recorded.")
         return "\n".join(lines)
+
+    def _record_vote(self, proposal: Dict, votes: List[str], reasons: List[str],
+                     approved: bool, veto: bool = False,
+                     member_weights: Optional[Dict] = None,
+                     yes_weight: float = 0, total_weight: float = 0,
+                     required: float = 0.6):
+        """Store vote record in database."""
+        record_id = f"vote_{int(time.time())}_{hash(proposal.get('id', ''))}"
+        record = {
+            'id': record_id,
+            'type': 'VoteRecord',
+            'proposal_id': proposal.get('id'),
+            'timestamp': time.time(),
+            'approved': approved,
+            'veto': veto,
+            'votes': dict(zip(self.MEMBERS, votes)),
+            'reasons': dict(zip(self.MEMBERS, reasons)),
+            'member_weights': member_weights,
+            'yes_weight': yes_weight,
+            'total_weight': total_weight,
+            'required_threshold': required,
+        }
+        self.db.update_properties(record_id, record)
+        # Link to proposal (if proposal has an ID)
+        if proposal.get('id'):
+            # We need a way to link; could be via edge but we'll just store reference.
+            # For now, proposal_id is stored in record.
+            pass
+        self._last_record = record
+        logger.info(f"Vote recorded: {record_id}")
+
+    # -------------------------------------------------------------------------
+    # Constitution management
+    # -------------------------------------------------------------------------
+
+    def amend_constitution(self, proposed_changes: Dict) -> Tuple[bool, str]:
+        """
+        Special procedure to amend constitution (requires supermajority of council).
+        This is a meta‑governance function.
+        """
+        # This would be called by a special proposal type
+        # For now, we return False; implement if needed.
+        return False, "Not implemented”

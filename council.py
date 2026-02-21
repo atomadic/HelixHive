@@ -197,4 +197,4 @@ class Council:
         """
         # This would be called by a special proposal type
         # For now, we return False; implement if needed.
-        return False, "Not implemented”
+        return False, "Not implemented"

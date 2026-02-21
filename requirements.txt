@@ -1,0 +1,11 @@
+groq
+openai
+numpy
+pyyaml
+requests
+tenacity
+pyjwt
+pynacl
+pytest
+google-cloud-aiplatform          # if you plan to use Vertex AI
+google-cloud-secret-manager       # for accessing secrets

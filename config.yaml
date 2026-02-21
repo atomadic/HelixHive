@@ -1,0 +1,67 @@
+# HelixHive Configuration – Phase 2
+# Deployment‑specific settings (model endpoints, rate limits, etc.)
+
+# ----------------------------------------------------------------------
+# LLM Providers (OpenAI‑compatible)
+# ----------------------------------------------------------------------
+model_providers:
+  groq:
+    base_url: "https://api.groq.com/openai/v1"
+    default_model: "llama3-8b-8192"
+    timeout: 30
+    connection_pool_size: 10
+    # API key should be set in environment: GROQ_API_KEY
+  openrouter:
+    base_url: "https://openrouter.ai/api/v1"
+    default_model: "openrouter/auto"          # Auto‑selects best free model
+    timeout: 30
+    connection_pool_size: 10
+    # API key: OPENROUTER_API_KEY
+  gemini:
+    base_url: "https://generativelanguage.googleapis.com"
+    default_model: "gemini-2.0-flash"
+    timeout: 30
+    connection_pool_size: 2
+    # API key: GEMINI_API_KEY (free tier)
+
+# ----------------------------------------------------------------------
+# Rate Limiting (per provider, default values)
+# ----------------------------------------------------------------------
+rate_limits:
+  default_rpm: 60                     # Requests per minute
+  default_tpm: 100000                  # Tokens per minute
+
+# ----------------------------------------------------------------------
+# Circuit Breaker Settings
+# ----------------------------------------------------------------------
+circuit_breaker:
+  failure_threshold: 5                 # Consecutive failures before opening
+  recovery_timeout: 60                  # Seconds in open state before half‑open
+
+# ----------------------------------------------------------------------
+# Semantic Cache (Leech‑based)
+# ----------------------------------------------------------------------
+cache:
+  enabled: true
+  max_size: 1000                        # Maximum number of cached responses
+  epsilon: 0.1                           # Leech distance threshold for cache hit
+
+# ----------------------------------------------------------------------
+# Retry Logic
+# ----------------------------------------------------------------------
+retry:
+  max_retries: 5
+  base_delay: 1.0                        # Initial delay (seconds)
+  max_delay: 3600.0                       # Max delay (1 hour)
+
+# ----------------------------------------------------------------------
+# Simulation Mode (global override)
+# ----------------------------------------------------------------------
+simulation: false                         # Set to true to bypass LLM calls
+
+# ----------------------------------------------------------------------
+# Logging
+# ----------------------------------------------------------------------
+logging:
+  level: "INFO"                           # DEBUG, INFO, WARNING, ERROR
+  format: "%(asctime)s | %(levelname)s | %(name)s | %(message)s”

@@ -62,11 +62,15 @@ jobs:
             echo "missing=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Install numpy
+        if: github.event.inputs.create_dummy_coset == 'true' && steps.coset.outputs.missing == 'true'
+        run: python3 -m pip install numpy
+
       - name: Create dummy coset table (if requested)
         if: github.event.inputs.create_dummy_coset == 'true' && steps.coset.outputs.missing == 'true'
         run: |
           echo "⚠️  Creating dummy coset table (error correction will be disabled)"
-          python -c "import numpy as np; np.save('data/leech_coset_leaders.npy', np.zeros((4096, 24), dtype=np.int8))"
+          python3 -c "import numpy as np; np.save('data/leech_coset_leaders.npy', np.zeros((4096, 24), dtype=np.int8))"
           echo "✅ Created dummy coset table"
 
       - name: Check for changes

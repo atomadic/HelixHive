@@ -1,19 +1,28 @@
 """
-Agent class for HelixHive – represents an individual AI agent.
-Handles state vectors (HD, E8, Leech) using RHC for traits, true lattice encoding,
-epigenetic marks, and enhanced breeding.
+Agent class for HelixHive Phase 2.
+
+Represents an AI agent with:
+- Traits (float values 0‑1) encoded via RHC and bound with role/trait keys.
+- State vectors: HD (10k bipolar), E8 (8D lattice point), Leech (24D lattice point).
+- Epigenetic marks for temporary modifications.
+- Mitochondrial inheritance for specified traits.
 """
 
 import uuid
+import logging
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any
 from datetime import datetime
 
 from memory import (
-    HD, E8, Leech, rhc_encode, rhc_bind, rhc_bundle,
-    e8_encode, leech_encode, _E8_PROJ, _LEECH_PROJ
+    HD, E8, LeechErrorCorrector,
+    rhc_encode, rhc_bind, rhc_map_to_hd,
+    e8_encode, leech_encode,
+    _E8_PROJ, _LEECH_PROJ
 )
-import helixdb
+from helixdb_git_adapter import HelixDBGit
+
+logger = logging.getLogger(__name__)
 
 
 class Agent:
@@ -29,8 +38,11 @@ class Agent:
         "curiosity": 0.5
     }
 
-    # Traits that are inherited only from the maternal parent (mitochondrial)
+    # Traits that are inherited only from the maternal parent (first parent in breed)
     MITOCHONDRIAL_TRAITS = ["cooperativeness", "ambition"]  # example
+
+    # Cache for role HD vectors to avoid recomputation
+    _role_hd_cache: Dict[str, np.ndarray] = {}
 
     def __init__(
         self,
@@ -49,11 +61,21 @@ class Agent:
         fitness_history: Optional[List[Dict]] = None,
         created_at: Optional[float] = None,
         last_active: Optional[float] = None,
+        # Precomputed vectors (if loading from DB)
+        hd_vec: Optional[np.ndarray] = None,
+        e8_vec: Optional[np.ndarray] = None,
+        leech_vec: Optional[np.ndarray] = None,
     ):
         self.agent_id = agent_id or str(uuid.uuid4())
         self.role = role
         self.prompt = prompt
-        self.traits = traits.copy() if traits else self.DEFAULT_TRAITS.copy()
+        # Clamp traits to [0,1]
+        self.traits = {}
+        if traits:
+            for k, v in traits.items():
+                self.traits[k] = max(0.0, min(1.0, v))
+        else:
+            self.traits = self.DEFAULT_TRAITS.copy()
         self.generation = generation
         self.parents = parents if parents is not None else []
         self.phase_history = phase_history if phase_history is not None else []
@@ -68,43 +90,47 @@ class Agent:
         self.created_at = created_at if created_at is not None else now
         self.last_active = last_active if last_active is not None else now
 
-        # State vectors – computed lazily
-        self._hd_vec: Optional[np.ndarray] = None
-        self._e8_vec: Optional[np.ndarray] = None
-        self._leech_vec: Optional[np.ndarray] = None
-        self.compute_state_vectors()
+        # State vectors – use provided ones or compute
+        self._hd_vec = hd_vec
+        self._e8_vec = e8_vec
+        self._leech_vec = leech_vec
+        if self._hd_vec is None or self._e8_vec is None or self._leech_vec is None:
+            self.compute_state_vectors()
 
     # ----------------------------------------------------------------------
     # State vector computation (using RHC and true lattices)
     # ----------------------------------------------------------------------
 
+    @classmethod
+    def _get_role_hd(cls, role: str) -> np.ndarray:
+        """Cached role HD vector."""
+        if role not in cls._role_hd_cache:
+            cls._role_hd_cache[role] = HD.from_word(role)
+        return cls._role_hd_cache[role]
+
     def compute_state_vectors(self) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """
         Compute HD, E8, and Leech state vectors:
-        - HD: role vector bundled with (trait_key_vector ⊗ rhc_encode(trait_value)) for each trait.
+        - HD: role vector ⊕ [trait_key ⊗ rhc_map_to_hd(rhc_encode(trait_value))] for each trait.
         - E8: project HD to 8D, then encode to nearest E8 lattice point.
         - Leech: project HD to 24D, then encode to nearest Leech lattice point.
         """
-        # Role vector (bipolar)
-        role_vec = HD.from_word(self.role)
+        # Role vector (cached)
+        role_vec = self._get_role_hd(self.role)
 
-        # For each trait, generate a vector = trait_key_vector ⊗ rhc_encode(trait_value)
+        # For each trait, generate vector = trait_key ⊗ (RHC value mapped to HD)
         trait_vectors = []
         for key, val in self.traits.items():
             if val == 0:
                 continue
             key_vec = HD.from_word(key)                     # bipolar HD
-            val_vec = rhc_encode(val)                        # bipolar RHC vector
-            # The dimensions of key_vec (HD_DIM) and val_vec (sum of moduli) are different.
-            # We need to map val_vec to HD_DIM. We'll repeat the RHC vector to fill HD_DIM.
-            # This is a simple approach; a more sophisticated method would use a fixed mapping.
-            repeats = (HD_DIM + len(val_vec) - 1) // len(val_vec)
-            val_vec_repeated = np.tile(val_vec, repeats)[:HD_DIM]
-            # Now bind (element‑wise multiply) to combine key and value
-            combined = HD.bind(key_vec, val_vec_repeated.astype(np.int8))
+            val_rhc = rhc_encode(val)                       # bipolar RHC vector
+            val_hd = rhc_map_to_hd(val_rhc)                 # now length HD_DIM
+            # Bind key and value
+            combined = HD.bind(key_vec, val_hd)
             trait_vectors.append(combined)
 
-        # Bundle all trait vectors together with the role vector
+        # Bundle all trait vectors with the role vector
         all_vectors = [role_vec] + trait_vectors
         self._hd_vec = HD.bundle(all_vectors)
 
@@ -228,6 +254,7 @@ class Agent:
     # ----------------------------------------------------------------------
 
     def to_dict(self) -> Dict[str, Any]:
+        """Return JSON‑serializable dictionary (without vectors)."""
         return {
             "agent_id": self.agent_id,
             "role": self.role,
@@ -247,48 +274,77 @@ class Agent:
         }
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> 'Agent':
-        agent = cls(
+    def from_dict(cls, data: Dict[str, Any], vectors: Optional[Dict[str, np.ndarray]] = None) -> 'Agent':
+        """
+        Reconstruct agent from dictionary and optional vectors.
+        If vectors not provided, they will be recomputed.
+        """
+        # Extract vectors if present
+        hd_vec = vectors.get('hd') if vectors else None
+        e8_vec = vectors.get('e8') if vectors else None
+        leech_vec = vectors.get('leech') if vectors else None
+
+        # Convert list back to numpy if needed
+        if hd_vec is not None and isinstance(hd_vec, list):
+            hd_vec = np.array(hd_vec, dtype=np.int8)
+        if e8_vec is not None and isinstance(e8_vec, list):
+            e8_vec = np.array(e8_vec, dtype=np.int8)  # E8 can be int or half‑int; store as float?
+            # Actually E8 lattice points are int or half‑int; we store as float to preserve half.
+        if leech_vec is not None and isinstance(leech_vec, list):
+            leech_vec = np.array(leech_vec, dtype=int)  # Leech vectors are integers
+
+        return cls(
             role=data["role"],
             prompt=data["prompt"],
-            traits=data["traits"],
+            traits=data.get("traits"),
             agent_id=data["agent_id"],
-            generation=data["generation"],
-            parents=data["parents"],
-            phase_history=data["phase_history"],
-            reputation=data["reputation"],
-            failures=data["failures"],
-            boost_remaining=data["boost_remaining"],
-            epigenetic_marks=data["epigenetic_marks"],
-            synthetic=data["synthetic"],
+            generation=data.get("generation", 0),
+            parents=data.get("parents", []),
+            phase_history=data.get("phase_history", []),
+            reputation=data.get("reputation", 0),
+            failures=data.get("failures", 0),
+            boost_remaining=data.get("boost_remaining", 0.0),
+            epigenetic_marks=data.get("epigenetic_marks", {}),
+            synthetic=data.get("synthetic", False),
             fitness_history=data.get("fitness_history", []),
-            created_at=data["created_at"],
-            last_active=data["last_active"]
+            created_at=data.get("created_at"),
+            last_active=data.get("last_active"),
+            hd_vec=hd_vec,
+            e8_vec=e8_vec,
+            leech_vec=leech_vec,
         )
-        return agent
 
-    def save_to_db(self, db: 'helixdb.HelixDB'):
-        if db.get_node(self.agent_id) is None:
-            db.add_node("Agent", self.agent_id, self.to_dict())
-        else:
-            db.update_node(self.agent_id, properties=self.to_dict())
-        db.add_vector(self.agent_id, "hd", self.hd_vec)
-        db.add_vector(self.agent_id, "e8", self.e8_vec)
-        db.add_vector(self.agent_id, "leech", self.leech_vec)
+    def save_to_db(self, db: HelixDBGit):
+        """
+        Save agent to the database (properties and vectors).
+        """
+        # Save properties (JSON)
+        db.update_properties(self.agent_id, self.to_dict())
+
+        # Save vectors (as numpy arrays)
+        db.update_vector(self.agent_id, "Agent", "hd", self.hd_vec)
+        db.update_vector(self.agent_id, "Agent", "e8", self.e8_vec)
+        db.update_vector(self.agent_id, "Agent", "leech", self.leech_vec)
 
     @classmethod
-    def load_from_db(cls, db: 'helixdb.HelixDB', agent_id: str) -> Optional['Agent']:
+    def load_from_db(cls, db: HelixDBGit, agent_id: str) -> Optional['Agent']:
+        """
+        Load agent from database by ID.
+        """
         node = db.get_node(agent_id)
         if not node:
             return None
-        agent = cls.from_dict(node.properties)
-        if 'hd' in node.vectors:
-            agent._hd_vec = node.vectors['hd']
-        if 'e8' in node.vectors:
-            agent._e8_vec = node.vectors['e8']
-        if 'leech' in node.vectors:
-            agent._leech_vec = node.vectors['leech']
-        return agent
+        # The node dict already contains "leech_vector" etc. if they were loaded.
+        # We need to extract properties (without vectors) and vectors separately.
+        props = {k: v for k, v in node.items() if k not in ('leech_vector', 'hd_vector', 'e8_vector')}
+        vectors = {}
+        if 'hd_vector' in node:
+            vectors['hd'] = node['hd_vector']
+        if 'e8_vector' in node:
+            vectors['e8'] = node['e8_vector']
+        if 'leech_vector' in node:
+            vectors['leech'] = node['leech_vector']
+        return cls.from_dict(props, vectors)
 
     # ----------------------------------------------------------------------
     # Utility

@@ -1,5 +1,5 @@
 """
-Evolution Market for HelixHive – enables trait trading, auctions, and serendipity matching.
+Evolution Market for HelixHive Phase 2 – enables trait trading, auctions, and serendipity matching.
 Agents can list traits for sale, search for complementary traits via Leech similarity,
 and participate in auctions for synthetic traits. All transactions require council approval.
 """
@@ -11,8 +11,8 @@ from typing import List, Dict, Any, Optional, Tuple
 import numpy as np
 
 from agent import Agent
-from memory import LeechProjection
-import helixdb
+from memory import HD, leech_encode, _LEECH_PROJ, LeechErrorCorrector
+from helixdb_git_adapter import HelixDBGit
 
 logger = logging.getLogger(__name__)
 
@@ -20,13 +20,14 @@ logger = logging.getLogger(__name__)
 class Market:
     """
     Handles trait listings, auctions, and reputation-based trading.
+    All operations are persisted in the git-backed database.
     """
 
-    def __init__(self, db: 'helixdb.HelixDB', genome: Any):
+    def __init__(self, db: HelixDBGit, genome: Any):
         self.db = db
         self.genome = genome
         self.min_reputation = genome.data.get('market', {}).get('min_reputation', 10)
-        self.auction_duration = genome.data.get('market', {}).get('auction_duration', 3600)  # 1 hour in ticks? Actually in seconds
+        self.auction_duration = genome.data.get('market', {}).get('auction_duration', 3600)  # seconds
         self.max_listings_per_agent = genome.data.get('market', {}).get('max_listings_per_agent', 5)
 
     # ----------------------------------------------------------------------
@@ -46,17 +47,18 @@ class Market:
         # Check number of active listings for this agent
         active_listings = self._get_active_listings(agent.agent_id)
         if len(active_listings) >= self.max_listings_per_agent:
-            logger.warning(f"Agent {agent.agent_id} already has {len(active_listings)} active listings (max {self.max_listings_per_agent})")
+            logger.warning(f"Agent {agent.agent_id} already has {len(active_listings)} active listings")
             return None
 
-        # Compute Leech vector for this trait (optional, for similarity search)
-        # We can use the trait name's HD word vector and project to Leech
-        hd_vec = HD.from_word(trait_name)  # HD is imported from memory
-        leech_vec = LeechProjection.project(hd_vec)
+        # Compute Leech vector for this trait (for similarity search)
+        hd_vec = HD.from_word(trait_name)
+        leech_float = np.dot(hd_vec.astype(np.float32), _LEECH_PROJ)
+        leech_vec = leech_encode(leech_float)
 
         listing_id = str(uuid.uuid4())
         listing = {
-            'listing_id': listing_id,
+            'id': listing_id,
+            'type': 'TraitListing',
             'seller_id': agent.agent_id,
             'trait_name': trait_name,
             'trait_value': float(trait_value),
@@ -65,8 +67,7 @@ class Market:
             'created_at': time.time(),
             'status': 'active'
         }
-        self.db.add_node('TraitListing', listing_id, properties=listing)
-        # No commit; caller will commit after batch
+        self.db.update_properties(listing_id, listing)
         logger.info(f"Agent {agent.agent_id} listed trait {trait_name}={trait_value} for {price} reputation")
         return listing_id
 
@@ -79,20 +80,13 @@ class Market:
         Leech similarity * (1/price) heuristic.
         Otherwise returns all active listings sorted by price.
         """
-        # Get all active listings
         all_listings = self._get_all_active_listings()
-
         if not all_listings:
             return []
 
-        # Filter by price
         if max_price is not None:
             all_listings = [l for l in all_listings if l['price'] <= max_price]
 
-        if not all_listings:
-            return []
-
-        # If no query vector, sort by price ascending
         if query_vector is None:
             all_listings.sort(key=lambda x: x['price'])
             return all_listings
@@ -101,13 +95,11 @@ class Market:
         scored = []
         for listing in all_listings:
             leech = np.array(listing['leech_vector'])
-            sim = LeechProjection.similarity(query_vector, leech)
+            sim = self._leech_similarity(query_vector, leech)
             if sim >= min_similarity:
-                # Score = similarity / price (higher is better)
-                score = sim / (listing['price'] + 1)  # avoid division by zero
+                score = sim / (listing['price'] + 1)
                 scored.append((score, listing))
 
-        # Sort by score descending
         scored.sort(key=lambda x: x[0], reverse=True)
         return [l for _, l in scored]
 
@@ -168,12 +160,14 @@ class Market:
         auction_id = str(uuid.uuid4())
         end_time = time.time() + duration
 
-        # Compute Leech vector for trait (for similarity)
+        # Compute Leech vector for trait
         hd_vec = HD.from_word(trait_name)
-        leech_vec = LeechProjection.project(hd_vec)
+        leech_float = np.dot(hd_vec.astype(np.float32), _LEECH_PROJ)
+        leech_vec = leech_encode(leech_float)
 
         auction = {
-            'auction_id': auction_id,
+            'id': auction_id,
+            'type': 'Auction',
             'seller_id': seller.agent_id,
             'trait_name': trait_name,
             'trait_value': float(trait_value),
@@ -185,14 +179,14 @@ class Market:
             'status': 'active',
             'created_at': time.time()
         }
-        self.db.add_node('Auction', auction_id, properties=auction)
+        self.db.update_properties(auction_id, auction)
         logger.info(f"Auction {auction_id} created by {seller.agent_id} for {trait_name}={trait_value}")
         return auction_id
 
     def place_bid(self, bidder: Agent, auction_id: str, bid_amount: int) -> Optional[bool]:
         """
         Place a bid on an active auction.
-        Returns True if bid placed (as edge), False if invalid, None if auction ended.
+        Returns True if bid placed, False if invalid, None if auction ended.
         """
         auction = self._get_auction(auction_id)
         if not auction or auction['status'] != 'active':
@@ -214,20 +208,27 @@ class Market:
         # Update auction node with new highest bid
         auction['current_bid'] = bid_amount
         auction['current_bidder'] = bidder.agent_id
-        self.db.update_node(auction_id, properties=auction)
+        self.db.update_properties(auction_id, auction)
 
-        # Record bid as an edge
-        self.db.add_edge(bidder.agent_id, auction_id, 'BID', properties={
+        # Record bid as a separate node (optional)
+        bid_id = str(uuid.uuid4())
+        bid_record = {
+            'id': bid_id,
+            'type': 'Bid',
+            'auction_id': auction_id,
+            'bidder_id': bidder.agent_id,
             'amount': bid_amount,
             'timestamp': time.time()
-        })
+        }
+        self.db.update_properties(bid_id, bid_record)
+
         logger.info(f"Bid of {bid_amount} placed by {bidder.agent_id} on auction {auction_id}")
         return True
 
     def process_auctions(self) -> List[Dict]:
         """
         Check for ended auctions and generate purchase proposals for winners.
-        Called periodically (e.g., each heartbeat).
+        Called by orchestrator each heartbeat.
         Returns list of proposal dicts for council approval.
         """
         proposals = []
@@ -235,7 +236,6 @@ class Market:
         auctions = self._get_all_active_auctions()
         for auction in auctions:
             if now >= auction['end_time'] and auction['status'] == 'active':
-                # Auction ended
                 if auction['current_bidder'] is not None:
                     # Winner exists
                     proposal = {
@@ -244,7 +244,7 @@ class Market:
                         'description': f"Auction win: {auction['trait_name']}={auction['trait_value']} from {auction['seller_id']} for {auction['current_bid']} reputation",
                         'tags': ['market', 'auction'],
                         'changes': {
-                            'auction_id': auction['auction_id'],
+                            'auction_id': auction['id'],
                             'buyer_id': auction['current_bidder'],
                             'seller_id': auction['seller_id'],
                             'trait_name': auction['trait_name'],
@@ -256,11 +256,11 @@ class Market:
                     proposals.append(proposal)
                     # Mark auction as completed
                     auction['status'] = 'completed'
-                    self.db.update_node(auction['auction_id'], properties=auction)
+                    self.db.update_properties(auction['id'], auction)
                 else:
                     # No bids, mark as expired
                     auction['status'] = 'expired'
-                    self.db.update_node(auction['auction_id'], properties=auction)
+                    self.db.update_properties(auction['id'], auction)
         return proposals
 
     # ----------------------------------------------------------------------
@@ -284,24 +284,28 @@ class Market:
             trait_name = changes['trait_name']
             trait_value = changes['trait_value']
 
-            # Update buyer's agent
-            buyer_node = self.db.get_node(buyer_id)
-            if not buyer_node:
-                raise ValueError(f"Buyer {buyer_id} not found")
-            # We need to load the full agent to modify traits
-            buyer = Agent.load_from_db(self.db, buyer_id)
+            # Load agents
+            buyer = self._load_agent(buyer_id)
+            seller = self._load_agent(seller_id)
+
+            # Update buyer's traits
             buyer.traits[trait_name] = trait_value
             buyer.reputation -= price
+            buyer.compute_state_vectors()  # recompute Leech vector
+            # Repair buyer's Leech vector (should already be correct, but ensure)
+            corrected, syn = LeechErrorCorrector.correct(buyer.leech_vec)
+            if syn != 0:
+                # This shouldn't happen, but if it does, store corrected
+                buyer._leech_vec = corrected
             buyer.save_to_db(self.db)
 
-            # Update seller's agent
-            seller = Agent.load_from_db(self.db, seller_id)
+            # Update seller's reputation
             seller.reputation += price
             seller.save_to_db(self.db)
 
             # Mark listing as sold
             listing['status'] = 'sold'
-            self.db.update_node(listing_id, properties=listing)
+            self.db.update_properties(listing_id, listing)
 
             # Record transaction
             self._record_transaction(buyer_id, seller_id, trait_name, trait_value, price, 'purchase')
@@ -318,17 +322,20 @@ class Market:
             trait_name = changes['trait_name']
             trait_value = changes['trait_value']
 
-            # Apply same as purchase
-            buyer = Agent.load_from_db(self.db, buyer_id)
+            buyer = self._load_agent(buyer_id)
+            seller = self._load_agent(seller_id)
+
             buyer.traits[trait_name] = trait_value
             buyer.reputation -= price
+            buyer.compute_state_vectors()
+            corrected, syn = LeechErrorCorrector.correct(buyer.leech_vec)
+            if syn != 0:
+                buyer._leech_vec = corrected
             buyer.save_to_db(self.db)
 
-            seller = Agent.load_from_db(self.db, seller_id)
             seller.reputation += price
             seller.save_to_db(self.db)
 
-            # Auction already marked completed
             self._record_transaction(buyer_id, seller_id, trait_name, trait_value, price, 'auction')
 
         else:
@@ -338,43 +345,51 @@ class Market:
     # Internal helpers
     # ----------------------------------------------------------------------
 
+    def _leech_similarity(self, v1: np.ndarray, v2: np.ndarray) -> float:
+        """Compute similarity (negative Euclidean distance)."""
+        return -np.linalg.norm(v1 - v2)
+
     def _get_active_listings(self, agent_id: str) -> List[Dict]:
         """Return active listings for a specific agent."""
-        nodes = self.db.query_nodes_by_label('TraitListing')
-        active = []
-        for node in nodes:
-            props = node.properties
-            if props.get('seller_id') == agent_id and props.get('status') == 'active':
-                active.append(props)
+        all_listings = self.db.get_nodes_by_type('TraitListing')
+        active = [l for l in all_listings.values() if l.get('seller_id') == agent_id and l.get('status') == 'active']
         return active
 
     def _get_all_active_listings(self) -> List[Dict]:
         """Return all active trait listings."""
-        nodes = self.db.query_nodes_by_label('TraitListing')
-        return [n.properties for n in nodes if n.properties.get('status') == 'active']
+        all_listings = self.db.get_nodes_by_type('TraitListing')
+        return [l for l in all_listings.values() if l.get('status') == 'active']
 
     def _get_listing(self, listing_id: str) -> Optional[Dict]:
         node = self.db.get_node(listing_id)
-        if node and node.label == 'TraitListing':
-            return node.properties
+        if node and node.get('type') == 'TraitListing':
+            return node
         return None
 
     def _get_all_active_auctions(self) -> List[Dict]:
-        nodes = self.db.query_nodes_by_label('Auction')
-        return [n.properties for n in nodes if n.properties.get('status') == 'active']
+        nodes = self.db.get_nodes_by_type('Auction')
+        return [n for n in nodes.values() if n.get('status') == 'active']
 
     def _get_auction(self, auction_id: str) -> Optional[Dict]:
         node = self.db.get_node(auction_id)
-        if node and node.label == 'Auction':
-            return node.properties
+        if node and node.get('type') == 'Auction':
+            return node
         return None
+
+    def _load_agent(self, agent_id: str) -> Agent:
+        """Load agent from database."""
+        node = self.db.get_node(agent_id)
+        if not node:
+            raise ValueError(f"Agent {agent_id} not found")
+        return Agent.from_dict(node, vectors={'leech': node.get('leech_vector')})
 
     def _record_transaction(self, buyer_id: str, seller_id: str, trait_name: str,
                             trait_value: float, price: int, tx_type: str):
         """Record a completed transaction for audit."""
         tx_id = str(uuid.uuid4())
         tx = {
-            'transaction_id': tx_id,
+            'id': tx_id,
+            'type': 'Transaction',
             'buyer_id': buyer_id,
             'seller_id': seller_id,
             'trait_name': trait_name,
@@ -383,26 +398,5 @@ class Market:
             'type': tx_type,
             'timestamp': time.time()
         }
-        self.db.add_node('Transaction', tx_id, properties=tx)
-        self.db.add_edge(buyer_id, tx_id, 'BOUGHT')
-        self.db.add_edge(seller_id, tx_id, 'SOLD')
-
-
-# Standalone functions for orchestrator/proposals engine to call
-
-def process_market_actions(db: 'helixdb.HelixDB', genome: Any) -> List[Dict]:
-    """
-    Called each heartbeat to process auctions and generate proposals.
-    Returns list of proposal dicts (for council).
-    """
-    market = Market(db, genome)
-    proposals = market.process_auctions()
-    return proposals
-
-
-def apply_market_purchase(db: 'helixdb.HelixDB', genome: Any, changes: Dict):
-    """
-    Called by proposals engine when a market purchase proposal is approved.
-    """
-    market = Market(db, genome)
-    market.apply_purchase(changes)
+        self.db.update_properties(tx_id, tx)
+        logger.info(f"Transaction recorded: {tx_id}")

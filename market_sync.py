@@ -212,4 +212,4 @@ def _format_action(template: Dict) -> str:
         url = f"https://github.com/new?template_name={template_repo}&owner=atomadic"
         return f"[Spawn]({url})"
     else:
-        return "–”
+        return "–”"

@@ -363,4 +363,4 @@ class Agent:
         self.last_active = datetime.now().timestamp()
 
     def __repr__(self):
-        return f"Agent(role={self.role}, id={self.agent_id[:8]})”
+        return f"Agent(role={self.role}, id={self.agent_id[:8]})”"

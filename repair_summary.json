@@ -1,0 +1,10 @@
+{
+  "files_scanned": 28,
+  "files_with_issues": 3,
+  "total_issues": 3,
+  "files_repaired": 3,
+  "duration_seconds": 157.42,
+  "coherence": 0.0086,
+  "meta_patches": 0,
+  "timestamp": "2026-02-21T09:28:22.327679"
+}

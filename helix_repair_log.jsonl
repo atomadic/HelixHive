@@ -1,0 +1,15 @@
+2026-02-21 09:25:44,910 | INFO | Scanning 28 Python files...
+2026-02-21 09:26:02,310 | INFO | agent.py: 1 issues
+2026-02-21 09:26:02,318 | WARNING | Ruff fix failed on /home/runner/work/HelixHive/HelixHive/agent.py: None
+2026-02-21 09:26:02,551 | WARNING | Black failed on /home/runner/work/HelixHive/HelixHive/agent.py: None
+2026-02-21 09:26:03,058 | INFO | Fixed unterminated string in /home/runner/work/HelixHive/HelixHive/agent.py at line 366
+2026-02-21 09:27:03,497 | INFO | market_sync.py: 1 issues
+2026-02-21 09:27:03,505 | WARNING | Ruff fix failed on /home/runner/work/HelixHive/HelixHive/market_sync.py: None
+2026-02-21 09:27:03,701 | WARNING | Black failed on /home/runner/work/HelixHive/HelixHive/market_sync.py: None
+2026-02-21 09:27:03,774 | INFO | Fixed unterminated string in /home/runner/work/HelixHive/HelixHive/market_sync.py at line 215
+2026-02-21 09:27:59,625 | INFO | council.py: 1 issues
+2026-02-21 09:27:59,633 | WARNING | Ruff fix failed on /home/runner/work/HelixHive/HelixHive/council.py: None
+2026-02-21 09:27:59,831 | WARNING | Black failed on /home/runner/work/HelixHive/HelixHive/council.py: None
+2026-02-21 09:27:59,903 | INFO | Fixed unterminated string in /home/runner/work/HelixHive/HelixHive/council.py at line 200
+2026-02-21 09:28:22,327 | INFO | {"summary": {"files_scanned": 28, "files_with_issues": 3, "total_issues": 3, "files_repaired": 3, "duration_seconds": 157.42, "coherence": 0.0086, "meta_patches": 0, "timestamp": "2026-02-21T09:28:22.327679"}}
+2026-02-21 09:28:22,328 | INFO | Report saved: /home/runner/work/HelixHive/HelixHive/repair_reports/repair_1771666102.html

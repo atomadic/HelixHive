@@ -4,3 +4,6 @@
 {"check": "MODULE_PRELOAD", "success": true, "message": "Successfully preloaded src.core.ollama_service", "ts": 1771727026.166955}
 {"check": "MODULE_PRELOAD", "success": true, "message": "Successfully preloaded src.core.super_panel", "ts": 1771727026.2138934}
 {"check": "DIAGNOSTIC", "success": true, "message": "Ollama local service online.", "ts": 1771727026.6465862}
+{"check": "HEALING", "success": false, "message": "Could not restore .env/keys automatically.", "ts": 1771735698.1084917}
+{"check": "HEALING", "success": false, "message": "Could not restore .env/keys automatically.", "ts": 1771735710.0791345}
+{"check": "HEALING", "success": false, "message": "Could not restore .env/keys automatically.", "ts": 1771735718.6976159}

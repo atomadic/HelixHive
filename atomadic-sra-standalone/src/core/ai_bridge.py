@@ -21,7 +21,7 @@ import json
 
 from src.core.e8_core import E8Core
 from src.core.leech_outer import LeechOuter
-from src.core.clifford_rotors import CliffordRotors
+from .clifford_rotors import CliffordRotor
 from src.core.formal_precision import FormalPrecisionLayer
 from src.core.active_inference import ActiveInferenceLoop
 from src.core.ollama_service import OllamaService
@@ -51,7 +51,7 @@ class AIBridge:
         # Core geometric stack
         self.e8 = E8Core()
         self.leech = LeechOuter()
-        self.clifford = CliffordRotors(dimension=8)
+        self.clifford = CliffordRotor(dimension=8)
         self.hott = FormalPrecisionLayer()
         self.inference = ActiveInferenceLoop()
 

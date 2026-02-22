@@ -1,6 +1,6 @@
-import time
 import hashlib
 import json
+import ast
 
 # --- Rule 10: Helical Derivation for RSI Protocol ---
 # Principle: O = P(O) for recursive self-regeneration.
@@ -78,7 +78,23 @@ class RSIProtocol:
         
         self.modification_log.append(entry)
         print(f"[RSI] APPROVED: delta_m={delta_m}, tau={self.tau:.4f}, hash={mod_hash}")
+        
+        # Implementation 3: Physical modification if target provided
+        if "target_file" in modification:
+            self.execute_self_modification(modification["target_file"], modification["content"])
+            
         return entry
+
+    def execute_self_modification(self, target_file: str, new_content: str):
+        """Rule VI: Autopoietic Core (Self-Regeneration) - Physically write to disk."""
+        print(f"[RSI] Physical Evolution: Writing to {target_file}...")
+        try:
+            with open(target_file, "w", encoding="utf-8") as f:
+                f.write(new_content)
+            print(f"[RSI] Evolution complete: {target_file} reified.")
+        except Exception as e:
+            print(f"[RSI] Evolution FAILED: {e}")
+            self.on_error()
 
     def on_error(self):
         """Decrement J on error (Jessica Gate)."""
@@ -88,10 +104,29 @@ class RSIProtocol:
             print(f"[RSI] WARNING: Jessica Gate at minimum. Operations frozen.")
 
     def _estimate_wisdom_gain(self, modification):
-        """Estimate how much wisdom mass this modification adds."""
-        if isinstance(modification, str):
-            return max(1, len(modification) // 50)
-        return 1
+        """Estimate wisdom gain using AST complexity metrics."""
+        if not isinstance(modification, str):
+            return 1
+            
+        try:
+            tree = ast.parse(modification)
+            node_count = sum(1 for _ in ast.walk(tree))
+            max_depth = self._get_max_depth(tree)
+            # Wisdom Mass ΔM = nodes * log(depth + 1)
+            # This incentivizes logic density over just line count (Axiom II)
+            import math
+            delta_m = int(node_count * math.log2(max_depth + 1))
+            return max(1, delta_m)
+        except Exception:
+            # Fallback to simple metric if not valid Python
+            return max(1, len(modification) // 100)
+
+    def _get_max_depth(self, node, depth=0):
+        """Helper to find maximum AST depth."""
+        children = list(ast.iter_child_nodes(node))
+        if not children:
+            return depth
+        return max(self._get_max_depth(child, depth + 1) for child in children)
 
     def safety_check(self, mod):
         """Quick safety check without full proposal pipeline."""

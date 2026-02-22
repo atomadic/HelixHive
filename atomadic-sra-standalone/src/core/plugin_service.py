@@ -16,7 +16,36 @@ class PluginService:
         self.vault = vault
         self.plugin_key = "plugin_registry"
         self.product_key = "marketplace_products"
+        self.skills_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), ".agent", "rules")
         self._init_registry()
+        self.discover_manifested_skills()
+
+    def discover_manifested_skills(self):
+        """Autonomously discover and map new skills in the .agent/rules directory."""
+        if not os.path.exists(self.skills_dir):
+            logger.warning(f"[Plugin] Skills directory not found: {self.skills_dir}")
+            return
+
+        print(f"[Plugin] Scanning for manifested skills in: {self.skills_dir}...")
+        plugins = self.vault.get_state(self.plugin_key) or {}
+        found_new = False
+
+        for file in os.listdir(self.skills_dir):
+            if file.endswith(".md"):
+                skill_id = f"skill_{file[:-3].lower()}"
+                if skill_id not in plugins:
+                    print(f"[Plugin] Auto-detecting new skill: {file}")
+                    plugins[skill_id] = {
+                        "name": file[:-3].replace("-", " ").title(),
+                        "path": os.path.join(self.skills_dir, file),
+                        "type": "manifested_skill",
+                        "discovered_at": time.time()
+                    }
+                    found_new = True
+
+        if found_new:
+            secret = os.getenv("SRA_SOVEREIGN_2026", "SRA_SOVEREIGN_2026")
+            self.vault.update_state(self.plugin_key, plugins, secret=secret)
 
     def _init_registry(self):
         if not self.vault.get_state(self.plugin_key):

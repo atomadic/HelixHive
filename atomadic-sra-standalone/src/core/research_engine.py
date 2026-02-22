@@ -9,7 +9,7 @@ import numpy as np
 from typing import List, Dict, Any, Optional
 
 from .hive_bridge import HiveBridge
-from .clifford_rotors import CliffordRotors
+from .clifford_rotors import CliffordRotor
 from .evolution_vault import EvolutionVault
 from .search_service import SearchService
 from .demo_service import DemoService
@@ -28,7 +28,7 @@ class ResearchEngine:
         self.hive = hive_bridge
         self.vault = vault
         self.settings = settings
-        self.rotors = CliffordRotors(dimension=8)
+        self.rotors = CliffordRotor(dimension=8)
         self.search_service = SearchService(vault)
         self.demo_service = DemoService(is_demo_mode=True)
         self.billing = BillingService(vault)

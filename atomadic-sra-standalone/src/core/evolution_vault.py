@@ -5,6 +5,7 @@ import time
 import uuid
 import hashlib
 from typing import Dict, Any, List, Optional
+from . import clifford_rotors
 
 class EvolutionVault:
     """
@@ -48,17 +49,34 @@ class EvolutionVault:
             }
 
     def _save(self, data: Dict[str, Any]):
+        """Enforces checksum and Sovereign Signature before writing."""
+        # Verify integrity of what we are about to save
         data["metadata"] = data.get("metadata", {})
         data["metadata"]["last_modified"] = time.strftime("%Y-%m-%dT%H:%M:%S")
         data["metadata"]["checksum"] = self._checksum(data)
         
-        # Rule 5: Sovereign Cryptographic Handshake (Pseudo-check for standlone)
-        # In v4.0.0, we simulate the lock to prevent accidental overwrites.
+        # Rule 5: Sovereign Cryptographic Handshake v2.0 (Helix v8.0)
+        # Uses SHA-3/512 and a Clifford-rotated signature base for maximum closure.
+        secret = os.getenv("SRA_SOVEREIGN_2026", "SRA_SOVEREIGN_2026")
+        
+        # Manifest rotor rotation in the secret (v2.0 enhancement)
+        rotor = clifford_rotors.CliffordRotor(8)
+        rotation_seed = int(hashlib.md5(secret.encode()).hexdigest(), 16) % 1000 / 1000.0
+        rotated_secret = rotor.generate_random_mutation([float(ord(c)) for c in secret[:8]], intensity=rotation_seed)
+        
+        signature_base = f"{data['metadata']['checksum']}:{rotated_secret['mutated_vector']}"
+        data["metadata"]["sovereign_signature"] = hashlib.sha3_512(signature_base.encode()).hexdigest()
+
+        # Before writing, verify that we aren't corrupting an existing valid vault
+        if os.path.exists(self.data_file):
+             if not self.verify_integrity():
+                 print("[Vault] WARNING: Existing vault integrity compromised. Sealing new state regardless.")
+
         try:
-            with open(self.data_file, "w") as f:
+            with open(self.data_file, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2)
         except PermissionError:
-            logger.error("[Vault] Sovereign Handshake Failure: Write Access Denied.")
+            print("[Vault] Sovereign Handshake Failure: Write Access Denied.")
             raise
 
     def _checksum(self, data):

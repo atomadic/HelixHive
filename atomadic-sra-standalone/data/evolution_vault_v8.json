@@ -1,0 +1,35 @@
+{
+  "opportunities": [],
+  "novelties": [],
+  "evolutions": [
+    {
+      "activity": "OMEGA_BOOT",
+      "details": {
+        "status": "sealed"
+      },
+      "tau": 1.0,
+      "j_gate": 1.0,
+      "id": "91a9f320-c1fb-435f-be6e-d61ea13ec513",
+      "timestamp": "2026-02-21T21:50:15"
+    },
+    {
+      "activity": "OMEGA_BOOT",
+      "details": {
+        "status": "sealed"
+      },
+      "tau": 1.0,
+      "j_gate": 1.0,
+      "id": "86ab2805-8a3e-49a4-b2ba-937dc40fa16e",
+      "timestamp": "2026-02-21T21:50:50"
+    }
+  ],
+  "sovereignty_events": [],
+  "state": {},
+  "metadata": {
+    "created": "2026-02-21T21:50:15",
+    "version": "3.2.1.0",
+    "last_modified": "2026-02-21T21:50:50",
+    "checksum": "437384486240db51",
+    "sovereign_signature": "184678c6dab44b1116c22384f8554ce1cc2b146cf6358f8e9a2a3ce44e4394c57e8fc6ae74a13863e5ca5716edab382592529856dd4a36c29e99572be08c7e8e"
+  }
+}

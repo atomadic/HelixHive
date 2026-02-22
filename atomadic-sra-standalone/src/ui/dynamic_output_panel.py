@@ -17,12 +17,21 @@ class DynamicOutputPanel:
             "show_metrics": True
         }
 
-    def format_output(self, content, output_type="general"):
-        """Format content for display based on type."""
+    def format_output(self, content, output_type="general", metrics=None):
+        """Format content for display based on type with helical audit header."""
         formatted = ""
         
+        # Implementation 10: Structured Output τ-Annotation
+        if metrics:
+            header = self.generate_helical_header(
+                metrics.get("tau", 1.0), 
+                metrics.get("j", 1.0), 
+                metrics.get("delta_m", 0)
+            )
+            formatted = f"{header}\n\n"
+        
         if output_type == "code":
-            formatted = f"```python\n{content}\n```"
+            formatted += f"```python\n{content}\n```"
         elif output_type == "table":
             formatted = self._format_table(content)
         elif output_type == "alert":
@@ -42,6 +51,16 @@ class DynamicOutputPanel:
         })
         
         return formatted
+
+    def generate_helical_header(self, tau, j, delta_m):
+        """Generates a standardized Helical Audit Header."""
+        timestamp = time.strftime("%Y-%m-%dT%H:%M:%S")
+        return (
+            f"--- HELICAL AUDIT: {timestamp} ---\n"
+            f"τ: {tau:.4f} | J: {j:.2f} | ΔM: +{delta_m}\n"
+            f"Status: SOVEREIGN | Coherence: {(tau * j):.4f}\n"
+            f"--------------------------------------"
+        )
 
     def update_agent_thoughts(self, agent_name, thoughts):
         """Update a dedicated window/view for agent thought streams."""

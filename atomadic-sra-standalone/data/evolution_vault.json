@@ -682,6 +682,36 @@
       "delta_m": 117,
       "id": "673c238b-5da5-4732-a122-7b522e9b6985",
       "timestamp": "2026-02-21T16:40:43"
+    },
+    {
+      "activity": "VERIFICATION_PASS",
+      "details": {
+        "status": "sealed"
+      },
+      "tau": 1.0,
+      "j_gate": 1.0,
+      "id": "adb5c8e8-062c-4f41-b0c4-0e0927ac19cc",
+      "timestamp": "2026-02-21T20:48:18"
+    },
+    {
+      "activity": "VERIFICATION_PASS",
+      "details": {
+        "status": "sealed"
+      },
+      "tau": 1.0,
+      "j_gate": 1.0,
+      "id": "f702e6aa-f019-4092-80bd-54541c809fc5",
+      "timestamp": "2026-02-21T20:48:30"
+    },
+    {
+      "activity": "VERIFICATION_PASS",
+      "details": {
+        "status": "sealed"
+      },
+      "tau": 1.0,
+      "j_gate": 1.0,
+      "id": "09bbe4fe-6210-4dd5-a83f-7505bc6fd22a",
+      "timestamp": "2026-02-21T20:48:38"
     }
   ],
   "sovereignty_events": [
@@ -699,8 +729,9 @@
     }
   ],
   "metadata": {
-    "last_modified": "2026-02-21T18:23:44",
-    "checksum": "79503e3232cadbc2"
+    "last_modified": "2026-02-21T23:15:53",
+    "checksum": "561ab80808b2c58d",
+    "sovereign_signature": "6dbe9a1141f994b9c0d2d7c53387416c00cf942bfab572b657b7faeeb432f083e878f5eb79af7f12f9cdc1b749143a3082aaec2da4cc36029485f94e6686862f"
   },
   "state": {
     "auth_tenant_registry": {

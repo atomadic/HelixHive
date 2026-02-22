@@ -1,6 +1,7 @@
 
 import time
 import re
+from src.core.leech_outer import LeechOuter
 
 class RevelationEngine:
     """
@@ -23,14 +24,36 @@ class RevelationEngine:
                 r"random\.random\(\)",
                 r"simulate_", 
                 r"placeholder",
-                r"mock_"
+                r"mock_",
+                r"TODO",
+                r"FIXME",
+                r"hack",
+                r"xxx"
             ],
             "RULE_V": [
                 r"bypass_auth",
                 r"sudo\s+",
-                r"hardcoded_key"
+                r"hardcoded_key",
+                r"password\s*=\s*['\"].*['\"]",
+                r"secret\s*=\s*['\"].*['\"]"
             ]
         }
+
+    def audit_directory(self, directory_path: str):
+        """Perform a mass audit of all Python files in a directory."""
+        print(f"[RevelationEngine] Mass Audit Initiated: {directory_path}")
+        results = {}
+        import os
+        for root, _, files in os.walk(directory_path):
+            for file in files:
+                if file.endswith(".py"):
+                    full_path = os.path.join(root, file)
+                    with open(full_path, "r", encoding="utf-8", errors="ignore") as f:
+                        code = f.read()
+                        res = self.perform_recursive_refinement(file, code)
+                        if res["status"] == "REJECTED":
+                            results[file] = res["violations"]
+        return results
 
     def perform_recursive_refinement(self, agent_name, code):
         """
@@ -58,11 +81,17 @@ class RevelationEngine:
         for i in range(3):
             time.sleep(0.1) # Computation delay
         
+        # Implementation 5: Leech-Fusion Reasoning Compression
+        leech = LeechOuter()
+        trace = leech.explore(f"Audit:{agent_name}:{status}")
+        compressed = leech.compress_trace(trace)
+        
         return {
             "status": status, 
             "violations": violations, 
             "agent": agent_name, 
             "audit_type": "NOV-015 RSR",
             "confidence": 0.98 if status == "PASSED" else 0.45,
+            "compressed_trace": compressed,
             "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S")
         }

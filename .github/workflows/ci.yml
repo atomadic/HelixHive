@@ -1,0 +1,107 @@
+name: CI – Full System Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      ticks:
+        description: 'Number of heartbeat ticks to simulate'
+        required: false
+        default: '3'
+        type: string
+      simulate:
+        description: 'Run in simulation mode (no LLM calls)'
+        required: false
+        default: 'true'
+        type: boolean
+      test_modules:
+        description: 'Comma-separated list of modules to test (empty = all)'
+        required: false
+        default: ''
+        type: string
+      debug:
+        description: 'Enable debug logging'
+        required: false
+        default: 'false'
+        type: boolean
+
+env:
+  PYTHON_VERSION: '3.12'
+  HELIX_DATA_PATH: ${{ github.workspace }}/test_data
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.11, 3.12]  # Test multiple Python versions
+      fail-fast: false  # Don't cancel all if one fails
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git-lfs
+          git lfs install
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov  # For test reporting
+
+      - name: Create test data directory
+        run: mkdir -p $HELIX_DATA_PATH
+
+      - name: Run Full System Test
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOG_LEVEL: ${{ github.event.inputs.debug == 'true' && 'DEBUG' || 'INFO' }}
+        run: |
+          # Build test command
+          TICKS="${{ github.event.inputs.ticks || 3 }}"
+          SIMULATE="${{ github.event.inputs.simulate || 'true' }}"
+          CMD="python tests/test_full_system.py $TICKS"
+          echo "Running: $CMD with simulate=$SIMULATE"
+          # Set environment variable for simulation
+          export HELIX_SIMULATE=$SIMULATE
+          $CMD
+
+      - name: Upload test report
+        if: always()  # Upload even if tests fail
+        uses: actions/upload-artifact@v4
+        with:
+          name: system-test-report-py${{ matrix.python-version }}
+          path: system_test_report.txt
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs-py${{ matrix.python-version }}
+          path: |
+            helixdb/
+            marketplace/
+            *.log

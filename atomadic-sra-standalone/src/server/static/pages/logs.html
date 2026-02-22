@@ -1,0 +1,62 @@
+<!-- SRA Log Trail Fragment // v4.2.0.0 -->
+<div class="card" style="grid-column: span 12; min-height: 600px; display: flex; flex-direction: column;">
+    <div class="card-header" style="justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h3 class="card-title" style="margin: 0; border: none; padding: 0;">EVT_LOG_TRAIL_STREAM</h3>
+        <div style="display: flex; gap: 0.75rem;">
+            <button class="btn" style="font-size: 0.6rem; padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.03);"
+                onclick="filterLogs('ALL')">ALL</button>
+            <button class="btn"
+                style="font-size: 0.6rem; padding: 0.4rem 0.8rem; border-color: var(--neon-pink); color: var(--neon-pink);"
+                onclick="filterLogs('ERROR')">ERROR</button>
+            <button class="btn"
+                style="font-size: 0.6rem; padding: 0.4rem 0.8rem; border-color: var(--neon-blue); color: var(--neon-blue);"
+                onclick="filterLogs('INFO')">INFO</button>
+        </div>
+    </div>
+    <div id="log-container"
+        style="flex: 1; overflow-y: auto; font-family: 'JetBrains Mono'; font-size: 0.75rem; color: #94a3b8; line-height: 1.8; padding-right: 1.5rem;">
+        <!-- Logs streamed here -->
+    </div>
+</div>
+
+<script>
+    if (typeof logInterval !== 'undefined') clearInterval(logInterval);
+    var currentFilter = 'ALL';
+
+    async function fetchLogs() {
+        if (currentPage !== 'logs') return;
+        try {
+            const res = await fetch('/api/logs');
+            const logs = await res.json();
+            const container = document.getElementById('log-container');
+            if (!container) return;
+
+            container.innerHTML = logs.reverse().map(log => {
+                if (currentFilter !== 'ALL' && log.level !== currentFilter) return '';
+                const color = log.level === 'ERROR' ? 'var(--neon-pink)' :
+                    log.level === 'WARNING' ? 'var(--neon-purple)' :
+                        log.level === 'DEBUG' ? '#475569' : 'var(--neon-blue)';
+
+                return `
+                    <div style="border-bottom: 1px solid rgba(255,255,255,0.03); padding: 0.8rem 0; display: flex; gap: 1rem;">
+                        <span style="color: #475569; font-size: 0.65rem; min-width: 80px;">[${log.timestamp.split('T')[1].split('.')[0]}]</span>
+                        <span style="color: ${color}; font-weight: 700; min-width: 60px;">${log.level}</span>
+                        <span style="color: var(--neon-green); min-width: 100px;">${log.agent}:</span>
+                        <div style="flex: 1;">
+                            <span style="color: #f1f5f9;">${log.action}</span>
+                            <div style="color: #64748b; font-size: 0.7rem; margin-top: 6px; background: rgba(0,0,0,0.2); padding: 6px; border-radius: 4px;">${JSON.stringify(log.details)}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        } catch (e) { console.error("Log Fetch Failed", e); }
+    }
+
+    function filterLogs(level) {
+        currentFilter = level;
+        fetchLogs();
+    }
+
+    var logInterval = setInterval(fetchLogs, 3000);
+    fetchLogs();
+</script>

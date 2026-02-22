@@ -1,0 +1,106 @@
+
+import time
+import math
+import json
+
+class ApexOptimizationEngine:
+    """
+    Apex Optimization Engine
+    Multi-objective optimizer for pipeline stability, intelligence, market value,
+    and computational efficiency. Runs after every refinement cycle.
+    
+    Optimizes across 4 axes:
+    - Stability (tau homeostasis)
+    - Intelligence (deltaL monotonic increase)
+    - Market Value (Opportunity yield)
+    - Efficiency (Latency, token usage)
+    """
+    def __init__(self):
+        self.tau = 1.0
+        self.alpha = 0.1
+        self.history = []
+        self.cycle_count = 0
+
+    def optimize_pipeline(self, metrics=None):
+        """
+        Run full pipeline optimization.
+        Returns optimized configuration with scores.
+        """
+        self.cycle_count += 1
+        metrics = metrics or {}
+        
+        # Homeostasis: tau += alpha(1 - tau)
+        self.tau += self.alpha * (1 - self.tau)
+        
+        # Compute multi-objective scores
+        stability = self._score_stability(metrics)
+        intelligence = self._score_intelligence(metrics)
+        market_value = self._score_market_value(metrics)
+        efficiency = self._score_efficiency(metrics)
+        
+        # Weighted aggregate (Pareto-inspired)
+        weights = {"stability": 0.3, "intelligence": 0.3, "market_value": 0.2, "efficiency": 0.2}
+        aggregate = sum([
+            weights["stability"] * stability,
+            weights["intelligence"] * intelligence,
+            weights["market_value"] * market_value,
+            weights["efficiency"] * efficiency
+        ])
+        
+        result = {
+            "cycle": self.cycle_count,
+            "tau": round(self.tau, 4),
+            "stability": round(stability, 4),
+            "intelligence": round(intelligence, 4),
+            "market_value": round(market_value, 4),
+            "efficiency": round(efficiency, 4),
+            "aggregate_score": round(aggregate, 4),
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S")
+        }
+        
+        self.history.append(result)
+        print(f"[Apex] Cycle {self.cycle_count}: Aggregate={result['aggregate_score']}, tau={result['tau']}")
+        return result
+
+    def _score_stability(self, metrics):
+        """Stability: how close tau is to 1.0"""
+        return self.tau
+
+    def _score_intelligence(self, metrics):
+        """Intelligence: deltaL > 0 compliance rate"""
+        delta_l = metrics.get("delta_l", 1)
+        return 1.0 if delta_l > 0 else 0.5
+
+    def _score_market_value(self, metrics):
+        """Market value: opportunity count weighted by approval rate"""
+        opps = metrics.get("opportunity_count", 0)
+        approved = metrics.get("approved_count", 0)
+        if opps == 0:
+            return 0.5
+        return min(1.0, 0.5 + (approved / opps) * 0.5)
+
+    def _score_efficiency(self, metrics):
+        """Efficiency: inverse of average response latency"""
+        latency = metrics.get("avg_latency_ms", 500)
+        return max(0.1, 1.0 - (latency / 5000))
+
+    def get_recommendations(self):
+        """Generate optimization recommendations based on history."""
+        if not self.history:
+            return ["No data yet. Run optimize_pipeline first."]
+        
+        last = self.history[-1]
+        recs = []
+        
+        if last["stability"] < 0.95:
+            recs.append("STABILITY: tau is below 0.95. Increase homeostasis alpha or reduce error rate.")
+        if last["intelligence"] < 0.8:
+            recs.append("INTELLIGENCE: deltaL violations detected. Ensure all changes increase complexity metric.")
+        if last["efficiency"] < 0.7:
+            recs.append("EFFICIENCY: High latency detected. Consider caching or model downsizing.")
+        if last["market_value"] < 0.6:
+            recs.append("MARKET: Low opportunity approval rate. Refine Novelty Engine filters.")
+        if not recs:
+            recs.append("ALL METRICS NOMINAL. System operating at peak performance.")
+        
+        return recs

@@ -1,0 +1,42 @@
+
+from src.agents.luminary_base import LuminaryBase
+from src.core.ollama_service import OllamaService
+from src.core.evolution_vault import EvolutionVault
+import json
+
+class OpportunityEngine(LuminaryBase):
+    """
+    Opportunity Engine
+    Generates high-value strategic opportunities based on system state and simulated market trends.
+    """
+    def __init__(self, name="OpportunityEngine"):
+        super().__init__(name)
+        self.llm = OllamaService()
+        self.vault = EvolutionVault()
+
+    def generate_opportunity(self, context="General system expansion"):
+        """
+        Uses LLM to hypothesize a strategic opportunity.
+        """
+        prompt = (
+            f"Generate a strategic 'Opportunity Alert' for an autonomous AI system. "
+            f"Context: {context}. "
+            "Format as JSON with keys: title, summary, market_eval, technical_feasibility, financial_projection, recommendation. "
+            "Ensure the output is valid JSON."
+        )
+        
+        print(f"[{self.name}] Ideating opportunity...")
+        response = self.llm.generate_completion(prompt)
+        
+        if response:
+            try:
+                # Basic cleanup
+                response = response.replace("```json", "").replace("```", "").strip()
+                item = json.loads(response)
+                
+                # Log to vault
+                self.vault.log_item("opportunities", item)
+                return item
+            except json.JSONDecodeError:
+                print(f"[{self.name}] Failed to parse JSON response.")
+        return None

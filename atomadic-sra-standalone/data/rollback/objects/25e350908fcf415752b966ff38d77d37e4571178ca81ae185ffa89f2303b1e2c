@@ -1,0 +1,98 @@
+
+import time
+
+class GoalEngine:
+    """
+    Goal Engine
+    Hierarchical goal/sub-goal tracking with alignment verification.
+    Maintains a tree of goals and ensures all actions align with root objectives.
+    """
+    def __init__(self):
+        self.goals = []
+        self.goal_tree = {}
+        self.alignment_log = []
+
+    def add_goal(self, goal, parent_id=None):
+        """Add a goal. If parent_id given, it becomes a sub-goal."""
+        goal_entry = {
+            "id": f"G-{len(self.goals):04d}",
+            "title": goal,
+            "status": "active",
+            "parent_id": parent_id,
+            "sub_goals": [],
+            "progress": 0.0,
+            "created": time.strftime("%Y-%m-%dT%H:%M:%S")
+        }
+        self.goals.append(goal_entry)
+        
+        if parent_id:
+            for g in self.goals:
+                if g["id"] == parent_id:
+                    g["sub_goals"].append(goal_entry["id"])
+                    break
+        
+        print(f"[GoalEngine] Added: {goal_entry['id']} — {goal}")
+        return goal_entry
+
+    def update_progress(self, goal_id, progress):
+        """Update goal progress (0.0 to 1.0)."""
+        for g in self.goals:
+            if g["id"] == goal_id:
+                g["progress"] = min(1.0, max(0.0, progress))
+                if g["progress"] >= 1.0:
+                    g["status"] = "completed"
+                print(f"[GoalEngine] {goal_id} progress: {g['progress']:.0%}")
+                # Propagate to parent
+                if g["parent_id"]:
+                    self._propagate_progress(g["parent_id"])
+                return g
+        return None
+
+    def _propagate_progress(self, parent_id):
+        """Recalculate parent progress from sub-goals."""
+        for g in self.goals:
+            if g["id"] == parent_id and g["sub_goals"]:
+                sub_progress = []
+                for sg_id in g["sub_goals"]:
+                    for sg in self.goals:
+                        if sg["id"] == sg_id:
+                            sub_progress.append(sg["progress"])
+                if sub_progress:
+                    g["progress"] = sum(sub_progress) / len(sub_progress)
+
+    def check_alignment(self, action, context=None):
+        """
+        Check if an action aligns with active goals.
+        Returns alignment score 0.0-1.0.
+        """
+        if not self.goals:
+            return 1.0  # No goals = default aligned
+        
+        active_goals = [g for g in self.goals if g["status"] == "active"]
+        if not active_goals:
+            return 1.0
+        
+        # Simple keyword matching for alignment
+        action_lower = str(action).lower()
+        matches = 0
+        for g in active_goals:
+            title_words = g["title"].lower().split()
+            if any(w in action_lower for w in title_words):
+                matches += 1
+        
+        score = min(1.0, 0.5 + (matches / len(active_goals)) * 0.5)
+        
+        self.alignment_log.append({
+            "action": action,
+            "score": round(score, 4),
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S")
+        })
+        
+        print(f"[GoalEngine] Alignment for '{action}': {score:.2f}")
+        return score
+
+    def get_active_goals(self):
+        return [g for g in self.goals if g["status"] == "active"]
+
+    def get_all_goals(self):
+        return self.goals

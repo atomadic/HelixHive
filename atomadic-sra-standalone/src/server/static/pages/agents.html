@@ -1,0 +1,60 @@
+<!-- SRA Agent Lattice Fragment // v4.2.0.0 -->
+<div style="grid-column: span 12; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem;"
+    id="agent-grid">
+    <!-- Agent cards will be injected here -->
+</div>
+
+<script>
+    function onStateUpdate(state) {
+        const grid = document.getElementById('agent-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        const agents = state.agents || {};
+
+        Object.entries(agents).forEach(([name, data]) => {
+            const tau = data.tau || 0.95;
+            const J = data.J || 1.0;
+            const statusColor = tau > 0.9412 ? 'var(--neon-blue)' : 'var(--neon-pink)';
+
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.borderLeft = `6px solid ${statusColor}`;
+
+            card.innerHTML = `
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h3 class="card-title" style="margin: 0; border: none; padding: 0; font-size: 1rem;">${name.toUpperCase()}</h3>
+                    <div class="pulse" style="width: 10px; height: 10px; border-radius: 50%; background: ${statusColor}; box-shadow: 0 0 15px ${statusColor};"></div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div>
+                        <div class="stat-label">Stability &tau;</div>
+                        <div class="stat-value" style="font-size: 1.4rem;">${tau.toFixed(4)}</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="stat-label">Ethics J</div>
+                        <div class="stat-value" style="font-size: 1.4rem;">${J.toFixed(2)}</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.7rem; margin-bottom: 8px; font-family: 'Orbitron'; letter-spacing: 1px;">
+                        <span>INTELLIGENCE_RESONANCE</span>
+                        <span style="color: ${statusColor}">${(tau * 100).toFixed(1)}%</span>
+                    </div>
+                    <div class="progress-container" style="height: 8px;">
+                        <div class="progress-bar" style="width: ${tau * 100}%; background: linear-gradient(to right, ${statusColor}, var(--neon-purple));"></div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem;">
+                    <span style="font-size: 0.65rem; color: #64748b; font-family: 'JetBrains Mono';">M_MASS: ${data.wisdom_mass || 0}</span>
+                    <button class="btn btn-evolution" style="padding: 0.5rem 1rem; font-size: 0.65rem;" onclick="triggerAction('AUDIT', {target: '${name}'})">
+                        SYST_AUDIT
+                    </button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+</script>

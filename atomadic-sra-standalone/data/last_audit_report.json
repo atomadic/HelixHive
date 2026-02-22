@@ -1,0 +1,43 @@
+{
+  "timestamp": "2026-02-21T17:19:10",
+  "status": "UNSTABLE",
+  "checks": [
+    {
+      "component": "API_KEYS",
+      "status": "PASS",
+      "details": {
+        "SRA_API_KEY": "ACTIVE",
+        "BING_SEARCH_V7_SUBSCRIPTION_KEY": "MISSING",
+        "GOOGLE_SEARCH_API_KEY": "MISSING",
+        "GOOGLE_SEARCH_CX": "MISSING",
+        "GROQ_API_KEY": "ACTIVE",
+        "GROQ_API_KEY_SECONDARY": "ACTIVE",
+        "OPENROUTER_API_KEY": "ACTIVE",
+        "OPENROUTER_API_KEY_SECONDARY": "ACTIVE"
+      }
+    },
+    {
+      "component": "CONNECTIVITY",
+      "status": "FAIL",
+      "details": {
+        "OLLAMA_LOCAL": "ONLINE",
+        "SRA_IDE_LOCAL": "OFFLINE (timed out)",
+        "HIVE_CENTRAL": "OFFLINE (<urlopen error [Errno 11001] getaddrinfo failed>)"
+      }
+    },
+    {
+      "component": "GEOMETRIC_CORE",
+      "status": "PASS",
+      "details": {
+        "E8": "READY"
+      }
+    },
+    {
+      "component": "EVOLUTION_VAULT",
+      "status": "PASS",
+      "details": {
+        "Integrity": "VERIFIED"
+      }
+    }
+  ]
+}

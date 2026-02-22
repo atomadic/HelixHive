@@ -1,0 +1,107 @@
+name: HelixHive Heartbeat
+
+on:
+  schedule:
+    # Default: every 5 minutes. Adjust as needed.
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+    inputs:
+      tick:
+        description: 'Override tick number (for testing)'
+        required: false
+        default: ''
+        type: string
+      simulate:
+        description: 'Run in simulation mode (no LLM calls)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      debug:
+        description: 'Enable debug logging'
+        required: false
+        default: 'false'
+        type: boolean
+
+env:
+  # Adjust these environment variables as needed
+  HELIX_DATA_PATH: ${{ github.workspace }}/data
+  PYTHON_VERSION: '3.10'
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10  # Prevent runaway jobs
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Needed for git operations
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Git LFS
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git-lfs
+          git lfs install
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade pip setuptools wheel
+          pip install -r requirements.txt
+
+      - name: Create data directory
+        run: mkdir -p ${{ env.HELIX_DATA_PATH }}
+
+      - name: Run Heartbeat
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GitHub App secrets (if configured)
+          GITHUB_APP_ID: ${{ secrets.GITHUB_APP_ID }}
+          GITHUB_APP_PRIVATE_KEY: ${{ secrets.GITHUB_APP_PRIVATE_KEY }}
+          GITHUB_INSTALLATION_ID: ${{ secrets.GITHUB_INSTALLATION_ID }}
+        run: |
+          # Build command with optional simulation flag
+          CMD="python orchestrator.py --tick"
+          if [ "${{ github.event.inputs.simulate }}" == "true" ]; then
+            CMD="$CMD --simulate"
+          fi
+          if [ "${{ github.event.inputs.debug }}" == "true" ]; then
+            export LOG_LEVEL=DEBUG
+          fi
+          echo "Running: $CMD"
+          $CMD
+
+      - name: Commit and push changes (if any)
+        run: |
+          git config user.name "HelixHive Bot"
+          git config user.email "bot@helixhive.ai"
+          git add helixdb marketplace
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Heartbeat tick ${{ github.run_number }} [skip ci]"
+            git push
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

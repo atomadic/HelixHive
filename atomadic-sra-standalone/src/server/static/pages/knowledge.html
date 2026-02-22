@@ -1,0 +1,83 @@
+<!-- SRA Knowledge Base Fragment // v4.2.0.0 -->
+<div class="card" style="grid-column: span 12; min-height: 600px;">
+    <div class="card-header" style="justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h3 class="card-title" style="margin: 0; border: none; padding: 0;">KNOWLEDGE_BASE // ACCUMULATED_INTELLIGENCE
+        </h3>
+        <div style="display: flex; gap: 1rem;">
+            <input type="text" id="kb-search" placeholder="FILTER_KNOWLEDGE..."
+                style="background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 8px; color: #fff; padding: 0.5rem 1rem; font-size: 0.75rem; font-family: 'JetBrains Mono'; outline: none; width: 250px;"
+                oninput="filterKB()">
+            <button class="btn btn-evolution" style="font-size: 0.7rem; padding: 0.5rem 1.2rem;"
+                onclick="toggleAddForm()">+ ADD_ENTRY</button>
+        </div>
+    </div>
+
+    <div id="kb-add-form"
+        style="display: none; background: rgba(57,255,20,0.05); padding: 2rem; border-radius: 16px; margin-bottom: 2rem; border: 1px dashed var(--neon-green);">
+        <input type="text" id="kb-title" placeholder="ENTRY_TITLE"
+            style="width: 100%; background: none; border: none; border-bottom: 1px solid var(--glass-border); color: #fff; margin-bottom: 1.5rem; font-family: 'Orbitron'; font-size: 1.2rem; outline: none;">
+        <textarea id="kb-content" placeholder="DESCRIBE_REVELATION..."
+            style="width: 100%; background: none; border: none; border-bottom: 1px solid var(--glass-border); color: #fff; min-height: 120px; font-family: 'JetBrains Mono'; font-size: 0.9rem; outline: none; resize: vertical;"></textarea>
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+            <button class="btn" style="font-size: 0.7rem; padding: 0.6rem 1.5rem;"
+                onclick="toggleAddForm()">CANCEL</button>
+            <button class="btn btn-evolution" style="font-size: 0.7rem; padding: 0.6rem 1.5rem;"
+                onclick="saveKBEntry()">COMMIT_TO_LATTICE</button>
+        </div>
+    </div>
+
+    <div id="kb-container"
+        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2rem;">
+        <!-- Knowledge items -->
+    </div>
+</div>
+
+<script>
+    var kbEntries = [];
+    async function fetchKB() {
+        try {
+            const res = await fetch('/api/knowledge');
+            kbEntries = await res.json();
+            renderKB(kbEntries);
+        } catch (e) { console.error("KB Fetch Failed", e); }
+    }
+
+    function renderKB(entries) {
+        const container = document.getElementById('kb-container');
+        if (!container) return;
+        container.innerHTML = entries.map(e => `
+            <div class="card" style="background: rgba(255,255,255,0.02); height: 100%; display: flex; flex-direction: column;">
+                <h4 style="font-family: 'Orbitron'; font-size: 0.9rem; color: var(--neon-blue); margin-bottom: 1rem; letter-spacing: 1px;">${e.title}</h4>
+                <div style="font-size: 0.85rem; color: #94a3b8; line-height: 1.6; margin-bottom: 2rem; flex: 1;">${e.content}</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
+                    ${(e.tags || []).map(t => `<span class="badge" style="font-size: 0.6rem; background: rgba(0, 243, 255, 0.05); color: var(--neon-blue); border: 1px solid rgba(0, 243, 255, 0.2);">${t.toUpperCase()}</span>`).join('')}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function filterKB() {
+        const q = document.getElementById('kb-search').value.toLowerCase();
+        const filtered = kbEntries.filter(e => e.title.toLowerCase().includes(q) || e.content.toLowerCase().includes(q));
+        renderKB(filtered);
+    }
+
+    function toggleAddForm() {
+        const f = document.getElementById('kb-add-form');
+        f.style.display = f.style.display === 'none' ? 'block' : 'none';
+    }
+
+    async function saveKBEntry() {
+        const title = document.getElementById('kb-title').value;
+        const content = document.getElementById('kb-content').value;
+        if (!title || !content) return;
+        showToast("Syncing with Knowledge Substrate...");
+        await fetch('/api/knowledge', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title, content, tags: ['USER_ENTRY', 'GENERATED'] })
+        });
+        toggleAddForm(); fetchKB(); showToast("Knowledge manifested successfully.", "success");
+    }
+    fetchKB();
+</script>

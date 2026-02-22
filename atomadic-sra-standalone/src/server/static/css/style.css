@@ -1,0 +1,529 @@
+:root {
+    --neon-blue: #00f3ff;
+    --neon-purple: #bc13fe;
+    --neon-pink: #ff00ff;
+    --neon-green: #39ff14;
+    --neon-gold: #ffcc00;
+    --bg-depth: #020617;
+    /* Deep Void Indigo */
+    --glass-bg: rgba(15, 23, 42, 0.6);
+    /* Neural Slant */
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --frost: rgba(255, 255, 255, 0.03);
+    --sidebar-width: 300px;
+    --header-height: 90px;
+    --trans-speed: 0.6s;
+    --glow-strength: 20px;
+    --neuro-radius: 24px;
+    /* Scientific Softness */
+}
+
+@font-face {
+    font-family: 'Geist';
+    src: url('https://cdn.jsdelivr.net/npm/geist@1.0.3/dist/fonts/geist-sans/Geist-Regular.woff2') format('woff2');
+}
+
+body {
+    background: var(--bg-depth);
+    background-image:
+        radial-gradient(circle at 0% 0%, rgba(0, 243, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(188, 19, 254, 0.08) 0%, transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+    color: #e6edf3;
+    font-family: 'Geist', 'JetBrains Mono', monospace;
+    margin: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    letter-spacing: -0.02em;
+}
+
+/* --- Navigation Enhancements --- */
+nav#sidebar {
+    width: var(--sidebar-width);
+    background: rgba(1, 4, 9, 0.95);
+    backdrop-filter: blur(50px) saturate(200%);
+    border-right: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    transition: width var(--trans-speed) cubic-bezier(0.2, 1, 0.2, 1);
+}
+
+.logo-container {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    border-bottom: 1px solid var(--glass-border);
+    background: linear-gradient(to right, rgba(0, 243, 255, 0.05), transparent);
+}
+
+.logo-icon {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+    border-radius: 12px;
+    margin-right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    color: #0d1117;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.4);
+}
+
+.logo-icon::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+    z-index: -1;
+    opacity: 0.6;
+    filter: blur(8px);
+    animation: pulse-glow 3s infinite;
+}
+
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        filter: blur(8px);
+    }
+
+    50% {
+        opacity: 0.9;
+        filter: blur(12px);
+    }
+}
+
+.nav-links {
+    padding: 2.5rem 0;
+    flex: 1;
+}
+
+.nav-item {
+    padding: 1.2rem 2rem;
+    margin: 0.6rem 1.2rem;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    color: #8b949e;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    border-left: 0 solid var(--neon-blue);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    transition: 0.5s;
+}
+
+.nav-item:hover::before {
+    left: 100%;
+}
+
+.nav-item:hover {
+    color: #f0f6fc;
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(8px);
+}
+
+.nav-item.active {
+    color: var(--neon-blue);
+    background: rgba(0, 243, 255, 0.12);
+    box-shadow: inset 0 0 20px rgba(0, 243, 255, 0.08);
+    border-left: 4px solid var(--neon-blue);
+}
+
+/* --- Main Layout --- */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    background: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.4) 0%, transparent 100%);
+}
+
+header {
+    height: var(--header-height);
+    background: rgba(13, 17, 23, 0.85);
+    backdrop-filter: blur(30px);
+    padding: 0 3rem;
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.page-title {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: #fff;
+    text-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+}
+
+.system-status {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+
+/* --- Neon Glass Cards --- */
+.content-area {
+    flex: 1;
+    padding: 3rem;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: min-content;
+    gap: 2.5rem;
+    scroll-behavior: smooth;
+}
+
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(32px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--neuro-radius);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 243, 255, 0.1);
+    border-color: rgba(0, 243, 255, 0.3);
+}
+
+.card-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    color: #c9d1d9;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 2rem;
+    border-left: 3px solid var(--neon-blue);
+    padding-left: 14px;
+}
+
+/* --- Buttons & Inputs --- */
+.btn {
+    padding: 0.75rem 1.75rem;
+    border-radius: 10px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.4s ease;
+    border: 1px solid var(--glass-border);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-evolution {
+    background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+    color: #fff;
+    border: none;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.25);
+}
+
+.btn-evolution:hover {
+    filter: brightness(1.25);
+    box-shadow: 0 0 35px rgba(0, 243, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+/* --- Chat Window vΩ --- */
+.chat-window {
+    width: 400px;
+    height: 600px;
+    background: rgba(13, 17, 23, 0.98);
+    backdrop-filter: blur(40px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 243, 255, 0.1);
+}
+
+.chat-bubble-trigger {
+    width: 70px;
+    height: 70px;
+    font-size: 1.8rem;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.chat-msg.agent {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.5;
+}
+
+.chat-msg.user {
+    background: linear-gradient(135deg, var(--neon-blue), #00d2ff);
+    color: #0d1117;
+    box-shadow: 0 5px 15px rgba(0, 243, 255, 0.3);
+}
+
+/* --- Progress Bars --- */
+.progress-container {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.progress-bar {
+    height: 100%;
+    transition: width 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+    box-shadow: 0 0 10px currentColor;
+}
+
+/* --- Helix Badges --- */
+.badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.6rem;
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.badge-leech {
+    background: rgba(0, 243, 255, 0.15);
+    color: var(--neon-blue);
+    border: 1px solid rgba(0, 243, 255, 0.3);
+}
+
+.badge-e8 {
+    background: rgba(188, 19, 254, 0.15);
+    color: var(--neon-purple);
+    border: 1px solid rgba(188, 19, 254, 0.3);
+}
+
+.badge-hd {
+    background: rgba(255, 0, 255, 0.15);
+    color: var(--neon-pink);
+    border: 1px solid rgba(255, 0, 255, 0.3);
+}
+
+.badge-fitness {
+    background: rgba(57, 255, 20, 0.15);
+    color: var(--neon-green);
+    border: 1px solid rgba(57, 255, 20, 0.3);
+}
+
+/* --- Stats Grid --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 0.6rem;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    font-weight: 700;
+}
+
+/* --- Status Dot --- */
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-online {
+    background: var(--neon-green);
+    box-shadow: 0 0 10px var(--neon-green);
+}
+
+.dot-offline {
+    background: #475569;
+}
+
+/* --- Research Substrate Styles --- */
+.revelation-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+}
+
+.revelation-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--neon-gold);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.epiphany-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.75rem;
+}
+
+.epiphany-header h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: var(--neon-gold);
+}
+
+.aha-badge {
+    background: rgba(255, 215, 0, 0.1);
+    color: var(--neon-gold);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.resonance-container {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.resonance-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+}
+
+.resonance-gauge {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.resonance-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--neon-gold), var(--neon-green));
+    width: 0%;
+    transition: width 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+    box-shadow: 0 0 15px var(--neon-gold);
+}
+
+.reliability-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* --- Device Substrate --- */
+.btn-device-toggle {
+    background: rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    margin-right: 1.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    font-size: 0.65rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-device-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--neon-blue);
+}
+
+/* --- Mobile Mode Substrate --- */
+body.mobile-mode {
+    --sidebar-width: 80px;
+}
+
+body.mobile-mode nav#sidebar .logo-text,
+body.mobile-mode nav#sidebar .nav-item span,
+body.mobile-mode nav#sidebar .sidebar-footer {
+    display: none;
+}
+
+body.mobile-mode nav#sidebar .nav-item {
+    justify-content: center;
+    padding: 1.2rem;
+    margin: 0.6rem 0.5rem;
+}
+
+body.mobile-mode .content-area {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+}
+
+body.mobile-mode .system-status {
+    gap: 1rem;
+}
+
+body.mobile-mode .status-item {
+    display: none;
+}
+
+body.mobile-mode .status-item:last-child {
+    display: flex;
+}

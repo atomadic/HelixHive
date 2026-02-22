@@ -1,0 +1,117 @@
+
+import math
+import time
+
+class LeechOuter:
+    """
+    Leech Outer Layer (24D)
+    Handles high-dimensional abstraction, exploration, and compressed reasoning traces.
+    
+    The Leech lattice is the densest sphere packing in 24 dimensions (kiss number = 196560).
+    Concepts are projected into 24D space for exploration and creative reasoning.
+    Traces are compressed via spherical quantization.
+    """
+    DIMENSION = 24
+    KISS_NUMBER = 196560
+
+    def __init__(self):
+        self.reasoning_traces = []
+        self.concept_space = {}
+        self.exploration_frontier = []
+
+    def explore(self, concept):
+        """Explore a concept in 24D space. Returns a compressed trace."""
+        vector = self._project_to_24d(concept)
+        
+        trace = {
+            "id": f"T-{len(self.reasoning_traces):04d}",
+            "concept": concept,
+            "vector": vector,
+            "neighbors": self._find_neighbors(vector),
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S")
+        }
+        
+        self.reasoning_traces.append(trace)
+        self.concept_space[concept] = vector
+        
+        print(f"[Leech] Explored: {concept} → {trace['id']} ({len(trace['neighbors'])} neighbors)")
+        return trace
+
+    def compress_trace(self, trace):
+        """
+        Compress reasoning trace via spherical Leech quantization.
+        Snaps the vector to the nearest Leech lattice point.
+        """
+        if isinstance(trace, dict):
+            vector = trace.get("vector", [0.0] * self.DIMENSION)
+        else:
+            vector = self._project_to_24d(str(trace))
+        
+        # Quantize: round each component to nearest 0.5 (simplified Leech quantization)
+        quantized = [round(v * 2) / 2 for v in vector]
+        
+        # Compute compression ratio
+        original_entropy = sum(abs(v) for v in vector)
+        compressed_entropy = sum(abs(v) for v in quantized)
+        ratio = compressed_entropy / original_entropy if original_entropy > 0 else 1.0
+        
+        return {
+            "original_dim": self.DIMENSION,
+            "quantized_vector": quantized,
+            "compression_ratio": round(ratio, 4),
+            "fidelity": round(1.0 - self._vector_distance(vector, quantized), 4)
+        }
+
+    def find_creative_connections(self, concept_a, concept_b):
+        """
+        Find creative connections between two concepts via their 24D representations.
+        The angular distance in 24D reveals non-obvious semantic relationships.
+        """
+        vec_a = self.concept_space.get(concept_a, self._project_to_24d(concept_a))
+        vec_b = self.concept_space.get(concept_b, self._project_to_24d(concept_b))
+        
+        dot = sum(a * b for a, b in zip(vec_a, vec_b))
+        norm_a = math.sqrt(sum(a**2 for a in vec_a)) or 1
+        norm_b = math.sqrt(sum(b**2 for b in vec_b)) or 1
+        
+        cosine_sim = dot / (norm_a * norm_b)
+        angle = math.acos(max(-1, min(1, cosine_sim)))
+        
+        # Midpoint in 24D = the "bridge concept"
+        midpoint = [(a + b) / 2 for a, b in zip(vec_a, vec_b)]
+        
+        return {
+            "similarity": round(cosine_sim, 4),
+            "angle_radians": round(angle, 4),
+            "connection_strength": round(1.0 - angle / math.pi, 4),
+            "bridge_vector": [round(v, 4) for v in midpoint[:4]]  # Show first 4 dims
+        }
+
+    def _project_to_24d(self, text):
+        """Project text to 24D using hash-based embedding."""
+        vector = [0.0] * self.DIMENSION
+        for i, char in enumerate(text):
+            idx = i % self.DIMENSION
+            vector[idx] += ord(char) * (0.01 + 0.002 * math.sin(i * 0.1))
+        
+        norm = math.sqrt(sum(v**2 for v in vector)) or 1
+        return [round(v / norm, 6) for v in vector]
+
+    def _find_neighbors(self, vector):
+        """Find concepts nearest to a given vector."""
+        neighbors = []
+        for concept, vec in self.concept_space.items():
+            dist = self._vector_distance(vector, vec)
+            if dist < 0.5 and dist > 0:
+                neighbors.append({"concept": concept, "distance": round(dist, 4)})
+        return sorted(neighbors, key=lambda x: x["distance"])[:5]
+
+    def _vector_distance(self, a, b):
+        return math.sqrt(sum((x - y)**2 for x, y in zip(a, b)))
+
+    def get_stats(self):
+        return {
+            "traces": len(self.reasoning_traces),
+            "concepts": len(self.concept_space),
+            "dimension": self.DIMENSION
+        }

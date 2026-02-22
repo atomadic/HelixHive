@@ -1,0 +1,32 @@
+[
+    {
+        "topic": "autopoietic machine learning architectures for AI agents",
+        "status": "COMPLETED",
+        "findings_count": 2,
+        "summary": "Explored 2 pages related to autopoietic machine learning architectures for AI agents."
+    },
+    {
+        "topic": "recursive self-improvement algorithms for large language models",
+        "status": "COMPLETED",
+        "findings_count": 2,
+        "summary": "Explored 2 pages related to recursive self-improvement algorithms for large language models."
+    },
+    {
+        "topic": "neuro-symbolic self-evolution",
+        "status": "COMPLETED",
+        "findings_count": 2,
+        "summary": "Explored 2 pages related to neuro-symbolic self-evolution."
+    },
+    {
+        "topic": "active inference and homeostatic control in autonomous agents",
+        "status": "COMPLETED",
+        "findings_count": 2,
+        "summary": "Explored 2 pages related to active inference and homeostatic control in autonomous agents."
+    },
+    {
+        "topic": "differentiable architecture search for agentic workflows",
+        "status": "COMPLETED",
+        "findings_count": 2,
+        "summary": "Explored 2 pages related to differentiable architecture search for agentic workflows."
+    }
+]

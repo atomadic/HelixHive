@@ -1,0 +1,135 @@
+<!-- SRA Swarm Ecosystem Fragment // v4.2.0.0 -->
+<div class="grid-container" style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem;">
+    <div class="card" style="grid-column: span 4;">
+        <h3 class="card-title">LEECH_HEALTH</h3>
+        <div style="margin-top: 1.5rem;">
+            <span class="stat-label">Global &tau; (Stability)</span>
+            <div style="display: flex; align-items: center; gap: 15px; margin-top: 8px;">
+                <span class="stat-value" id="hive-tau" style="font-size: 1.4rem;">1.0000</span>
+                <div class="progress-container" style="flex: 1; height: 6px;">
+                    <div id="hive-tau-bar" class="progress-bar" style="width: 100%; background: var(--neon-blue);">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 2rem;">
+            <span class="stat-label">Aletheia J (Sanity)</span>
+            <div style="display: flex; align-items: center; gap: 15px; margin-top: 8px;">
+                <span class="stat-value" id="hive-j" style="font-size: 1.4rem;">1.00</span>
+                <div class="progress-container" style="flex: 1; height: 6px;">
+                    <div id="hive-j-bar" class="progress-bar" style="width: 100%; background: var(--neon-purple);">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="grid-column: span 4;">
+        <h3 class="card-title">LATTICE_DISCOVERY</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+            <div>
+                <span class="stat-label">Coset Leaders</span>
+                <div id="hive-coset" class="stat-value" style="font-size: 1rem; color: var(--neon-green);">ACTIVE</div>
+            </div>
+            <div>
+                <span class="stat-label">Leech Vectors</span>
+                <div id="hive-leech-count" class="stat-value" style="font-size: 1rem;">196,560</div>
+            </div>
+            <div>
+                <span class="stat-label">HD Manifold</span>
+                <div id="hive-hd-dim" class="stat-value" style="font-size: 1rem;">10,000D</div>
+            </div>
+            <div>
+                <span class="stat-label">E8 Points</span>
+                <div id="hive-e8-count" class="stat-value" style="font-size: 1rem;">240,480</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="grid-column: span 4;">
+        <h3 class="card-title">SWARM_INTELLIGENCE</h3>
+        <div style="margin-top: 1.5rem;">
+            <span class="stat-label">Active Agents</span>
+            <div id="hive-agents-count" class="stat-value" style="font-size: 1.4rem;">0</div>
+        </div>
+        <div style="margin-top: 1.5rem; display: flex; gap: 10px;">
+            <span class="badge badge-leech">GOLAY_v5</span>
+            <span class="badge badge-e8">EVO_v2</span>
+            <span class="badge badge-hd">RHC_ALPHA</span>
+        </div>
+    </div>
+
+    <div class="card" style="grid-column: span 8;">
+        <h3 class="card-title">AUTONOMOUS_SWARM_REGISTRY</h3>
+        <div id="hive-agents-list"
+            style="max-height: 500px; overflow-y: auto; margin-top: 1.5rem; padding-right: 1rem;">
+            <div style="opacity: 0.5; padding: 2rem; text-align: center;">Scanning manifold for active luminaries...
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="grid-column: span 4;">
+        <h3 class="card-title">GOVERNANCE_SYSTEM</h3>
+        <div style="margin-top: 1.5rem;">
+            <span class="stat-label">Council Members</span>
+            <div id="hive-council" class="stat-value" style="font-size: 1.2rem;">--</div>
+        </div>
+        <div style="margin-top: 2rem;">
+            <span class="stat-label">Self-Healing Protocols</span>
+            <button class="btn btn-evolution" style="margin-top: 12px; width: 100%;"
+                onclick="runHiveRepair()">RUN_GOLAY_REPAIR</button>
+        </div>
+        <div id="hive-governance-log"
+            style="margin-top: 2rem; font-size: 0.7rem; font-family: 'JetBrains Mono'; color: #475569; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px;">
+            [SYSTEM] Waiting for voting cycle...
+        </div>
+    </div>
+</div>
+
+<script>
+    if (typeof hiveInterval !== 'undefined') clearInterval(hiveInterval);
+    async function refreshHiveState() {
+        try {
+            const res = await fetch('/api/hive/state');
+            const state = await res.json();
+            document.getElementById('hive-tau').innerText = state.tau.toFixed(4);
+            document.getElementById('hive-tau-bar').style.width = (state.tau * 100) + '%';
+            document.getElementById('hive-j').innerText = state.J.toFixed(2);
+            document.getElementById('hive-j-bar').style.width = (state.J * 100) + '%';
+            document.getElementById('hive-coset').innerText = state.golay_available ? 'ONLINE' : 'REDUNDANT';
+            document.getElementById('hive-council').innerText = state.governance.council_members + ' SEATS';
+
+            const listRes = await fetch('/api/hive/agents');
+            const agents = await listRes.json();
+            document.getElementById('hive-agents-count').innerText = agents.length;
+            const listEl = document.getElementById('hive-agents-list');
+            if (agents.length === 0) {
+                listEl.innerHTML = '<div style="opacity: 0.3; padding: 2rem; text-align: center; font-style: italic;">No agents discovered in this cycle.</div>';
+            } else {
+                listEl.innerHTML = agents.map(a => `
+                    <div class="card" style="padding: 1.2rem; border-radius: 12px; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.01);">
+                        <div>
+                            <div style="font-weight: 700; color: #fff; font-size: 0.95rem; font-family: 'Orbitron';">${a.role}</div>
+                            <div style="font-size: 0.65rem; color: #475569; letter-spacing: 1px; font-family: 'JetBrains Mono'; margin-top: 4px;">ID: ${a.agent_id.substring(0, 12)} | GEN: ${a.generation}</div>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            ${a.has_leech ? '<span class="badge badge-leech">LEECH</span>' : ''}
+                            ${a.has_e8 ? '<span class="badge badge-e8">E8</span>' : ''}
+                        </div>
+                    </div>
+                `).join('');
+            }
+        } catch (e) { console.error("Hive State Refresh Failed", e); }
+    }
+
+    async function runHiveRepair() {
+        showToast("Initiating Quantum Golay Repair...");
+        try {
+            await fetch('/api/hive/repair', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ dry_run: true }) });
+            showToast("Repair Cycle Complete. Resonance Stabilized.", "success");
+            refreshHiveState();
+        } catch (e) { showToast("Repair Failure.", "error"); }
+    }
+    var hiveInterval = setInterval(() => { if (currentPage === 'ecosystem') refreshHiveState(); }, 5000);
+    refreshHiveState();
+</script>

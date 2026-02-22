@@ -1,0 +1,59 @@
+
+import json
+import os
+import time
+import uuid
+from typing import Dict, Any, List
+
+class EvolutionVault:
+    """
+    Evolution Vault
+    Central storage for strategic artifacts: Opportunities, Novelties, Evolutions.
+    Persists to data/evolution_vault.json
+    """
+    def __init__(self, data_file="data/evolution_vault.json"):
+        self.data_file = data_file
+        self.ensure_data_file()
+
+    def ensure_data_file(self):
+        if not os.path.exists(os.path.dirname(self.data_file)):
+            os.makedirs(os.path.dirname(self.data_file), exist_ok=True)
+        if not os.path.exists(self.data_file):
+            with open(self.data_file, "w") as f:
+                json.dump({"opportunities": [], "novelties": [], "evolutions": []}, f, indent=4)
+
+    def _load(self) -> Dict[str, List[Dict]]:
+        try:
+            with open(self.data_file, "r") as f:
+                return json.load(f)
+        except Exception:
+            return {"opportunities": [], "novelties": [], "evolutions": []}
+
+    def _save(self, data: Dict[str, List[Dict]]):
+        with open(self.data_file, "w") as f:
+            json.dump(data, f, indent=4)
+
+    def log_item(self, category: str, item: Dict[str, Any]):
+        """
+        Logs an item to the specified category (opportunities, novelties, evolutions).
+        """
+        if category not in ["opportunities", "novelties", "evolutions"]:
+            raise ValueError(f"Invalid category: {category}")
+        
+        # Enforce ID and Timestamp
+        if "id" not in item:
+            item["id"] = str(uuid.uuid4())
+        if "timestamp" not in item:
+            item["timestamp"] = time.strftime("%Y-%m-%dT%H:%M:%S%z")
+
+        data = self._load()
+        data[category].append(item)
+        self._save(data)
+        print(f"[EvolutionVault] Logged new {category[:-1]}: {item.get('title', 'Untitled')}")
+        return item["id"]
+
+    def get_all(self, category=None):
+        data = self._load()
+        if category:
+             return data.get(category, [])
+        return data

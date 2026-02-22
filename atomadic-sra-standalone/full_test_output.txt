@@ -1,0 +1,181 @@
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 memory: Golay/Leech/RHC/HD/E8 lattice operations
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 helical: Helical phase management
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 agent: Leech-encoded AI agent class
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 helixdb_git: Git-backed database adapter
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 immune: Agent health monitoring
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 market: Trait marketplace & auctions
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 marketplace_sync: Marketplace index generator
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 world_model: World model & simulation
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 fitness: Fitness evaluation
+INFO:src.core.hive_bridge:[HiveBridge] Loaded 9/24 HelixHive modules
+INFO:src.core.hive_bridge:[HiveBridge] Golay coset table available
+INFO:src.agents.hive_agent_adapter:[HiveAgentAdapter] \u2713 HelixHive Agent class loaded
+INFO:src.agents.hive_agent_adapter:[HiveAgentAdapter] \u2713 Fitness module loaded
+E.....INFO:src.core.auth_service:[Auth] Initialized Tenant Registry with Sovereign and Partner keys.
+.INFO:src.core.auth_service:[Auth] Initialized Tenant Registry with Sovereign and Partner keys.
+.INFO:src.core.auth_service:[Auth] Initialized Tenant Registry with Sovereign and Partner keys.
+.EINFO:src.core.auth_service:[Auth] Initialized Tenant Registry with Sovereign and Partner keys.
+WARNING:src.core.auth_service:[Auth] Rate limit exceeded for Limited_Tenant
+..INFO:src.core.research_engine:[v5.9.0] Initiating research cycle: The future of autonomous agents
+INFO:src.core.billing_service:[Billing] Recorded usage for master. New count: <MagicMock name='mock.get_state().get().__getitem__()' id='1519972214480'>
+.INFO:     Started server process [32288]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8005 (Press CTRL+C to quit)
+ERROR:SRA-Server:[AUTH] Rejecting. Invalid Key='BAD_KEY', UA='SRA-SDK-v3.8.0.0'
+[EvolutionVault] Logged sovereignty_event: 8e4d56db-2bf0-43b8-a4c8-a326c8910c4a
+INFO:     127.0.0.1:57680 - "POST /api/research HTTP/1.1" 401 Unauthorized
+ERROR:sra_sdk:[SRA-SDK] Deployment connectivity failure: HTTP Error 401: Unauthorized
+.INFO:src.core.research_engine:[v5.9.0] Initiating research cycle: Vancouver Tech Expo 2026
+WARNING:src.core.search_service:[Search] No API keys or results. Using simulation for: Vancouver Tech Expo 2026
+INFO:src.core.research_engine:[Research] Search grounding yielded 2 results.
+C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\asyncio\base_events.py:437: ResourceWarning: unclosed <socket.socket [closed] fd=1088, family=2, type=1, proto=0>
+  task = tasks.Task(coro, loop=self, name=name, context=context)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+[EvolutionVault] Logged evolution: 7a15c8be-74ae-4ecd-bc4e-792111432d15
+[EvolutionVault] Logged sovereignty_event: 52ebc85b-0eb5-45e8-a038-87a91c22fa47
+INFO:     127.0.0.1:57681 - "POST /api/research HTTP/1.1" 500 Internal Server Error
+ERROR:sra_sdk:[SRA-SDK] Deployment connectivity failure: HTTP Error 500: Internal Server Error
+EINFO:src.core.search_service:[Search] Cache hit for: cached query
+.ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 410, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\applications.py", line 1134, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 424, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 312, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone\src\server\app.py", line 255, in run_research
+    result = await research_engine.conduct_research(query, docs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone\src\core\research_engine.py", line 88, in conduct_research
+    self.billing.record_usage() # Defaulting to master for demo
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone\src\core\billing_service.py", line 27, in record_usage
+    self.vault.update_state(self.usage_key, registry)
+  File "C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone\src\core\evolution_vault.py", line 181, in update_state
+    raise PermissionError(f"Access Denied: Protected state key '{key}'")
+PermissionError: Access Denied: Protected state key 'billing_usage_registry'
+WARNING:src.core.search_service:[Search] No API keys or results. Using simulation for: latest news on SRA
+.
+======================================================================
+ERROR: test_record_usage (test_billing.TestBillingService.test_record_usage)
+Test incrementing usage count.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone\tests\test_billing.py", line 21, in test_record_usage
+    self.service.record_usage(key)
+  File "C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone\src\core\billing_service.py", line 27, in record_usage
+    self.vault.update_state(self.usage_key, registry)
+  File "C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone\src\core\evolution_vault.py", line 181, in update_state
+    raise PermissionError(f"Access Denied: Protected state key '{key}'")
+PermissionError: Access Denied: Protected state key 'billing_usage_registry'
+
+======================================================================
+ERROR: test_pwa_routes (unittest.loader._FailedTest.test_pwa_routes)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_pwa_routes
+Traceback (most recent call last):
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\testclient.py", line 38, in <module>
+    import httpx
+ModuleNotFoundError: No module named 'httpx'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone\tests\test_pwa_routes.py", line 3, in <module>
+    from fastapi.testclient import TestClient
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\testclient.py", line 1, in <module>
+    from starlette.testclient import TestClient as TestClient  # noqa
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\testclient.py", line 40, in <module>
+    raise RuntimeError(
+RuntimeError: The starlette.testclient module requires the httpx package to be installed.
+You can install this with:
+    $ pip install httpx
+
+
+
+======================================================================
+ERROR: test_research_success (test_sdk_connectivity.TestSDKConnectivity.test_research_success)
+Test successful revelation via SDK.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone\src\sdk\sra_client.py", line 39, in research
+    with urllib.request.urlopen(req) as response:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\urllib\request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\urllib\request.py", line 525, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\urllib\request.py", line 634, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\urllib\request.py", line 563, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\urllib\request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\urllib\request.py", line 643, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone\tests\test_sdk_connectivity.py", line 31, in test_research_success
+    result = self.client.research("Vancouver Tech Expo 2026")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone\src\sdk\sra_client.py", line 45, in research
+    raise RuntimeError(f"Revelation Engine unreachable: {e}")
+RuntimeError: Revelation Engine unreachable: HTTP Error 500: Internal Server Error
+
+----------------------------------------------------------------------
+Ran 17 tests in 2.555s
+
+FAILED (errors=3)

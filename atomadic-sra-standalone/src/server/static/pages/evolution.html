@@ -1,0 +1,47 @@
+<!-- SRA Evolution Vault Fragment // v4.2.0.0 -->
+<div class="card" style="grid-column: span 12; min-height: 600px; display: flex; flex-direction: column;">
+    <h3 class="card-title">EVOLUTION_VAULT // OPPORTUNITIES & NOVELTIES</h3>
+    <div id="evolution-stream" style="flex: 1; overflow-y: auto; padding-right: 1.5rem; margin-top: 1rem;">
+        <!-- Evolution events injected here -->
+    </div>
+</div>
+
+<script>
+    if (typeof evoInterval !== 'undefined') clearInterval(evoInterval);
+    async function fetchEvoEvents() {
+        if (currentPage !== 'evolution') return;
+        try {
+            const r = await fetch('/api/logs');
+            const logs = await r.json();
+            const container = document.getElementById('evolution-stream');
+            if (!container) return;
+
+            container.innerHTML = logs.reverse().filter(evt =>
+                evt.action.includes('NOVELTY') || evt.action.includes('OPPORTUNITY') || evt.action.includes('EVOLUTION')
+            ).map(evt => {
+                const isNovelty = evt.action.includes('NOVELTY');
+                const themeColor = isNovelty ? 'var(--neon-purple)' : 'var(--neon-green)';
+                const icon = isNovelty ? '⚛' : '💰';
+
+                return `
+                    <div class="card" style="background: rgba(255,255,255,0.02); border-left: 6px solid ${themeColor}; padding: 1.5rem; margin-bottom: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span style="font-family: 'Orbitron'; font-size: 0.9rem; color: ${themeColor}; font-weight: 800; letter-spacing: 2px;">${icon} ${evt.action}</span>
+                            <span style="font-size: 0.65rem; color: #475569; font-family: 'JetBrains Mono';">${evt.timestamp}</span>
+                        </div>
+                        <div style="font-size: 0.85rem; color: #f1f5f9; line-height: 1.7; font-family: 'Geist', sans-serif;">
+                            ${typeof evt.details === 'string' ? evt.details : JSON.stringify(evt.details)}
+                        </div>
+                        <div style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem; display: flex; gap: 1.5rem;">
+                            <button class="btn" style="padding: 0.5rem 1.2rem; font-size: 0.65rem; background: rgba(255,255,255,0.03);" onclick="triggerAction('INVESTIGATE', {id: '${evt.details.id || 'N/A'}'})">INVESTIGATE</button>
+                            ${!isNovelty ? `<button class="btn btn-evolution" style="padding: 0.5rem 1.2rem; font-size: 0.65rem;" onclick="triggerAction('CAPITALIZE', {id: '${evt.details.id}'})">CAPITALIZE</button>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        } catch (e) { console.error("Evo fetch failed", e); }
+    }
+
+    var evoInterval = setInterval(fetchEvoEvents, 4000);
+    fetchEvoEvents();
+</script>

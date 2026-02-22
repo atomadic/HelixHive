@@ -1,0 +1,43 @@
+<!-- SRA ML Hub Fragment // v4.2.0.0 -->
+<div style="grid-column: span 12; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem;"
+    id="ml-grid">
+    <!-- ML health cards -->
+</div>
+
+<script>
+    function onStateUpdate(state) {
+        const grid = document.getElementById('ml-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        const modules = state.ml_hub.modules || {};
+
+        Object.entries(modules).forEach(([mid, mstate]) => {
+            const tau = parseFloat(mstate.tau) || 0;
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.borderTop = `4px solid var(--neon-blue)`;
+
+            card.innerHTML = `
+                <div class="card-header" style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                    <span class="card-title" style="font-size: 0.8rem; color: #fff; margin:0; border:none; padding:0;">${mid}</span>
+                    <span style="font-size: 0.6rem; color: var(--neon-green); font-weight: 800; font-family: 'Orbitron';">${mstate.status}</span>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <span class="stat-label">ALIGN_&tau;</span>
+                    <span class="stat-value" style="font-size: 1.1rem;">${tau.toFixed(4)}</span>
+                </div>
+                
+                <div class="progress-container" style="height: 4px;">
+                    <div class="progress-bar" style="width: ${tau * 100}%; background: linear-gradient(to right, var(--neon-blue), var(--neon-purple));"></div>
+                </div>
+                
+                <div style="margin-top: 1.5rem; font-size: 0.6rem; color: #475569; display: flex; justify-content: space-between; font-family: 'JetBrains Mono';">
+                    <span>MODE: L0_SUBSTRATE</span>
+                    <span>v4.2.0</span>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+</script>

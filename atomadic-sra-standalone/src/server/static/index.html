@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRA // Sovereign Command Center vΩ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <canvas id="intel-canvas"></canvas>
+
+    <nav id="sidebar">
+        <div class="logo-container">
+            <div class="logo-icon">Ω</div>
+            <div class="logo-text">
+                <h1
+                    style="font-family: 'Orbitron', sans-serif; font-size: 1rem; color: #fff; margin:0; letter-spacing: 3px; font-weight: 900;">
+                    ATOMADIC
+                </h1>
+                <span
+                    style="font-size: 0.6rem; opacity: 0.6; font-family: 'Orbitron'; letter-spacing: 2px;">NEURO_SUBSTRATE
+                    v4.2.0.0</span>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <a href="#" class="nav-item active" data-page="logs" onclick="loadPage('logs')">
+                <span class="nav-indicator"></span>
+                <i>L</i> EVT_LOG_TRAIL
+            </a>
+            <a href="#" class="nav-item" data-page="agents" onclick="loadPage('agents')">
+                <span class="nav-indicator"></span>
+                <i>A</i> AGENT_LATTICE
+            </a>
+            <a href="#" class="nav-item" data-page="goals" onclick="loadPage('goals')">
+                <span class="nav-indicator"></span>
+                <i>G</i> GOAL_TOPOLOGY
+            </a>
+            <a href="#" class="nav-item" data-page="ml_hub" onclick="loadPage('ml_hub')">
+                <span class="nav-indicator"></span>
+                <i>M</i> ML_DIAGNOSTIC
+            </a>
+            <a href="#" class="nav-item" data-page="evolution" onclick="loadPage('evolution')">
+                <span class="nav-indicator"></span>
+                <i>E</i> EVO_VAULT
+            </a>
+            <a href="#" class="nav-item" data-page="knowledge" onclick="loadPage('knowledge')">
+                <span class="nav-indicator"></span>
+                <i>K</i> KNOWLEDGE_BASE
+            </a>
+            <a href="#" class="nav-item" data-page="ecosystem" onclick="loadPage('ecosystem')">
+                <span class="nav-indicator"></span>
+                <i>🧬</i> HELIX_ECOSYSTEM
+            </a>
+            <a href="#" class="nav-item" data-page="research" onclick="loadPage('research')">
+                <span class="nav-indicator"></span>
+                <i>💡</i> RESEARCH_ASSOCIATE
+            </a>
+        </div>
+
+        <div class="sidebar-footer"
+            style="padding: 2rem; border-top: 1px solid var(--glass-border); background: rgba(255,255,255,0.02);">
+            <div style="font-size: 0.6rem; color: #475569; letter-spacing: 1px; margin-bottom: 0.5rem;">
+                SOVEREIGN_PROTOCOL</div>
+            <div
+                style="color: var(--neon-blue); font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                <div class="pulse" style="width: 6px; height: 6px; border-radius: 50%; background: var(--neon-blue);">
+                </div>
+                TRANSCENDENT vΩ
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <header>
+            <div class="header-left">
+                <div class="breadcrumb"
+                    style="font-size: 0.6rem; color: #475569; margin-bottom: 4px; letter-spacing: 2px;">SYSTEM_CORE / L0
+                    /</div>
+                <div class="page-title" id="page-title-display">EVT_LOG_TRAIL</div>
+            </div>
+
+            <div class="system-status">
+                <div class="status-item">
+                    <span class="status-label">Wisdom Mass</span>
+                    <span class="status-value odometer" id="header-dm">0</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Global &tau;</span>
+                    <span class="status-value" id="header-tau">1.0000</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Aletheia J</span>
+                    <span class="status-value" id="header-j">1.00</span>
+                </div>
+                <button class="btn btn-evolution btn-glitch" onclick="toggleEvo()">Autonomous Initialize</button>
+            </div>
+        </header>
+
+        <div id="content-container" class="content-area">
+            <!-- Dynamic cards injected here -->
+        </div>
+
+        <!-- Chat Overlay -->
+        <div class="chat-bubble-container">
+            <div class="chat-window" id="chat-window">
+                <div class="chat-header">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="pulse"
+                            style="width: 8px; height: 8px; border-radius: 50%; background: var(--neon-blue);"></div>
+                        AGENT_ORACLE // vΩ
+                    </div>
+                    <div style="font-size: 0.6rem; opacity: 0.5;">RECURSIVE_ALIGNMENT: 1.000</div>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="chat-msg agent">Greetings, Sovereign. The SRA substrate is fully manifested and
+                        evolving. How shall we refine the local reality?</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="Initiate resonance..."
+                        onkeypress="if(event.key==='Enter') sendChat()">
+                    <button class="btn btn-evolution" style="padding: 0.5rem 1rem;" onclick="sendChat()">></button>
+                </div>
+            </div>
+            <div class="chat-bubble-trigger" onclick="toggleChat()">Ω</div>
+        </div>
+
+        <div id="toast-container" style="position: absolute; bottom: 3rem; left: 3rem; z-index: 2000;"></div>
+    </main>
+
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/nav.js"></script>
+    <script src="/static/js/persistence.js"></script>
+    <script>
+        function toggleChat() {
+            const win = document.getElementById('chat-window');
+            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        async function sendChat() {
+            const input = document.getElementById('chat-input');
+            const msg = input.value;
+            if (!msg) return;
+
+            const msgs = document.getElementById('chat-messages');
+
+            // User Message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-msg user';
+            userMsg.innerText = msg;
+            msgs.appendChild(userMsg);
+            input.value = '';
+            msgs.scrollTop = msgs.scrollHeight;
+
+            // Agent Reply
+            try {
+                const response = await fetch('/api/agents/Toolsmith/message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: msg })
+                });
+                const data = await response.json();
+
+                const agentMsg = document.createElement('div');
+                agentMsg.className = 'chat-msg agent';
+                agentMsg.innerText = data.reply || "Axiomatic alignment complete.";
+                msgs.appendChild(agentMsg);
+                msgs.scrollTop = msgs.scrollHeight;
+            } catch (e) {
+                console.error("Chat Failed", e);
+            }
+        }
+    </script>
+</body>
+
+</html>

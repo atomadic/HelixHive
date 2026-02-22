@@ -1,0 +1,32 @@
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 memory: Golay/Leech/RHC/HD/E8 lattice operations
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 helical: Helical phase management
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 agent: Leech-encoded AI agent class
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 helixdb_git: Git-backed database adapter
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 immune: Agent health monitoring
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 market: Trait marketplace & auctions
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 marketplace_sync: Marketplace index generator
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 world_model: World model & simulation
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 fitness: Fitness evaluation
+INFO:src.core.hive_bridge:[HiveBridge] Loaded 9/24 HelixHive modules
+INFO:src.core.hive_bridge:[HiveBridge] Golay coset table available
+INFO:src.agents.hive_agent_adapter:[HiveAgentAdapter] \u2713 HelixHive Agent class loaded
+INFO:src.agents.hive_agent_adapter:[HiveAgentAdapter] \u2713 Fitness module loaded
+INFO:     Started server process [38660]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8005 (Press CTRL+C to quit)
+ERROR:SRA-Server:[AUTH] Rejecting. Received='BAD_KEY', UA='SRA-SDK-v3.8.0.0'
+INFO:     127.0.0.1:55748 - "POST /api/research HTTP/1.1" 401 Unauthorized
+ERROR:sra_sdk:[SRA-SDK] Deployment connectivity failure: HTTP Error 401: Unauthorized
+.INFO:src.core.research_engine:[v5.8.0] Initiating research cycle: Vancouver Tech Expo 2026
+WARNING:src.core.search_service:[Search] No API keys or results. Using simulation for: Vancouver Tech Expo 2026
+INFO:src.core.research_engine:[Research] Search grounding yielded 2 results.
+[EvolutionVault] Logged evolution: 51c44b56-10a9-40ca-a64a-51fff6110d68
+[EvolutionVault] Logged evolution: af2510c8-7ff5-4b4f-a82d-a63cfa75f776
+INFO:     127.0.0.1:55749 - "POST /api/research HTTP/1.1" 200 OK
+INFO:sra_sdk:[SRA-SDK] Revelation received. Coherence (\u03c4): 0.9971
+.
+----------------------------------------------------------------------
+Ran 2 tests in 2.302s
+
+OK

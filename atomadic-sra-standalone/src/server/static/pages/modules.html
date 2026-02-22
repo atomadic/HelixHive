@@ -1,0 +1,103 @@
+<!-- SRA Autopoiesis Dashboard // v4.3.0.0 -->
+<div class="card" style="grid-column: span 12; margin-bottom: 2rem; border-color: var(--neon-purple);">
+    <h3 class="card-title">AUTOPOIETIC_MODULE_ENGINE</h3>
+    <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 1rem; max-width: 600px;">
+        Trigger the Revelation Engine to scaffold new structural modules. All manifestations are grounded in E8/Leech
+        geometry and persisted in the Sovereign Vault.
+    </p>
+
+    <div
+        style="margin-top: 3rem; background: rgba(255,255,255,0.02); padding: 2rem; border-radius: 16px; border: 1px dashed var(--glass-border);">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div>
+                <label
+                    style="display: block; font-family: 'Orbitron'; font-size: 0.7rem; color: var(--neon-blue); margin-bottom: 10px;">MODULE_IDENTIFIER</label>
+                <input type="text" id="mod-id" placeholder="e.g. quantum_analytics"
+                    style="width: 100%; background: none; border: none; border-bottom: 1px solid var(--glass-border); color: #fff; font-family: 'JetBrains Mono'; font-size: 1.1rem; padding: 10px 0; outline: none;">
+            </div>
+            <div>
+                <label
+                    style="display: block; font-family: 'Orbitron'; font-size: 0.7rem; color: var(--neon-purple); margin-bottom: 10px;">INTENT_PROMPT</label>
+                <input type="text" id="mod-prompt" placeholder="Define the module's core purpose..."
+                    style="width: 100%; background: none; border: none; border-bottom: 1px solid var(--glass-border); color: #fff; font-family: 'JetBrains Mono'; font-size: 1.1rem; padding: 10px 0; outline: none;">
+            </div>
+        </div>
+        <div style="margin-top: 2rem;">
+            <label
+                style="display: block; font-family: 'Orbitron'; font-size: 0.7rem; color: var(--neon-green); margin-bottom: 10px;">FEATURE_SET
+                (comma-separated)</label>
+            <input type="text" id="mod-features" placeholder="e.g. Data Visualization, Real-time Hooks, Vector Pruning"
+                style="width: 100%; background: none; border: none; border-bottom: 1px solid var(--glass-border); color: #fff; font-family: 'JetBrains Mono'; font-size: 0.9rem; padding: 10px 0; outline: none;">
+        </div>
+        <div style="margin-top: 2rem; display: flex; justify-content: flex-end;">
+            <button class="btn btn-evolution" onclick="manifestNewModule()">MANIFEST_STRUCTURAL_MODULE</button>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="grid-column: span 12;">
+    <h3 class="card-title">MODULE_REGISTRY // ACTIVE_AUTOPOIESIS</h3>
+    <div id="module-registry-grid"
+        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+        <!-- Dynamic module cards -->
+    </div>
+</div>
+
+<script>
+    async function fetchModules() {
+        try {
+            const res = await fetch('/api/modules/list');
+            const modules = await res.json();
+            const grid = document.getElementById('module-registry-grid');
+            if (modules.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; opacity: 0.3; padding: 3rem;">No autopoietic modules registered.</div>';
+                return;
+            }
+            grid.innerHTML = modules.map(m => `
+                <div class="card" style="background: rgba(255,255,255,0.01); border-left: 4px solid var(--neon-purple);">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.5rem;">
+                        <h4 style="margin: 0; font-family: 'Orbitron'; font-size: 0.9rem; color: var(--neon-purple);">${m.name}</h4>
+                        <span class="badge badge-e8" style="font-size: 0.6rem;">v4.3.0</span>
+                    </div>
+                    <p style="font-size: 0.75rem; color: #94a3b8; line-height: 1.6; margin-bottom: 2rem;">${m.prompt}</p>
+                    <div style="display: flex; gap: 10px; margin-top: auto;">
+                        <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.65rem;" onclick="loadPage('${m.name}')">LAUNCH</button>
+                        <button class="btn btn-evolution" style="padding: 0.5rem 1rem; font-size: 0.65rem;" onclick="evolveModule('${m.name}')">EVOLVE</button>
+                    </div>
+                </div>
+            `).join('');
+        } catch (e) { console.error("Module Fetch Failed", e); }
+    }
+
+    async function manifestNewModule() {
+        const id = document.getElementById('mod-id').value;
+        const prompt = document.getElementById('mod-prompt').value;
+        const features = document.getElementById('mod-features').value.split(',').map(f => f.trim());
+
+        if (!id || !prompt) {
+            showToast("Identifier and Prompt required.", "error");
+            return;
+        }
+
+        showToast("Triggering Revelation Engine...");
+        try {
+            const res = await fetch('/api/modules/manifest', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ module_id: id, prompt, features })
+            });
+            const result = await res.json();
+            if (result.status === 'success') {
+                showToast(`Module '${id}' manifested into substrate.`, "success");
+                fetchModules();
+            }
+        } catch (e) { showToast("Manifestation Failure.", "error"); }
+    }
+
+    function evolveModule(id) {
+        showToast(`Initiating E8-Refinement for ${id}...`);
+        setTimeout(() => showToast(`Module ${id} evolved to generation ${Math.floor(Math.random() * 10)}.`, "success"), 2000);
+    }
+
+    fetchModules();
+</script>

@@ -1,0 +1,19 @@
+ollama
+playwright
+sympy
+numpy
+scipy
+networkx
+pandas
+matplotlib
+plotly
+pydantic
+fastapi
+uvicorn
+python-multipart
+websockets
+# HoTT/Formal Verification
+pycoq
+# Visualization
+graphviz
+python-dotenv

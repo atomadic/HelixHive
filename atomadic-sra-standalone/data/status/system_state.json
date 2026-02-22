@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-02-21T17:54:26-0800",
+  "uptime_seconds": 10,
+  "ml_hub": {
+    "global_tau": 1.0,
+    "modules": {
+      "SRA-Prime": {
+        "tau": 1.0,
+        "status": "ACTIVE"
+      },
+      "GoalEngine": {
+        "tau": 1.0,
+        "status": "ACTIVE"
+      }
+    }
+  },
+  "goals": {
+    "active_count": 0,
+    "all_goals": [],
+    "alignment_score": 1.0
+  },
+  "agents": {
+    "SRA-Prime": {
+      "name": "SRA-Prime",
+      "tau": -4.0311,
+      "J": 1.0,
+      "wisdom_mass": 1003,
+      "tasks_completed": 0
+    },
+    "GoalEngine": {
+      "status": "ACTIVE_UNTRACKED"
+    }
+  },
+  "system": {
+    "wisdom_mass": 1003,
+    "session_id": "SES-1771714900"
+  }
+}

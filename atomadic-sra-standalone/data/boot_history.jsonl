@@ -1,0 +1,6 @@
+{"check": "KEY_CHECK", "success": false, "message": "No cloud API keys found in .env.", "ts": 1771727024.1102097}
+{"check": "MODULE_PRELOAD", "success": true, "message": "Successfully preloaded src.core.ai_bridge", "ts": 1771727026.1619532}
+{"check": "MODULE_PRELOAD", "success": true, "message": "Successfully preloaded src.core.hive_bridge", "ts": 1771727026.1659555}
+{"check": "MODULE_PRELOAD", "success": true, "message": "Successfully preloaded src.core.ollama_service", "ts": 1771727026.166955}
+{"check": "MODULE_PRELOAD", "success": true, "message": "Successfully preloaded src.core.super_panel", "ts": 1771727026.2138934}
+{"check": "DIAGNOSTIC", "success": true, "message": "Ollama local service online.", "ts": 1771727026.6465862}

@@ -1,0 +1,82 @@
+INFO:     Started server process [40636]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8005 (Press CTRL+C to quit)
+INFO:     127.0.0.1:52388 - "POST /api/research HTTP/1.1" 500 Internal Server Error
+[SRA-SDK] Deployment connectivity failure: HTTP Error 500: Internal Server Error
+FERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\uvicorn\protocols\http\h11_impl.py", line 410, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\applications.py", line 1134, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 119, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 105, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 424, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\site-packages\fastapi\routing.py", line 312, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone\src\server\app.py", line 214, in run_research
+    logger.error(f"[AUTH] Rejecting. Received='{api_key}', UA='{ua}'")
+    ^^^^^^
+NameError: name 'logger' is not defined
+[Search] No API keys or results. Using simulation for: Vancouver Tech Expo 2026
+[EvolutionVault] Logged evolution: 92f741a4-0e29-40bf-a2d4-69dcb8192463
+[EvolutionVault] Logged evolution: d2476a58-9883-4714-863d-24fed623b928
+INFO:     127.0.0.1:52389 - "POST /api/research HTTP/1.1" 200 OK
+F
+======================================================================
+FAIL: test_auth_failure (__main__.TestSDKConnectivity.test_auth_failure)
+Test that invalid API key triggers 401.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone\tests\test_sdk_connectivity.py", line 41, in test_auth_failure
+    self.assertIn("401", str(cm.exception))
+AssertionError: '401' not found in 'Revelation Engine unreachable: HTTP Error 500: Internal Server Error'
+
+======================================================================
+FAIL: test_research_success (__main__.TestSDKConnectivity.test_research_success)
+Test successful revelation via SDK.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone\tests\test_sdk_connectivity.py", line 34, in test_research_success
+    self.assertGreaterEqual(result["coherence"], 0.8)
+AssertionError: -0.0583 not greater than or equal to 0.8
+
+----------------------------------------------------------------------
+Ran 2 tests in 3.896s
+
+FAILED (failures=2)

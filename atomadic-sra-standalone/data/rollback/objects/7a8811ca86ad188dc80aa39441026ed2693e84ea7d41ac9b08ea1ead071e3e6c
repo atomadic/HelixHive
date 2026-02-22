@@ -1,0 +1,77 @@
+
+import time
+import json
+
+class CLevelBoard:
+    """
+    C-Level Board
+    Corporate governance simulation with 7 executive roles.
+    Each role evaluates proposals from its domain perspective.
+    """
+    ROLES = {
+        "CEO": {"focus": "strategic_alignment", "weight": 0.25},
+        "CTO": {"focus": "technical_feasibility", "weight": 0.20},
+        "CFO": {"focus": "financial_viability", "weight": 0.15},
+        "CMO": {"focus": "market_potential", "weight": 0.15},
+        "CPO": {"focus": "product_impact", "weight": 0.10},
+        "CRO": {"focus": "risk_assessment", "weight": 0.10},
+        "CIO": {"focus": "information_security", "weight": 0.05},
+    }
+
+    def __init__(self):
+        self.members = list(self.ROLES.keys())
+        self.decisions = []
+
+    def review_proposal(self, proposal):
+        """
+        Full board review. Each C-level evaluates independently.
+        Returns aggregate decision with scores.
+        """
+        print(f"[Board] Convening review for: {proposal.get('title', proposal)}")
+        
+        title = proposal.get("title", str(proposal)) if isinstance(proposal, dict) else str(proposal)
+        votes = {}
+        total_score = 0
+        
+        for role, config in self.ROLES.items():
+            score = self._evaluate(role, config["focus"], proposal)
+            votes[role] = {"score": score, "focus": config["focus"]}
+            total_score += score * config["weight"]
+        
+        decision = "APPROVED" if total_score >= 0.6 else "UNDER REVIEW" if total_score >= 0.4 else "REJECTED"
+        
+        result = {
+            "title": title,
+            "decision": decision,
+            "aggregate_score": round(total_score, 4),
+            "votes": votes,
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S")
+        }
+        
+        self.decisions.append(result)
+        print(f"[Board] Decision: {decision} (score: {result['aggregate_score']})")
+        return result
+
+    def _evaluate(self, role, focus, proposal):
+        """Simulate domain-specific evaluation. Returns 0.0-1.0."""
+        if isinstance(proposal, dict):
+            # Heuristic: check for relevant keys
+            if focus == "technical_feasibility":
+                return 0.9 if proposal.get("feasibility") else 0.7
+            elif focus == "financial_viability":
+                return 0.8 if proposal.get("financial_projection") else 0.6
+            elif focus == "market_potential":
+                return 0.85 if proposal.get("market_eval") else 0.65
+            elif focus == "risk_assessment":
+                risks = proposal.get("risks", [])
+                return max(0.3, 1.0 - len(risks) * 0.15)
+            elif focus == "strategic_alignment":
+                return 0.9 if proposal.get("recommendation") == "Develop" else 0.7
+            elif focus == "product_impact":
+                return 0.8
+            elif focus == "information_security":
+                return 0.85
+        return 0.7
+
+    def get_history(self):
+        return self.decisions

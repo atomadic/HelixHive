@@ -1,0 +1,62 @@
+<!-- SRA Goal Topology Fragment // v4.2.0.0 -->
+<div class="card" style="grid-column: span 8;">
+    <h3 class="card-title">GOAL_HIERARCHY_TOPOLOGY</h3>
+    <div id="goal-list" style="margin-top: 2rem;">
+        <!-- Goals injected here -->
+    </div>
+</div>
+
+<div class="card"
+    style="grid-column: span 4; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <h3 class="card-title">RESONANCE_INDEX</h3>
+    <div
+        style="position: relative; width: 200px; height: 200px; display: flex; align-items: center; justify-content: center; margin: 2rem 0;">
+        <svg style="width: 100%; height: 100%; transform: rotate(-90deg);">
+            <circle cx="100" cy="100" r="90" stroke="rgba(255,255,255,0.05)" stroke-width="12" fill="transparent" />
+            <circle id="resonance-ring" cx="100" cy="100" r="90" stroke="var(--neon-blue)" stroke-width="12"
+                fill="transparent" stroke-dasharray="565" stroke-dashoffset="565"
+                style="transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1); filter: drop-shadow(0 0 10px var(--neon-blue));" />
+        </svg>
+        <div id="alignment-score"
+            style="position: absolute; font-size: 2.8rem; font-family: 'Orbitron'; font-weight: 900; color: #fff;">100%
+        </div>
+    </div>
+    <div style="font-size: 0.75rem; color: var(--neon-blue); letter-spacing: 3px; font-family: 'Orbitron';"
+        class="pulse">
+        GDGA_PHASE_LOCKED</div>
+</div>
+
+<script>
+    function onStateUpdate(state) {
+        const list = document.getElementById('goal-list');
+        if (!list) return;
+        list.innerHTML = '';
+        const goals = state.goals.all_goals || [];
+        const score = state.goals.alignment_score || 1.0;
+
+        const ring = document.getElementById('resonance-ring');
+        const offset = 565 - (565 * score);
+        ring.style.strokeDashoffset = offset;
+        document.getElementById('alignment-score').innerText = `${(score * 100).toFixed(0)}%`;
+
+        goals.forEach(g => {
+            const div = document.createElement('div');
+            div.style.marginBottom = '2rem';
+            div.style.padding = '1.2rem';
+            div.style.background = 'rgba(255,255,255,0.03)';
+            div.style.borderRadius = '16px';
+            div.style.border = '1px solid rgba(255,255,255,0.05)';
+
+            div.innerHTML = `
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 12px; font-family: 'Orbitron';">
+                    <span style="font-weight: 600; color: #cbd5e1;">${g.id} // ${g.title}</span>
+                    <span style="color: var(--neon-blue);">${(g.progress * 100).toFixed(0)}%</span>
+                </div>
+                <div class="progress-container" style="height: 6px;">
+                    <div class="progress-bar" style="width: ${g.progress * 100}%; background: linear-gradient(to right, var(--neon-blue), var(--neon-purple));"></div>
+                </div>
+            `;
+            list.appendChild(div);
+        });
+    }
+</script>

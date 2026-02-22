@@ -1,0 +1,101 @@
+name: 🔧 HelixHive Self‑Healing Engine
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - '**.py'
+      - '**.yaml'
+      - 'requirements.txt'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - '**.py'
+  schedule:
+    # Run weekly on Sunday at 2 AM
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (scan only, no fixes)'
+        required: true
+        default: 'true'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
+      path:
+        description: 'Path to scan (default: .)'
+        required: false
+        default: '.'
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  self-heal:
+    name: Self‑Healing Scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write        # to push fixes
+      pull-requests: write    # to create PRs
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install system dependencies (for semgrep)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy libcst
+          pip install ruff black autoflake bandit semgrep
+
+      - name: Run self‑healing script
+        id: heal
+        env:
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
+          SCAN_PATH: ${{ github.event.inputs.path || '.' }}
+        run: |
+          echo "Running self‑healing (dry-run: $DRY_RUN) on path: $SCAN_PATH"
+          python golay_self_repair_v5.py --path "$SCAN_PATH" $([ "$DRY_RUN" == "true" ] && echo "--dry-run") --json > repair_summary.json
+
+      - name: Upload repair logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: helix-repair-logs
+          path: |
+            helix_repair_log.jsonl
+            repair_reports/
+            repair_summary.json
+
+      - name: Create Pull Request with fixes
+        if: github.event.inputs.dry_run == 'false' && success()
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "🔧 Auto‑fix: codebase self‑healing applied"
+          title: "🔧 Auto‑fix: codebase self‑healing"
+          body: |
+            This PR was automatically created by the HelixHive Self‑Healing Engine.
+            
+            It applies automated fixes to the codebase (linting, formatting, security patches, and creative rotor repairs).
+            
+            Please review the changes before merging.
+          branch: auto-fix/self-heal
+          base: ${{ github.head_ref || github.ref_name }}
+          labels: automated, self-heal
+          delete-branch: true

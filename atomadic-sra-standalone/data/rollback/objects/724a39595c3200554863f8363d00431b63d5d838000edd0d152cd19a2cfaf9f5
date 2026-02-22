@@ -1,0 +1,42 @@
+
+from src.agents.luminary_base import LuminaryBase
+from src.core.ollama_service import OllamaService
+from src.core.evolution_vault import EvolutionVault
+import json
+
+class EvolutionEngine(LuminaryBase):
+    """
+    Evolution Engine
+    Proposes architectural upgrades (Recursive Self-Improvement).
+    """
+    def __init__(self, name="EvolutionEngine"):
+        super().__init__(name)
+        self.llm = OllamaService()
+        self.vault = EvolutionVault()
+
+    def propose_evolution(self, focus_area="Architecture"):
+        """
+        Uses LLM to propose an evolutionary upgrade.
+        """
+        prompt = (
+            f"Propose an evolutionary upgrade for the SRA (Supreme Research Agent) system. "
+            f"Focus Area: {focus_area}. "
+            "Format as JSON with keys: title, summary, impact_assessment, feasibility, next_steps. "
+            "Ensure the output is valid JSON."
+        )
+
+        print(f"[{self.name}] Designing evolution...")
+        response = self.llm.generate_completion(prompt)
+
+        if response:
+            try:
+                # Basic cleanup
+                response = response.replace("```json", "").replace("```", "").strip()
+                item = json.loads(response)
+
+                # Log to vault
+                self.vault.log_item("evolutions", item)
+                return item
+            except json.JSONDecodeError:
+                print(f"[{self.name}] Failed to parse JSON response.")
+        return None

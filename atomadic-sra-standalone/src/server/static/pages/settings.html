@@ -1,0 +1,136 @@
+<!-- SRA Sovereign Control Fragment // v4.2.0.0 -->
+<div class="card" style="margin-bottom: 2rem;">
+    <h3 class="card-title">SYSTEM_PARAMETERS</h3>
+    <div id="settings-content">
+        <!-- Dynamic Content -->
+    </div>
+    <button class="btn btn-evolution" style="width: 100%; margin-top: 2rem;"
+        onclick="saveSettings()">COMMIT_CHANGES_TO_VAULT</button>
+</div>
+
+<style>
+    .setting-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .label-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .label-group span {
+        font-size: 0.95rem;
+        font-weight: 600;
+        font-family: 'Orbitron';
+        letter-spacing: 1px;
+    }
+
+    .label-group small {
+        font-size: 0.75rem;
+        color: #94a3b8;
+        margin-top: 4px;
+    }
+
+    input.setting-input {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--glass-border);
+        color: var(--neon-gold);
+        padding: 0.8rem 1rem;
+        border-radius: 8px;
+        font-family: 'JetBrains Mono', monospace;
+        width: 180px;
+        outline: none;
+    }
+
+    .toggle-btn {
+        cursor: pointer;
+        padding: 0.6rem 1.5rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-family: 'Orbitron';
+        border: 1px solid var(--neon-blue);
+        color: var(--neon-blue);
+        background: transparent;
+        transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .toggle-btn.active {
+        background: var(--neon-blue);
+        color: #020617;
+        box-shadow: 0 0 15px var(--neon-blue);
+    }
+</style>
+
+<script>
+    let currentSettings = {};
+
+    async function loadSettings() {
+        const res = await fetch('/api/settings');
+        currentSettings = await res.json();
+        renderSettings();
+    }
+
+    function renderSettings() {
+        const container = document.getElementById('settings-content');
+        container.innerHTML = '';
+
+        // Features Section
+        let featureHTML = '<h4 style="font-family: Orbitron; font-size: 0.8rem; color: var(--neon-purple); margin: 2rem 0 1rem 0;">FUNCTIONAL_TOGGLES</h4>';
+        for (const [key, val] of Object.entries(currentSettings.features)) {
+            featureHTML += `
+                <div class="setting-row">
+                    <div class="label-group">
+                        <span>${key.replace(/_/g, ' ').toUpperCase()}</span>
+                        <small>Module activation status</small>
+                    </div>
+                    <button class="toggle-btn ${val ? 'active' : ''}" onclick="toggleSetting('features', '${key}')">${val ? 'ENABLED' : 'DISABLED'}</button>
+                </div>
+            `;
+        }
+
+        // Pricing Section
+        let pricingHTML = '<h4 style="font-family: Orbitron; font-size: 0.8rem; color: var(--neon-green); margin: 2rem 0 1rem 0;">ECONOMIC_PARAMETERS</h4>';
+        for (const [key, val] of Object.entries(currentSettings.pricing)) {
+            pricingHTML += `
+                <div class="setting-row">
+                    <div class="label-group">
+                        <span>${key.replace(/_/g, ' ').toUpperCase()}</span>
+                        <small>Unit cost (USD)</small>
+                    </div>
+                    <input type="number" class="setting-input" value="${val}" step="0.01" onchange="updateVal('pricing', '${key}', this.value)">
+                </div>
+            `;
+        }
+
+        container.innerHTML = featureHTML + pricingHTML;
+    }
+
+    function toggleSetting(cat, key) {
+        currentSettings[cat][key] = !currentSettings[cat][key];
+        renderSettings();
+    }
+
+    function updateVal(cat, key, val) {
+        currentSettings[cat][key] = parseFloat(val);
+    }
+
+    async function saveSettings() {
+        showToast("Committing Changes...");
+        for (const cat of ['features', 'pricing']) {
+            for (const [key, val] of Object.entries(currentSettings[cat])) {
+                await fetch('/api/settings/update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ category: cat, key: key, value: val })
+                });
+            }
+        }
+        showToast("Sovereign Protocol: Vault Synchronized.", "success");
+    }
+
+    loadSettings();
+</script>

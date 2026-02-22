@@ -1,0 +1,187 @@
+
+import os
+import sys
+import json
+import time
+import uuid
+
+# Ensure project root is on path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse, JSONResponse
+import uvicorn
+
+from src.core.evolution_vault import EvolutionVault
+from src.core.ollama_service import OllamaService
+
+app = FastAPI(title="SRA Internal IDE", version="3.2.0.0")
+
+# Mount static files
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
+# Shared services
+vault = EvolutionVault()
+llm = OllamaService()
+
+# ─── Pages ───────────────────────────────────────────────────────────────────
+
+@app.get("/", response_class=HTMLResponse)
+async def index():
+    with open(os.path.join(static_dir, "index.html")) as f:
+        return HTMLResponse(f.read())
+
+@app.get("/evolution", response_class=HTMLResponse)
+async def evolution_page():
+    with open(os.path.join(static_dir, "pages", "evolution.html")) as f:
+        return HTMLResponse(f.read())
+
+@app.get("/agents", response_class=HTMLResponse)
+async def agents_page():
+    with open(os.path.join(static_dir, "pages", "agents.html")) as f:
+        return HTMLResponse(f.read())
+
+@app.get("/knowledge", response_class=HTMLResponse)
+async def knowledge_page():
+    with open(os.path.join(static_dir, "pages", "knowledge.html")) as f:
+        return HTMLResponse(f.read())
+
+# ─── API: Features ──────────────────────────────────────────────────────────
+
+@app.get("/api/features")
+async def get_features():
+    features = [
+        {"name": "Toolsmith Agent", "status": "active", "desc": "JIT tool fabrication via LLM"},
+        {"name": "Optimization Engine", "status": "active", "desc": "cProfile + LLM code rewriting"},
+        {"name": "Opportunity Engine", "status": "active", "desc": "Strategic opportunity generation"},
+        {"name": "Novelty Engine", "status": "active", "desc": "Serendipitous idea mining"},
+        {"name": "Evolution Engine", "status": "active", "desc": "Architectural upgrade proposals"},
+        {"name": "Creative Engine", "status": "active", "desc": "Feature brainstorming via LLM"},
+        {"name": "Secure Sandbox", "status": "active", "desc": "Isolated code execution"},
+        {"name": "Ollama Integration", "status": "active", "desc": "Local qwen2.5-coder:1.5b"},
+        {"name": "Evolution Vault", "status": "active", "desc": "Strategic artifact persistence"},
+        {"name": "Knowledge Base", "status": "active", "desc": "Searchable research entries"},
+    ]
+    return JSONResponse(features)
+
+# ─── API: Vault ──────────────────────────────────────────────────────────────
+
+@app.get("/api/vault/{category}")
+async def get_vault(category: str):
+    items = vault.get_all(category)
+    return JSONResponse(items)
+
+@app.get("/api/vault")
+async def get_vault_all():
+    return JSONResponse(vault.get_all())
+
+# ─── API: Agents ─────────────────────────────────────────────────────────────
+
+AGENT_REGISTRY = {
+    "Toolsmith": {"status": "idle", "messages": []},
+    "OptimizationAgent": {"status": "idle", "messages": []},
+    "OpportunityEngine": {"status": "idle", "messages": []},
+    "NoveltyEngine": {"status": "idle", "messages": []},
+    "EvolutionEngine": {"status": "idle", "messages": []},
+    "CreativeEngine": {"status": "idle", "messages": []},
+}
+
+@app.get("/api/agents")
+async def list_agents():
+    result = []
+    for name, info in AGENT_REGISTRY.items():
+        result.append({"name": name, "status": info["status"], "message_count": len(info["messages"])})
+    return JSONResponse(result)
+
+@app.post("/api/agents/{name}/message")
+async def send_agent_message(name: str, request: Request):
+    body = await request.json()
+    msg = body.get("message", "")
+    if name not in AGENT_REGISTRY:
+        return JSONResponse({"error": f"Agent '{name}' not found"}, status_code=404)
+    
+    AGENT_REGISTRY[name]["messages"].append({"role": "user", "content": msg, "ts": time.time()})
+    AGENT_REGISTRY[name]["status"] = "processing"
+    
+    # Use LLM to simulate agent response
+    response = llm.generate_completion(f"You are {name}. Respond to: {msg}")
+    reply = response if response else f"[{name}] Acknowledged."
+    
+    AGENT_REGISTRY[name]["messages"].append({"role": "agent", "content": reply, "ts": time.time()})
+    AGENT_REGISTRY[name]["status"] = "idle"
+    
+    return JSONResponse({"reply": reply})
+
+@app.get("/api/agents/{name}/messages")
+async def get_agent_messages(name: str):
+    if name not in AGENT_REGISTRY:
+        return JSONResponse({"error": f"Agent '{name}' not found"}, status_code=404)
+    return JSONResponse(AGENT_REGISTRY[name]["messages"])
+
+# ─── API: Knowledge Base ─────────────────────────────────────────────────────
+
+KB_FILE = "data/knowledge_base.json"
+
+def _load_kb():
+    if os.path.exists(KB_FILE):
+        with open(KB_FILE) as f:
+            return json.load(f)
+    return []
+
+def _save_kb(entries):
+    os.makedirs(os.path.dirname(KB_FILE), exist_ok=True)
+    with open(KB_FILE, "w") as f:
+        json.dump(entries, f, indent=2)
+
+@app.get("/api/knowledge")
+async def get_knowledge():
+    return JSONResponse(_load_kb())
+
+@app.post("/api/knowledge")
+async def add_knowledge(request: Request):
+    body = await request.json()
+    entries = _load_kb()
+    entry = {
+        "id": str(uuid.uuid4()),
+        "title": body.get("title", "Untitled"),
+        "content": body.get("content", ""),
+        "tags": body.get("tags", []),
+        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S")
+    }
+    entries.append(entry)
+    _save_kb(entries)
+    return JSONResponse(entry)
+
+# ─── API: Creative Engine ────────────────────────────────────────────────────
+
+@app.post("/api/creative/generate")
+async def creative_generate(request: Request):
+    body = await request.json()
+    context = body.get("context", "General improvements")
+    
+    prompt = (
+        f"You are a creative product designer. Brainstorm an innovative new feature for an AI IDE platform. "
+        f"Context: {context}. "
+        "Format as JSON with keys: title, description, user_value, effort, priority."
+    )
+    
+    response = llm.generate_completion(prompt)
+    if response:
+        response = response.replace("```json", "").replace("```", "").strip()
+        try:
+            item = json.loads(response)
+            item["id"] = str(uuid.uuid4())
+            item["timestamp"] = time.strftime("%Y-%m-%dT%H:%M:%S")
+            vault.log_item("opportunities", {**item, "type": "feature_suggestion"})
+            return JSONResponse(item)
+        except json.JSONDecodeError:
+            pass
+    return JSONResponse({"error": "Generation failed"}, status_code=500)
+
+# ─── Server Entry ────────────────────────────────────────────────────────────
+
+if __name__ == "__main__":
+    print("[SRA-IDE] Starting SRA Internal IDE on http://localhost:8420")
+    uvicorn.run(app, host="0.0.0.0", port=8420)

@@ -1,0 +1,49 @@
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 memory: Golay/Leech/RHC/HD/E8 lattice operations
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 helical: Helical phase management
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 agent: Leech-encoded AI agent class
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 helixdb_git: Git-backed database adapter
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 immune: Agent health monitoring
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 market: Trait marketplace & auctions
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 marketplace_sync: Marketplace index generator
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 world_model: World model & simulation
+INFO:src.core.hive_bridge:[HiveBridge] \u2713 fitness: Fitness evaluation
+INFO:src.core.hive_bridge:[HiveBridge] Loaded 9/24 HelixHive modules
+INFO:src.core.hive_bridge:[HiveBridge] Golay coset table available
+INFO:src.agents.hive_agent_adapter:[HiveAgentAdapter] \u2713 HelixHive Agent class loaded
+INFO:src.agents.hive_agent_adapter:[HiveAgentAdapter] \u2713 Fitness module loaded
+INFO:src.core.billing_service:[Billing] Recorded usage for test_agent. New count: 1
+INFO:src.core.billing_service:[Billing] Recorded usage for test_agent. New count: 2
+......INFO:src.core.auth_service:[Auth] Initialized Tenant Registry with Sovereign and Partner keys.
+.INFO:src.core.auth_service:[Auth] Initialized Tenant Registry with Sovereign and Partner keys.
+.INFO:src.core.auth_service:[Auth] Initialized Tenant Registry with Sovereign and Partner keys.
+.INFO:httpx:HTTP Request: GET http://testserver/manifest.json "HTTP/1.1 200 OK"
+.INFO:httpx:HTTP Request: GET http://testserver/sw.js "HTTP/1.1 200 OK"
+.INFO:src.core.auth_service:[Auth] Initialized Tenant Registry with Sovereign and Partner keys.
+WARNING:src.core.auth_service:[Auth] Rate limit exceeded for Limited_Tenant
+..INFO:src.core.research_engine:[v5.9.0] Initiating research cycle: The future of autonomous agents
+INFO:src.core.billing_service:[Billing] Recorded usage for master. New count: <MagicMock name='mock.get_state().get().__getitem__()' id='2949817389008'>
+.INFO:     Started server process [43636]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8005 (Press CTRL+C to quit)
+ERROR:SRA-Server:[AUTH] Rejecting. Invalid Key='BAD_KEY', UA='SRA-SDK-v3.8.0.0'
+INFO:     127.0.0.1:62228 - "POST /api/research HTTP/1.1" 401 Unauthorized
+ERROR:sra_sdk:[SRA-SDK] Deployment connectivity failure: HTTP Error 401: Unauthorized
+.INFO:src.core.research_engine:[v5.9.0] Initiating research cycle: Vancouver Tech Expo 2026
+WARNING:src.core.search_service:[Search] No API keys or results. Using simulation for: Vancouver Tech Expo 2026
+INFO:src.core.research_engine:[Research] Search grounding yielded 2 results.
+C:\Users\sherr\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py:254: ResourceWarning: unclosed <socket.socket [closed] fd=1060, family=2, type=1, proto=0>
+  _iterencode = _make_iterencode(
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+INFO:src.core.billing_service:[Billing] Recorded usage for master. New count: 1
+[EvolutionVault] Logged evolution: 13d8a14c-eea5-4065-b87e-adb11930ee39
+[EvolutionVault] Logged evolution: 168f2a05-28c1-4b7f-969d-9e1c0b0cee44
+INFO:     127.0.0.1:62229 - "POST /api/research HTTP/1.1" 200 OK
+INFO:sra_sdk:[SRA-SDK] Revelation received. Coherence (\u03c4): 0.997
+.INFO:src.core.search_service:[Search] Cache hit for: cached query
+.WARNING:src.core.search_service:[Search] No API keys or results. Using simulation for: latest news on SRA
+.
+----------------------------------------------------------------------
+Ran 18 tests in 2.544s
+
+OK

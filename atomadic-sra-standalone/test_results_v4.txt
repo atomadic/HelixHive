@@ -1,0 +1,23 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.9, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\sherr\AppData\Local\Programs\Python\Python311\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\sherr\.gemini\antigravity\Atomadic\atomadic-sra-standalone
+plugins: anyio-4.12.1
+collecting ... collected 9 items
+
+tests/unit/test_hive_bridge_v33.py::TestHiveBridgeFull::test_bridge_discovery PASSED [ 11%]
+tests/unit/test_hive_bridge_v33.py::TestHiveBridgeFull::test_get_summary_format PASSED [ 22%]
+tests/unit/test_hive_bridge_v33.py::TestHiveBridgeFull::test_math_coverage PASSED [ 33%]
+tests/unit/test_hive_bridge_v33.py::TestHiveBridgeFull::test_governance_probes PASSED [ 44%]
+tests/unit/test_hive_bridge_v33.py::TestHiveBridgeFull::test_health_probes PASSED [ 55%]
+tests/unit/test_hive_bridge_v33.py::TestHiveBridgeFull::test_social_probes PASSED [ 66%]
+tests/unit/test_hive_bridge_v33.py::TestHiveAgentAdapterExpanded::test_agent_lifecycle PASSED [ 77%]
+tests/unit/test_hive_bridge_v33.py::TestHiveAgentAdapterExpanded::test_breeding PASSED [ 88%]
+tests/unit/test_hive_bridge_v33.py::TestAIBridgeV33::test_bridge_v33_id PASSED [100%]
+
+============================== warnings summary ===============================
+tests/unit/test_hive_bridge_v33.py::TestHiveBridgeFull::test_bridge_discovery
+  C:\\Users\\sherr\\.gemini\\antigravity\\Atomadic\\atomadic-sra-standalone\\HelixHive-main\\memory.py:386: UserWarning: Leech coset leader table not found at leech_coset_leaders.npy. Please generate it offline using the provided script or download the pre\u2011computed file from the HelixHive repository.\n    warnings.warn(str(e))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 9 passed, 1 warning in 0.68s =========================

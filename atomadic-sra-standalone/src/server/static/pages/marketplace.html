@@ -1,0 +1,56 @@
+<!-- SRA Sovereign Marketplace Fragment // v4.2.0.0 -->
+<div class="marketplace-substrate">
+    <h4 style="font-family: 'Orbitron'; font-size: 0.9rem; color: var(--neon-purple); margin-bottom: 2rem;">
+        CORE_SYSTEM_EXTENSIONS</h4>
+    <div id="plugin-grid"
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
+        <!-- Plugins here -->
+    </div>
+
+    <h4 style="font-family: 'Orbitron'; font-size: 0.9rem; color: var(--neon-green); margin-bottom: 2rem;">
+        MANIFESTED_RESEARCH_PRODUCTS</h4>
+    <div id="product-grid"
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+        <!-- Products here -->
+    </div>
+</div>
+
+<script>
+    async function loadMarketplace() {
+        const res = await fetch('/api/marketplace');
+        const data = await res.json();
+
+        const plugins = [
+            { name: "Quantum Search Booster", price: 49.99, id: "psb", desc: "Enhances E8 grounding with real-time quantum parity checks across the lattice." },
+            { name: "Helix 3D Visualizer", price: 29.99, id: "h3d", desc: "Interactive 24D Leech Lattice projection module for the research dashboard." }
+        ];
+
+        const pluginGrid = document.getElementById('plugin-grid');
+        pluginGrid.innerHTML = plugins.map(p => `
+            <div class="card" style="display: flex; flex-direction: column;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <h3 class="card-title" style="margin:0; border:none; padding:0; font-size: 0.85rem;">${p.name}</h3>
+                    <span style="color: var(--neon-green); font-family: 'JetBrains Mono'; font-size: 0.8rem;">$${p.price}</span>
+                </div>
+                <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.6; flex-grow: 1; margin-bottom: 2rem;">${p.desc}</p>
+                <button class="btn btn-evolution" style="font-size: 0.65rem; padding: 0.6rem;">ACQUIRE_PLUGIN</button>
+            </div>
+        `).join('');
+
+        const productGrid = document.getElementById('product-grid');
+        productGrid.innerHTML = Object.entries(data.products).map(([id, p]) => `
+            <div class="card" style="display: flex; flex-direction: column;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                    <h3 class="card-title" style="margin:0; border:none; padding:0; font-size: 0.85rem;">${p.name.toUpperCase()}</h3>
+                    <span class="badge badge-leech">${p.type}</span>
+                </div>
+                <p style="font-size: 0.85rem; color: #94a3b8; line-height: 1.6; flex-grow: 1; margin-bottom: 2rem;">Manifested epiphany: "<i>${p.prompt}</i>"</p>
+                <a href="${p.url}" target="_blank" style="text-decoration:none;">
+                    <button class="btn" style="width:100%; border-color: var(--neon-green); color: var(--neon-green); font-size: 0.65rem;">RUN_PRODUCT</button>
+                </a>
+            </div>
+        `).join('');
+    }
+
+    loadMarketplace();
+</script>

@@ -1,0 +1,8 @@
+{
+    "appId": "ai.atomadic.sra",
+    "appName": "Supreme Research Agent",
+    "webDir": "src/server/static",
+    "server": {
+        "androidScheme": "https"
+    }
+}

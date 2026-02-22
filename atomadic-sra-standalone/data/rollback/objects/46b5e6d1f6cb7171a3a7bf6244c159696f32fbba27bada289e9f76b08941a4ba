@@ -1,0 +1,71 @@
+
+import subprocess
+import time
+import os
+
+class ShellTool:
+    """
+    Shell Tool
+    Secure shell execution with permission gating and audit logging.
+    """
+    BLOCKED_COMMANDS = ["rm -rf", "format", "del /s", "rmdir /s", "shutdown", "reboot"]
+
+    def __init__(self):
+        self.execution_log = []
+        self.permissions = {"shell_enabled": True, "max_timeout": 30}
+
+    def execute(self, command, timeout=None, cwd=None):
+        """Execute a shell command with safety checks."""
+        timeout = timeout or self.permissions["max_timeout"]
+        
+        # Permission gate
+        if not self.permissions["shell_enabled"]:
+            return {"status": "BLOCKED", "reason": "Shell execution disabled"}
+        
+        # Safety check
+        if self._is_dangerous(command):
+            result = {"status": "BLOCKED", "reason": f"Dangerous command detected: {command}"}
+            self._log(command, result)
+            return result
+        
+        print(f"[Shell] Executing: {command}")
+        
+        try:
+            proc = subprocess.run(
+                command,
+                shell=True,
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+                cwd=cwd
+            )
+            
+            result = {
+                "status": "SUCCESS" if proc.returncode == 0 else "ERROR",
+                "exit_code": proc.returncode,
+                "stdout": proc.stdout[:2000] if proc.stdout else "",
+                "stderr": proc.stderr[:2000] if proc.stderr else "",
+            }
+        except subprocess.TimeoutExpired:
+            result = {"status": "TIMEOUT", "reason": f"Command exceeded {timeout}s"}
+        except Exception as e:
+            result = {"status": "ERROR", "reason": str(e)}
+        
+        self._log(command, result)
+        return result
+
+    def _is_dangerous(self, command):
+        """Check if command matches blocked patterns."""
+        cmd_lower = command.lower()
+        return any(blocked in cmd_lower for blocked in self.BLOCKED_COMMANDS)
+
+    def _log(self, command, result):
+        """Audit log entry."""
+        self.execution_log.append({
+            "command": command,
+            "result": result["status"],
+            "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S")
+        })
+
+    def get_log(self):
+        return self.execution_log

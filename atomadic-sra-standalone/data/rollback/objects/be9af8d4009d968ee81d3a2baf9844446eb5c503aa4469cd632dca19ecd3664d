@@ -1,0 +1,77 @@
+
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+from src.core.ollama_service import OllamaService
+
+class CodeOptimizationPanel:
+    """
+    Code Optimization Panel
+    Handles performance profiling, parallelism suggestions,
+    and resource optimization using LLM analysis.
+    """
+    def __init__(self):
+        self.llm = OllamaService()
+
+    def optimize(self, code, focus="performance"):
+        """Optimize code using LLM with specific focus area."""
+        print(f"[CodeOptimization] Optimizing for {focus}...")
+        
+        prompt = (
+            f"Optimize the following Python code for {focus}.\n\n"
+            f"```python\n{code}\n```\n\n"
+            "Apply these optimizations:\n"
+            "- Reduce time complexity where possible\n"
+            "- Use efficient data structures\n"
+            "- Minimize memory allocations\n"
+            "- Add caching/memoization if applicable\n"
+            "Return only the optimized code."
+        )
+        
+        result = self.llm.generate_completion(prompt)
+        if result:
+            return result.replace("```python", "").replace("```", "").strip()
+        return code + "\n# Optimization attempted but LLM unavailable"
+
+    def profile_analysis(self, code):
+        """Static analysis for performance bottlenecks."""
+        print("[CodeOptimization] Running static analysis...")
+        
+        lines = code.split("\n")
+        issues = []
+        
+        for i, line in enumerate(lines):
+            stripped = line.strip()
+            # Detect common performance anti-patterns
+            if "for " in stripped and "range(len(" in stripped:
+                issues.append({"line": i+1, "issue": "Use enumerate() instead of range(len())"})
+            if ".append(" in stripped and "for " in code[:code.find(stripped)]:
+                issues.append({"line": i+1, "issue": "Consider list comprehension instead of loop+append"})
+            if "import time" in stripped and "time.sleep" in code:
+                issues.append({"line": i+1, "issue": "Blocking sleep detected — consider async"})
+            if "global " in stripped:
+                issues.append({"line": i+1, "issue": "Global variable usage — consider encapsulation"})
+        
+        return {
+            "issues_found": len(issues),
+            "issues": issues,
+            "recommendation": "Optimize" if issues else "Code looks efficient"
+        }
+
+    def suggest_parallelism(self, code):
+        """Suggest parallelization opportunities."""
+        suggestions = []
+        
+        if "for " in code:
+            loop_count = code.count("for ")
+            if loop_count > 1:
+                suggestions.append("Multiple loops detected — consider concurrent.futures.ThreadPoolExecutor")
+        
+        if "requests." in code or "urllib" in code:
+            suggestions.append("HTTP calls detected — use asyncio + aiohttp for parallel fetching")
+        
+        if "open(" in code:
+            suggestions.append("File I/O detected — consider async file operations")
+        
+        return suggestions if suggestions else ["No parallelization opportunities detected"]

@@ -1,0 +1,60 @@
+{
+  "query": "SRA Economic Sovereignty",
+  "results": [
+    {
+      "luminary": "SRA-Blueprint",
+      "response": "[Error: Deliberation Failed]",
+      "advisor": "[Support Role Offline]",
+      "council": "[Support Role Offline]",
+      "adversary": "[Support Role Offline]",
+      "debate": "[Error: Deliberation Failed]",
+      "synthesis": null
+    },
+    {
+      "luminary": "SRA-Code-Architect",
+      "response": "[Error: Deliberation Failed]",
+      "advisor": "[Support Role Offline]",
+      "council": "[Support Role Offline]",
+      "adversary": "[Support Role Offline]",
+      "debate": "[Error: Deliberation Failed]",
+      "synthesis": null
+    },
+    {
+      "luminary": "SRA-UI-Designer",
+      "response": "[Error: Deliberation Failed]",
+      "advisor": "[Support Role Offline]",
+      "council": "[Support Role Offline]",
+      "adversary": "[Support Role Offline]",
+      "debate": "[Error: Deliberation Failed]",
+      "synthesis": null
+    },
+    {
+      "luminary": "SRA-Tester-Validator",
+      "response": "[Error: Deliberation Failed]",
+      "advisor": "[Support Role Offline]",
+      "council": "[Support Role Offline]",
+      "adversary": "[Support Role Offline]",
+      "debate": "[Error: Deliberation Failed]",
+      "synthesis": null
+    },
+    {
+      "luminary": "SRA-Deployer",
+      "response": "[Error: Deliberation Failed]",
+      "advisor": "[Support Role Offline]",
+      "council": "[Support Role Offline]",
+      "adversary": "[Support Role Offline]",
+      "debate": "[Error: Deliberation Failed]",
+      "synthesis": null
+    },
+    {
+      "luminary": "SRA-IDE-Orchestrator",
+      "response": "[Error: Deliberation Failed]",
+      "advisor": "[Support Role Offline]",
+      "council": "[Support Role Offline]",
+      "adversary": "[Support Role Offline]",
+      "debate": "[Error: Deliberation Failed]",
+      "synthesis": null
+    }
+  ],
+  "final": null
+}

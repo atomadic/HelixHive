@@ -1,0 +1,73 @@
+<!-- SRA Billing & Usage Fragment // v4.2.0.0 -->
+<div class="card" style="margin-bottom: 2rem;">
+    <h3 class="card-title">RESOURCE_USAGE_METRICS</h3>
+    <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem;">
+        <div class="card"
+            style="background: rgba(0, 242, 255, 0.03); border-color: rgba(0, 242, 255, 0.1); text-align: center; padding: 2rem;">
+            <span class="stat-value" id="query-count" style="font-size: 3rem; color: var(--neon-blue);">0</span>
+            <span class="stat-label">TOTAL_REVELATIONS</span>
+        </div>
+        <div class="card"
+            style="background: rgba(255, 215, 0, 0.03); border-color: rgba(255, 215, 0, 0.1); text-align: center; padding: 2rem;">
+            <span class="stat-value" id="total-spend" style="font-size: 3rem; color: var(--neon-gold);">$0.00</span>
+            <span class="stat-label">ACCUMULATED_BALANCE</span>
+        </div>
+    </div>
+
+    <div style="margin-top: 3rem; padding: 0 1rem;">
+        <div
+            style="display: flex; justify-content: space-between; margin-bottom: 12px; font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 1px;">
+            <span>QUOTA_STATUS</span>
+            <span id="quota-label">0 / 1000 CREDITS</span>
+        </div>
+        <div class="progress-container" style="height: 12px; border-radius: 6px;">
+            <div id="usage-progress" class="progress-bar" style="width: 0%; box-shadow: 0 0 15px var(--neon-blue);">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+    <div class="card">
+        <h3 class="card-title">MONETIZATION_POLICIES</h3>
+        <ul
+            style="font-size: 0.9rem; color: #cbd5e1; line-height: 2; margin-top: 1.5rem; list-style: none; padding: 0;">
+            <li style="margin-bottom: 10px;"><span style="color: var(--neon-blue); font-weight: 800;">TIER_1:</span>
+                Free Manifestation (100 queries)</li>
+            <li style="margin-bottom: 10px;"><span style="color: var(--neon-purple); font-weight: 800;">TIER_2:</span>
+                Revelation Pro ($0.03/query)</li>
+            <li style="margin-bottom: 10px;"><span style="color: var(--neon-gold); font-weight: 800;">TIER_3:</span>
+                White-Label Sovereign (Unlimited)</li>
+        </ul>
+        <button class="btn btn-evolution"
+            style="width: 100%; margin-top: 1.5rem; background: var(--neon-purple); border-color: var(--neon-purple);"
+            onclick="showToast('Upgrade Protocol Initiated...')">UPGRADE_TO_TIER_2</button>
+    </div>
+
+    <div class="card"
+        style="display: flex; flex-direction: column; justify-content: center; align-items: center; border-color: var(--neon-gold); background: rgba(255,215,0,0.03);">
+        <h4 style="font-family: 'Orbitron'; color: var(--neon-gold); margin-bottom: 10px;">CREDIT_HARVEST</h4>
+        <p style="text-align: center; font-size: 0.8rem; color: #94a3b8; margin-bottom: 1.5rem;">Swap wisdom mass for
+            revelation credits.</p>
+        <button class="btn" style="border-color: var(--neon-gold); color: var(--neon-gold);"
+            onclick="showToast('Wisdom conversion not available in trial.')">INITIATE_SWAP</button>
+    </div>
+</div>
+
+<script>
+    if (typeof billingInterval !== 'undefined') clearInterval(billingInterval);
+    async function loadStats() {
+        try {
+            const response = await fetch('/api/billing/stats');
+            const data = await response.json();
+            document.getElementById('query-count').innerText = data.query_count;
+            document.getElementById('total-spend').innerText = `$${data.total_spend.toFixed(2)}`;
+            const percent = Math.min((data.query_count / 1000) * 100, 100);
+            document.getElementById('usage-progress').style.width = `${percent}%`;
+            document.getElementById('quota-label').innerText = `${data.query_count} / 1000 REVELATIONS`;
+        } catch (e) { console.error("Billing Stats Failure", e); }
+    }
+    var billingInterval = setInterval(loadStats, 5000);
+    loadStats();
+</script>

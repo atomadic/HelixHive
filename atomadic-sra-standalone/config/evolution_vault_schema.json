@@ -1,0 +1,17 @@
+{
+    "type": "object",
+    "properties": {
+        "timestamp": {
+            "type": "number"
+        },
+        "agent": {
+            "type": "string"
+        },
+        "action": {
+            "type": "string"
+        },
+        "details": {
+            "type": "object"
+        }
+    }
+}

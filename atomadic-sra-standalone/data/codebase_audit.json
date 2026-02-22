@@ -1,0 +1,2531 @@
+[
+  {
+    "path": ".env",
+    "size": 709,
+    "loc": 17,
+    "hash": "fae96e4916c8df56d9dd60c02c9584cac39f1cc645f275994b369b1b89fd6a12",
+    "last_modified": "Sat Feb 21 17:15:52 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": ".env.example",
+    "size": 530,
+    "loc": 20,
+    "hash": "8669742a3a9b0b621a2ed65b159ecaa7d1690d22b35ab4f6337f7cfcde416a57",
+    "last_modified": "Sat Feb 21 16:41:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "activate_agents.py",
+    "size": 736,
+    "loc": 28,
+    "hash": "7121d22599a5c7283d3c15bbf99abaa4016ba2e44a3df7fa540889d9424164ba",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "audit_output.txt",
+    "size": 0,
+    "loc": 0,
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "last_modified": "Wed Feb 18 21:06:11 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "audit_report.md",
+    "size": 15460,
+    "loc": 428,
+    "hash": "4684ea232b53e1c093c5787193a3153ab8b1e39afe25077d14efe3766aa2dc64",
+    "last_modified": "Fri Feb 20 10:53:40 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "capacitor.config.json",
+    "size": 173,
+    "loc": 8,
+    "hash": "7e02259e0e43c589ac99f3af8991f72dfd384cb9576df9562047dd038f7016d7",
+    "last_modified": "Sat Feb 21 15:32:42 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "check_consistency.py",
+    "size": 1906,
+    "loc": 63,
+    "hash": "304e9eb4bd17157f1656b4f06b58172e787f2821cf21b90f7814b4ff1a3cdeb9",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "debug_tests.py",
+    "size": 1033,
+    "loc": 33,
+    "hash": "fd164484c1dec90965264379a7b6645b0da29246b4d57b56abde507e99ab56fa",
+    "last_modified": "Sat Feb 21 15:26:27 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "Dockerfile",
+    "size": 584,
+    "loc": 29,
+    "hash": "e62aaaa59f9860972d87adee4fd794b5674339c7875284241b16d5a0a4690a73",
+    "last_modified": "Wed Feb 18 18:38:25 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "full_test_output.txt",
+    "size": 13166,
+    "loc": 181,
+    "hash": "3e41edd03e2ed1d74e147e4a177622423f171da67ca0890b481906451b91b882",
+    "last_modified": "Sat Feb 21 15:55:22 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "full_test_output_2.txt",
+    "size": 3780,
+    "loc": 49,
+    "hash": "ca110cf9febde6ed7d339f5f36842864e9462c82beffd1ffbac9b8d94fd54d38",
+    "last_modified": "Sat Feb 21 15:56:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "Guide.md",
+    "size": 43417,
+    "loc": 699,
+    "hash": "468bd74329af449c3e0301316f2e69309176f3b2129817cca38cc4c9c440ef01",
+    "last_modified": "Sat Feb 21 15:09:34 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "launch_sra.py",
+    "size": 2436,
+    "loc": 73,
+    "hash": "e80ad20b3f3330f2dfa361eec7a52d31e7324b0a085ce7a1ea04abf3be0cd357",
+    "last_modified": "Sat Feb 21 16:19:55 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "leech_coset_leaders.npy",
+    "size": 98432,
+    "loc": 0,
+    "hash": "c608495dfd73c4081565dfb4b6eb42f24e38a8a300fd3fc49b6fbc5501908d73",
+    "last_modified": "Sat Feb 21 15:24:35 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "main.ipynb",
+    "size": 1795,
+    "loc": 61,
+    "hash": "63028f36c5c575d3a09d3a44f8cb3d36327e750cc8343b1aeb9d27670346282a",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "meta_audit.md",
+    "size": 1983,
+    "loc": 49,
+    "hash": "f93ea744a1be7b869dd9afd3756c3e0dbc4af392776abe75d0081d445a383637",
+    "last_modified": "Sat Feb 21 16:16:27 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "README.md",
+    "size": 602,
+    "loc": 28,
+    "hash": "dcfcde7643d7b51ae35fc053e81f4a0745b21cf954c7f7bf54644cdbb9a08b86",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "requirements.txt",
+    "size": 214,
+    "loc": 19,
+    "hash": "b232f4888121394ad7aad0f328b0adf6a411659f7eb0041883f5d238658dcb7d",
+    "last_modified": "Sat Feb 21 17:17:50 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sovereignty_seal.md",
+    "size": 17778,
+    "loc": 466,
+    "hash": "a3ef1febae52b4e87c14f0eea6c7256e272480dbe3b43fafb004165fc79121fa",
+    "last_modified": "Sat Feb 21 17:20:31 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sra-blueprint.md",
+    "size": 2237,
+    "loc": 40,
+    "hash": "aeb96f05ca3faaffe3ce06b64add0b37e3a4adf9f1dd620f52c4d493946218ef",
+    "last_modified": "Sat Feb 21 17:35:05 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sra-code-architect.md",
+    "size": 2316,
+    "loc": 40,
+    "hash": "c8751167177ef1821c234dd27da348d2fb5689e3daff02081976731a0e1ca0d8",
+    "last_modified": "Sat Feb 21 17:35:10 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sra-deployer.md",
+    "size": 2325,
+    "loc": 40,
+    "hash": "c033fa05dc60ca1538c303d5ba20ff48f289fbf8789119ab717a27ecdfd444e0",
+    "last_modified": "Sat Feb 21 17:35:26 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sra-evo-director.md",
+    "size": 2398,
+    "loc": 40,
+    "hash": "0b36a83c00a5c0a5d3bc143c4d9fb1116e22894e356086a4c8c1a94e804f3968",
+    "last_modified": "Sat Feb 21 17:36:08 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Rule 15 Validated"
+  },
+  {
+    "path": "sra-ide-orchestrator.md",
+    "size": 2415,
+    "loc": 40,
+    "hash": "ae21249598784845ba43023de69edc3fcd568a004bf15b90b93c8e337cf059f4",
+    "last_modified": "Sat Feb 21 17:35:27 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sra-legal-counsel.md",
+    "size": 2419,
+    "loc": 40,
+    "hash": "929d2f932b5f600ef9a4fc162539df612b8d2a362497f931bde181132c2e2075",
+    "last_modified": "Sat Feb 21 17:36:06 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sra-market-analyst.md",
+    "size": 2387,
+    "loc": 40,
+    "hash": "8143e022be9c2ccc9daa29fe4ed4fc0c0706862356705cefabf48c45f6a547cf",
+    "last_modified": "Sat Feb 21 17:35:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sra-mathematical-genius.md",
+    "size": 2428,
+    "loc": 40,
+    "hash": "9327ae0d1a47eed2e4145f56afcd5063505fbd2f445fb959f2a7a4f4e0ee1499",
+    "last_modified": "Sat Feb 21 17:36:42 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sra-rules.md",
+    "size": 5924,
+    "loc": 126,
+    "hash": "c2ed34d010019a214c8fba565fc16037a52af6c7a491f8d57217ff1d4582691f",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sra-security-auditor.md",
+    "size": 2394,
+    "loc": 40,
+    "hash": "987a9e1a080162f5c73617acfc87b7de97afda06c34c79faa23717ebcf4053e6",
+    "last_modified": "Sat Feb 21 17:35:50 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sra-tester-validator.md",
+    "size": 2381,
+    "loc": 40,
+    "hash": "c9b4bb7a0755eb1908becfa8d35768cf3dd792f3c3125043f34fe138476c8dfa",
+    "last_modified": "Sat Feb 21 17:35:21 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sra-ui-designer.md",
+    "size": 2308,
+    "loc": 40,
+    "hash": "539509957478ebde6e95e2c18d54145ecbe397eb9544f3aa00849674884fdce6",
+    "last_modified": "Sat Feb 21 17:35:15 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sra-ux-researcher.md",
+    "size": 2443,
+    "loc": 40,
+    "hash": "a705a8206ecd36329a0104995b120037f971816b7bcf977abbc61d3063c302bd",
+    "last_modified": "Sat Feb 21 17:36:01 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sra-workflow.md",
+    "size": 4684,
+    "loc": 95,
+    "hash": "e9910ccd2743865380af679a1219d16a4341564529456fc73bdd16d4b7556e3c",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "sra.md",
+    "size": 16955,
+    "loc": 300,
+    "hash": "3e6774c9121cba6bd9ef96c88636c176bb07594df1166992342bf2167dbbbeac",
+    "last_modified": "Sat Feb 21 17:36:39 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Rule 15 Validated"
+  },
+  {
+    "path": "system_manifesto.md",
+    "size": 2075,
+    "loc": 48,
+    "hash": "8579b0f16afaa59ec48eef28580b7bb8e362d12551fb46f0ef7bec1a88013dc5",
+    "last_modified": "Sat Feb 21 17:20:27 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "test_hive.py",
+    "size": 646,
+    "loc": 22,
+    "hash": "e6b71fdc17a87fbfc55007d805c5196664e708df46cae2ae09c9edcf14debe52",
+    "last_modified": "Sat Feb 21 17:46:43 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "test_output.txt",
+    "size": 5869,
+    "loc": 82,
+    "hash": "31e595dcc0c36b2696a7a280b16fad8b94125fd5e92b3672404026a0242a9c59",
+    "last_modified": "Sat Feb 21 15:42:55 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "test_output_2.txt",
+    "size": 2192,
+    "loc": 32,
+    "hash": "07094a3e40877ec3236b7a25dacda53117598c9946723ccadd44cc5958af9b93",
+    "last_modified": "Sat Feb 21 15:48:29 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "test_results.txt",
+    "size": 6366,
+    "loc": 96,
+    "hash": "1f37b544af83b68bfb781c28a2bad493b684f49c8fe1babf2675fed4362a6251",
+    "last_modified": "Sat Feb 21 14:50:15 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "test_results_v2.txt",
+    "size": 4213,
+    "loc": 66,
+    "hash": "d10270f44be1882fc237547d520f62f68d028605c1332b9713fb0ca9e0c088a5",
+    "last_modified": "Sat Feb 21 14:51:06 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "test_results_v3.txt",
+    "size": 3064,
+    "loc": 46,
+    "hash": "834b9f98042673d9a7ab991dd869522528c55d98c287c42d1703d73b9cb73cce",
+    "last_modified": "Sat Feb 21 14:59:14 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "test_results_v4.txt",
+    "size": 1862,
+    "loc": 23,
+    "hash": "82ab48a651a4f11073e2d65b0e2efcc9e91525450becc579605453d40d5a14ad",
+    "last_modified": "Sat Feb 21 14:59:53 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "verify_blueprint.py",
+    "size": 1975,
+    "loc": 64,
+    "hash": "69c16f3867c1ebe054f7371cc5948200d07c367dd4b3e122e8111c09fb0c576f",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "verify_build.ps1",
+    "size": 723,
+    "loc": 27,
+    "hash": "6f2ef6cf97019f8cfe242066e6c0e134ee5a49aca030b1d1cb4a81d69872851a",
+    "last_modified": "Wed Feb 18 18:23:08 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "version_state.md",
+    "size": 6444,
+    "loc": 104,
+    "hash": "127cc518ab1ff1c22b2b359451ba7665a8e912e5c1769cd24db8ff1a99690bac",
+    "last_modified": "Sat Feb 21 15:32:05 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": ".github\\workflows\\ci-cd.yml",
+    "size": 449,
+    "loc": 19,
+    "hash": "d6745ca1c19d9b1d42d50408d274da79909a260ebc3cd5ce7569696b649fc78c",
+    "last_modified": "Wed Feb 18 18:41:56 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "config\\evolution_vault_schema.json",
+    "size": 309,
+    "loc": 17,
+    "hash": "510236bc1fb98806368a4512939413452eeb2e9152e672c55d991543e3227853",
+    "last_modified": "Wed Feb 18 18:41:58 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\deliberation_audit.jsonl",
+    "size": 1278,
+    "loc": 10,
+    "hash": "04b8643b9afe24d05fe68264148be55f5416dd26a6732b4f21def39d7ea14dc4",
+    "last_modified": "Sat Feb 21 18:13:09 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\evolution_vault.json",
+    "size": 25594,
+    "loc": 793,
+    "hash": "4f21a92b8d48c922e8740ed9b2e71bd0d735e87e0e58420b2ce37021533133db",
+    "last_modified": "Sat Feb 21 16:40:43 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Rule 15 Validated"
+  },
+  {
+    "path": "data\\last_audit_report.json",
+    "size": 1079,
+    "loc": 43,
+    "hash": "ce3023104f8b61f8f0cdfbd8b5ca8da21d57408cfcaf2a1d35aa6b0111617b8f",
+    "last_modified": "Sat Feb 21 17:19:18 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\market_ledger.json",
+    "size": 142,
+    "loc": 8,
+    "hash": "5c570ffa5364eaa84fdbcac66f23acdc49a93f791852a2d159eb9abe9136e0c7",
+    "last_modified": "Fri Feb 20 08:33:14 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\ml_research_summary.json",
+    "size": 1288,
+    "loc": 32,
+    "hash": "f9249e5480097c9c8eca1c9a04ae1955048451989dc649416acf40d45b76b761",
+    "last_modified": "Wed Feb 18 21:23:21 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\panel_discussion_181637.json",
+    "size": 1962,
+    "loc": 60,
+    "hash": "3f0d0285c548e5fd8ff9675e3e06037ac9867888c9ce582eeb34f3954ef5e379",
+    "last_modified": "Sat Feb 21 17:30:51 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\panel_discussion_181818.json",
+    "size": 3850,
+    "loc": 114,
+    "hash": "f388dedb52c4d49461715a675d99fa7a242cc6c560d12902a5a71dd6b3dcaa3d",
+    "last_modified": "Sat Feb 21 17:33:52 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\sra_master.log",
+    "size": 912,
+    "loc": 9,
+    "hash": "07f720a3e686038dfa5cb6a58718ba2b8faf7f948f28453669743e5474ba2dd6",
+    "last_modified": "Sat Feb 21 18:11:43 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-471b2d9e\\meta.json",
+    "size": 145,
+    "loc": 7,
+    "hash": "ff0c5a95f251e9425457f0ddeba372aa7e837c5660c779a2e53cd8cadd11ecce",
+    "last_modified": "Fri Feb 20 08:15:38 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-471b2d9e\\src\\agents\\creative_engine.py",
+    "size": 5788,
+    "loc": 152,
+    "hash": "e68905ff6fd70078872c63d69f97db101acc105581f71eccf4312ca210c0f9b0",
+    "last_modified": "Fri Feb 20 07:40:32 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-471b2d9e\\src\\core\\evolution_vault.py",
+    "size": 5606,
+    "loc": 148,
+    "hash": "d23b73ac3cc4306b67793ec91a2ea386142e6c20f5b4211b9920dbe2c95078c1",
+    "last_modified": "Fri Feb 20 02:12:05 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-471b2d9e\\src\\core\\ollama_service.py",
+    "size": 3856,
+    "loc": 102,
+    "hash": "d84f44881b82af547d9ff2aa428f6120de296bb90f713f76183a8a1078e44b76",
+    "last_modified": "Fri Feb 20 02:17:17 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-5b0180a9\\meta.json",
+    "size": 145,
+    "loc": 7,
+    "hash": "aca40721c4ff50a342661ff74b80f5ec0d3b11325c44afd1e05745dd01a64711",
+    "last_modified": "Fri Feb 20 08:26:19 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-5b0180a9\\src\\agents\\creative_engine.py",
+    "size": 5788,
+    "loc": 152,
+    "hash": "e68905ff6fd70078872c63d69f97db101acc105581f71eccf4312ca210c0f9b0",
+    "last_modified": "Fri Feb 20 07:40:32 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-5b0180a9\\src\\core\\evolution_vault.py",
+    "size": 5606,
+    "loc": 148,
+    "hash": "d23b73ac3cc4306b67793ec91a2ea386142e6c20f5b4211b9920dbe2c95078c1",
+    "last_modified": "Fri Feb 20 02:12:05 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-5b0180a9\\src\\core\\ollama_service.py",
+    "size": 3856,
+    "loc": 102,
+    "hash": "d84f44881b82af547d9ff2aa428f6120de296bb90f713f76183a8a1078e44b76",
+    "last_modified": "Fri Feb 20 02:17:17 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-763301c9\\meta.json",
+    "size": 145,
+    "loc": 7,
+    "hash": "991e7a1b2a9f514e3c0eb09138c9edf9ce810263387f61f5eb72e47e22abc379",
+    "last_modified": "Fri Feb 20 08:33:14 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-763301c9\\assets\\AST-1771605194.md",
+    "size": 395,
+    "loc": 12,
+    "hash": "cc0251a7f89decb330fd532cb9908372b5e1f64d029813d8c100ae65aff4a00a",
+    "last_modified": "Fri Feb 20 08:33:14 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-763301c9\\src\\agents\\creative_engine.py",
+    "size": 5788,
+    "loc": 152,
+    "hash": "e68905ff6fd70078872c63d69f97db101acc105581f71eccf4312ca210c0f9b0",
+    "last_modified": "Fri Feb 20 07:40:32 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-763301c9\\src\\core\\evolution_vault.py",
+    "size": 5606,
+    "loc": 148,
+    "hash": "d23b73ac3cc4306b67793ec91a2ea386142e6c20f5b4211b9920dbe2c95078c1",
+    "last_modified": "Fri Feb 20 02:12:05 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-763301c9\\src\\core\\ollama_service.py",
+    "size": 3856,
+    "loc": 102,
+    "hash": "d84f44881b82af547d9ff2aa428f6120de296bb90f713f76183a8a1078e44b76",
+    "last_modified": "Fri Feb 20 02:17:17 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-7c95588d\\meta.json",
+    "size": 145,
+    "loc": 7,
+    "hash": "219cab98291441a9493996b26b47f1cacc8c6ea321073ebc804b4c2a92b5dd1a",
+    "last_modified": "Fri Feb 20 07:42:47 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-7c95588d\\assets\\AST-1771602167.md",
+    "size": 0,
+    "loc": 0,
+    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "last_modified": "Fri Feb 20 07:42:47 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-7c95588d\\src\\agents\\creative_engine.py",
+    "size": 5788,
+    "loc": 152,
+    "hash": "e68905ff6fd70078872c63d69f97db101acc105581f71eccf4312ca210c0f9b0",
+    "last_modified": "Fri Feb 20 07:40:32 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-7c95588d\\src\\core\\evolution_vault.py",
+    "size": 5606,
+    "loc": 148,
+    "hash": "d23b73ac3cc4306b67793ec91a2ea386142e6c20f5b4211b9920dbe2c95078c1",
+    "last_modified": "Fri Feb 20 02:12:05 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-7c95588d\\src\\core\\ollama_service.py",
+    "size": 3856,
+    "loc": 102,
+    "hash": "d84f44881b82af547d9ff2aa428f6120de296bb90f713f76183a8a1078e44b76",
+    "last_modified": "Fri Feb 20 02:17:17 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-ec52c734\\meta.json",
+    "size": 145,
+    "loc": 7,
+    "hash": "c221d4789212ff18c8a8a881a6ee584ec5012fe1450738dcb640f928fad2cae3",
+    "last_modified": "Fri Feb 20 08:14:30 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-ec52c734\\src\\agents\\creative_engine.py",
+    "size": 5788,
+    "loc": 152,
+    "hash": "e68905ff6fd70078872c63d69f97db101acc105581f71eccf4312ca210c0f9b0",
+    "last_modified": "Fri Feb 20 07:40:32 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-ec52c734\\src\\core\\evolution_vault.py",
+    "size": 5606,
+    "loc": 148,
+    "hash": "d23b73ac3cc4306b67793ec91a2ea386142e6c20f5b4211b9920dbe2c95078c1",
+    "last_modified": "Fri Feb 20 02:12:05 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\daughters\\DAUGHTER-ec52c734\\src\\core\\ollama_service.py",
+    "size": 3856,
+    "loc": 102,
+    "hash": "d84f44881b82af547d9ff2aa428f6120de296bb90f713f76183a8a1078e44b76",
+    "last_modified": "Fri Feb 20 02:17:17 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\logs\\sra_events.jsonl",
+    "size": 3639003,
+    "loc": 13861,
+    "hash": "0bb232fd6ead2a397233dfdd1e946241d638cebb0f3de894928691612daf3b61",
+    "last_modified": "Sat Feb 21 17:54:26 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\manifest.json",
+    "size": 21636,
+    "loc": 572,
+    "hash": "0e71c4a3d52248e33ac31e3cd8efc0f6007d0055dc20596bb4111520ece89f27",
+    "last_modified": "Wed Feb 18 20:08:19 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\01a35a0cc5c080c80510b99fa2b11bc2e4d4d5f7d67520411cbd14419923a210",
+    "size": 4061,
+    "loc": 106,
+    "hash": "9519e82d70196a8e1a43a53dc966eea010107780ec23030889fae1ae4380a181",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\01a5aa06d0383a435c91778796a3d612fc7f04ffc6e04227f3b81ed8f4da3f5a",
+    "size": 4956,
+    "loc": 97,
+    "hash": "8cc121dca4929baed5af9380ace047d79db90a4d27186515684f4b8821016c13",
+    "last_modified": "Wed Feb 18 20:08:19 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\0953489cd282039716fa15fecdd33a065d3c2d81e1c20b98cc70c3583856231c",
+    "size": 8081,
+    "loc": 187,
+    "hash": "4acb2bf3a2012113a2c715f6d56ef532d7923d29ade974f48dd20d9418d8b38b",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\18e824497ddf0e7a17fd39c14f769ebff84ae3ed429b0d69f2f875c9fe0b33f0",
+    "size": 1506,
+    "loc": 42,
+    "hash": "4c39046bceb7f6a9f7734bac8a9047339782e309cd3d1062dce97946593acbed",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\25e350908fcf415752b966ff38d77d37e4571178ca81ae185ffa89f2303b1e2c",
+    "size": 3452,
+    "loc": 98,
+    "hash": "c90e875dde73f7f389a5fc47b43a01d78a049430f203c120a9be47bed89cd29e",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\2809c2364384e2321ccfd09b0c48d3e271f1622d21e4fb66514377fbe1ddf073",
+    "size": 1518,
+    "loc": 47,
+    "hash": "610208e972985d040a920016add5922295e01a035eb5237f205a1db8aed3f8f0",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\284dda3b45183bc43b8bffd852e7b56d107d7fcea0e162bf79c0930fba952917",
+    "size": 3546,
+    "loc": 96,
+    "hash": "dab3afaf9d06bb05b897e129e024cdc9b1671140aae0cc74ff50c685633477d1",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\29b6d86afc4e9d7698c65de4088c7235845f765618399013f1dde790d2a788d5",
+    "size": 128,
+    "loc": 7,
+    "hash": "221a3fb6d5b2a97a1b9b4c1b561fba99b982f42cd4cce572e5b3388ab295a901",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\2f8bc63e4fc6fd00c58cf5ecd3ed1e442f489e4538db29bc06d4663de8cba828",
+    "size": 2981,
+    "loc": 74,
+    "hash": "abda375bf3b8f4d5fa360a12816bd2d7c08055f03dc8485ad76af99b52f5f7f8",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\37c1ea863a99830a3f89e4a10019599a7d2915ff35292f35fe574a804480d30b",
+    "size": 3250,
+    "loc": 79,
+    "hash": "c658237921a29b749d92fc1d69bbfd6e1356dc778c44d34c85c728ebd9c9af58",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\3875d5eb578d184d9fbec0152ce64ff2557a1ec9d5380e7e67dd69221edae155",
+    "size": 4656,
+    "loc": 122,
+    "hash": "66a8fa2aaf48ea521652ab829e7b515289ccf98f5d904f8bdb119e509759a763",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\44f24e78ef01f307f054b1c9573303e81981cc5a0a7979ceb90c6a3a6118f240",
+    "size": 3051,
+    "loc": 80,
+    "hash": "2f598beac18b4a2145f555f106557f81cb2a82dbc2529fa6ee8d0cf811f8d25e",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\46b5e6d1f6cb7171a3a7bf6244c159696f32fbba27bada289e9f76b08941a4ba",
+    "size": 2425,
+    "loc": 71,
+    "hash": "0ebe867ef1df3282e4759c5e04730fd3a1c69b23dcdc556a22c03b857bdd566f",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\4903fd76f27bbab38424dd90cec5507a0bd6ba4a1cf1c713b7992672da4e6eef",
+    "size": 3394,
+    "loc": 91,
+    "hash": "e5ca10ac45cb76ee848b4bec748bb55279a0d19a110dbf5e51e5aa2b76c2e91b",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\5e0840f1e569bc65b94a19f07b3e0b9eae8ea67eac51de496e2485597737368f",
+    "size": 9891,
+    "loc": 254,
+    "hash": "0e7faa1cc94fb89309356f3a05632541e74bb6e59ca809d4a9f192f59db07d2a",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\650a0bb9e439ffbb8cada6acf31e2ad6e4fa63862621799e80168bf00afe2598",
+    "size": 4604,
+    "loc": 117,
+    "hash": "29eefb23024fd9fdfed89b46603c2224c2c9a5656fd23c322f3cf0cc090e6104",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\724a39595c3200554863f8363d00431b63d5d838000edd0d152cd19a2cfaf9f5",
+    "size": 1511,
+    "loc": 42,
+    "hash": "a7cc98b45f5435ab4bfa7734eaf0566b8b8ba0eba4e41671d94093fc3513b44a",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\77605cabe393129de383d70129dfb31f27ca35644e0c2293faac5c6974aba963",
+    "size": 320,
+    "loc": 14,
+    "hash": "13d76e699be44c1d966ba4a2bdf6bd5372c7297d9205f88314cd782529757081",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\7a8811ca86ad188dc80aa39441026ed2693e84ea7d41ac9b08ea1ead071e3e6c",
+    "size": 3091,
+    "loc": 77,
+    "hash": "cf3f1f89437a94c78aaa77e84ae10f02c7146456cab1c8e7919e16847df75aae",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\807a21c917cfd0e5c0efca507bde1f952e8c48d71b68ea280816a11ed5cb077f",
+    "size": 2092,
+    "loc": 59,
+    "hash": "f199e74fde57d6623dd8354dd427844cc82bf57fb91074947f86b5f00bcb812a",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\955d3ab98db77bc440ec19172018ad38ed04e8757effe3c19b753e0ea938d76c",
+    "size": 5378,
+    "loc": 104,
+    "hash": "e19a72196b5de8289708adf45cd0a706fed3de37186475edc7495df3dffd1085",
+    "last_modified": "Wed Feb 18 20:08:19 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\a5e8375e55bd9136f4724c3b1899f53a9585faa1e5971badee7d56ca1a1dfb09",
+    "size": 3776,
+    "loc": 103,
+    "hash": "04a2f2e6eb3b863dcdbae6adee03875bca91c6192722d3e0ec85d6e2d76e5602",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\a8e46ffdaab7cd8345fea468afb365264b4e0bb6a54d8603d36ab0866c531df6",
+    "size": 6463,
+    "loc": 120,
+    "hash": "9b54337f7cbd4b04643b1a72e7ff4b45f7bf86f3a5f51728101c86ae8b684760",
+    "last_modified": "Wed Feb 18 20:08:19 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\b18c2bba93d9563f85d1e8d314745050c92e5e59326f601764e985988d9c906f",
+    "size": 4277,
+    "loc": 113,
+    "hash": "3f7548aa977211dd3ba9b812a228dffe24fab414bebd7bf813e877272221f691",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\b414a9e9ddca81101cdd48ae6cee00270a8ee209fc53fd2612f96f72b27c718e",
+    "size": 5264,
+    "loc": 133,
+    "hash": "9f7474281eedf821eb02e4d9a3fe16bf7ea5eff2ea4ebd450cfcc6f80c3688ff",
+    "last_modified": "Wed Feb 18 20:08:19 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\b743282adf2f2033a4628aff2968fad4953833e04b7366142f18c295a96c2278",
+    "size": 2465,
+    "loc": 77,
+    "hash": "ed05fe7d2940586736e6fe60457536c544030b531fc5c01e275894d184dc73e8",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\b7a435e4dfc981901613305fd70603dd7e6b4cad8195924bc194a0d050f730c3",
+    "size": 3907,
+    "loc": 105,
+    "hash": "17c4c214fda7a20cf33a1f07c91aa415f8aef0e86207c26d693e1ee04c364af5",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\be9af8d4009d968ee81d3a2baf9844446eb5c503aa4469cd632dca19ecd3664d",
+    "size": 3276,
+    "loc": 77,
+    "hash": "ab46de038e5e4b9874192e303eda8a5f8cfe62a846ba590e759a73744e808a55",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\c5fd8e856fee6a61e9103ba9692fd40c7daa199418248153d0d06331a4960bbb",
+    "size": 176,
+    "loc": 7,
+    "hash": "1cdad6ee74ba1037cbed407b08b711d1181deb7582c15dae1ceea675242c41ee",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\ca767c5c950a8bbaa90673e97084a4e9981cadaedc1fde05bbe7f4698363e733",
+    "size": 4122,
+    "loc": 98,
+    "hash": "4106658a1808948712694b4484046b6219119105ca7c6d32783258f7b0baed8d",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\d158a610b8fd7a377234219ff675799027cc75ac267fde6c861e7f76924df3db",
+    "size": 6878,
+    "loc": 185,
+    "hash": "ecf31d9d2e06ca627f5f72987fe5e46062b926497961baf49100b9227836ca88",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\d44b29926772f0797594e88a5f008b49307e931e4db22fd237466760dc79b4d2",
+    "size": 3789,
+    "loc": 84,
+    "hash": "07d6d0853b09e88889ac384aa5c9979a0f4bcbeabe0b6562c0ab2e319b0ab204",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\d696b6a2b682eb019bc63b13f8c4187bd33b3880a0030b70787392e42627d3ae",
+    "size": 1977,
+    "loc": 52,
+    "hash": "2321cfd1d63aa9506128b78c56890f4d8df7dd0ad923d1df5469005b6250bf20",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\daae8c6d3962f8616ddf47f9795635098da7dad1a33eb65b1edf291c2c6e9b5e",
+    "size": 1620,
+    "loc": 42,
+    "hash": "bf486fe25a62fe87899613d90ece1fdb4067deb5bd59738cbe086a92cf6ccbab",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\e8ec8b90747e2ca0f0b9100ca12d4bb9084fdc166ceb1af56a7baa175ada7b41",
+    "size": 3505,
+    "loc": 90,
+    "hash": "eefe99926f17c0278b2fd03de2c71e8f543d6356c783b618bfdf418f06d40be8",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\eecbde0c4622d624aaf20c2b17ab9d193492a875b3dab743acf4c9b643c77f90",
+    "size": 2759,
+    "loc": 81,
+    "hash": "0d2dd9885f90206b0409929992a54270a275dee84e1da4c164a002cd213f4513",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\f0fda1354166cfb1f7cec4dc977c422a7f1f6561feae205fbb4209bce035cb1e",
+    "size": 2745,
+    "loc": 77,
+    "hash": "de57f65e6f08db5066a2d1ba9a25d34c33ef223ddaa5f2e23d0822bffe8eb01a",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\f3ff2f9844f4f751f8068e708a62d2e544e89a2f361114d50a37adae200b2491",
+    "size": 3226,
+    "loc": 80,
+    "hash": "1c9a2138b40684ac8378e55f32477241a98aae606197b9cf4788aaece57649cf",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\fbe7a75cbb0bdd61076b4b8aea85d34bf6491948ee7f4c3dff0183bfab6edc22",
+    "size": 2611,
+    "loc": 71,
+    "hash": "5cc2d986d9e6b08c3312e80016910b3b16c960efda10bafdd9cef64158c3c6e5",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\rollback\\objects\\fc5e7be05c829d0b369b4f766a5fdbe7f60496852008395ce8ac7b3553af5c68",
+    "size": 2748,
+    "loc": 65,
+    "hash": "1302e8a230b916527d243b9d1641158c3fc215f57a5bc6de129db38abb87fc9c",
+    "last_modified": "Wed Feb 18 20:00:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\status\\commands.json",
+    "size": 2,
+    "loc": 1,
+    "hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "last_modified": "Sat Feb 21 15:01:40 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "data\\status\\system_state.json",
+    "size": 718,
+    "loc": 38,
+    "hash": "0e1b7689b817d8d35871d787fe5492fb61cb4ac2efd4164a98856b94ac701d11",
+    "last_modified": "Sat Feb 21 17:54:26 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "docs\\architecture.md",
+    "size": 434,
+    "loc": 21,
+    "hash": "2179bb2832522ec27cc2aa4e19bb360d23f01d43753f02255265ca290cf24e9e",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "docs\\equations.md",
+    "size": 217,
+    "loc": 11,
+    "hash": "e637204707f49e8b19bc4f7628dd099aee0b880095fd47ba83bfff6a164fa6e9",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "docs\\paper.tex",
+    "size": 237,
+    "loc": 8,
+    "hash": "3f532d7702e3c5a956be5498854fdccd5111e9bbef4106063c5b86baac37efc5",
+    "last_modified": "Wed Feb 18 18:41:53 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "docs\\sdk_usage.md",
+    "size": 1121,
+    "loc": 40,
+    "hash": "e006a5522e1388f07e88b3f2407a6f463cf52a80314dff15de3133ca09f926d3",
+    "last_modified": "Sat Feb 21 15:40:25 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "notebooks\\e8_leech_demo.ipynb",
+    "size": 1613,
+    "loc": 53,
+    "hash": "a3db5dace40ea19e1a921a577499fdb3125506a3665c0648503f65978971a976",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "notebooks\\hott_synthetic_topology.ipynb",
+    "size": 1404,
+    "loc": 48,
+    "hash": "4deddd6664ea74462e3fa789c11450831a760209e63bea01cf0ff447b25675c1",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "notebooks\\rsi_simulation.ipynb",
+    "size": 1448,
+    "loc": 49,
+    "hash": "b501a5695af056d0939b1a643c1cea80c6be933ec3690d65ded6bc70b604a2ff",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "notebooks\\standalone_test.ipynb",
+    "size": 1356,
+    "loc": 47,
+    "hash": "4e972cd3d6da05def6f0dce2824d269696c7af95afe3ccedc2367d81c8fcb084",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "notebooks\\verifiable_artifacts.ipynb",
+    "size": 1193,
+    "loc": 43,
+    "hash": "6935bca0e5825e7ab95fba774518171af11372012cdf9b6d9ee2e251b436206a",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\audit_and_repair.py",
+    "size": 2176,
+    "loc": 62,
+    "hash": "fea9675b19ecae8b36571b9876333c9c766e4fdf6a8e08e109e51c0089ab892f",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\audit_script.py",
+    "size": 9319,
+    "loc": 218,
+    "hash": "0493a96a46aaf55619521f20752f48d768c3000f51d877e740cedea6a0a73fa0",
+    "last_modified": "Fri Feb 20 10:47:09 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\autonomous_evolution.py",
+    "size": 4667,
+    "loc": 124,
+    "hash": "1b33065c6b05d54506aac5d2858d719ea1ca8b4cbfec0d008400181c9c622a6a",
+    "last_modified": "Fri Feb 20 10:37:44 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\autonomy_loops.py",
+    "size": 4160,
+    "loc": 116,
+    "hash": "7709f551d8c88a4794220d62950e5da5cea8e302b74371da530fe34bcb24a2c1",
+    "last_modified": "Fri Feb 20 02:18:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\build_mobile.ps1",
+    "size": 1423,
+    "loc": 37,
+    "hash": "c9d6e6c6203913f7636404a04dc84ab0b72135114bcc1589bf7515e9368ba2c2",
+    "last_modified": "Sat Feb 21 15:35:31 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\council_discussion.py",
+    "size": 1945,
+    "loc": 53,
+    "hash": "c773f4e6002dfa25841616788659facf693bd88d9893c55f16c6c318c42a3e7e",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\expert_review.py",
+    "size": 1836,
+    "loc": 48,
+    "hash": "eeee3cdb96e13498609347b6ae21fac3fa93af171a12eef7ba2192bf505a85ae",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\generate_coset_table.py",
+    "size": 2155,
+    "loc": 61,
+    "hash": "3d890351b26325a96b901f95421f4408189782b630fc8fab72053d5a30db107f",
+    "last_modified": "Sat Feb 21 15:24:27 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\homeostasis_daemon.py",
+    "size": 1294,
+    "loc": 41,
+    "hash": "1b0122e61b218d2361489c7a049d74448b6f5fcd96bb62032fe6a1f475713cc9",
+    "last_modified": "Fri Feb 20 02:27:44 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\hyper_evolution.py",
+    "size": 4597,
+    "loc": 120,
+    "hash": "e0d84367e891a603c0f9caa6068346a25e86c0dd9dcffba2e84e372872b372be",
+    "last_modified": "Fri Feb 20 02:22:20 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\log_viewer.html",
+    "size": 6586,
+    "loc": 210,
+    "hash": "9cbb9f5054636fcfe3b051b2ce4b8ed3a8230d0b92c0c4f223a4b1e1df8dcfb7",
+    "last_modified": "Sat Feb 21 17:56:58 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\production_audit.py",
+    "size": 1847,
+    "loc": 54,
+    "hash": "2d9653ce28e820843d224205e8e5f5fc9d6e8ca9ba4fcf221ce7829fa50ddbbf",
+    "last_modified": "Sat Feb 21 15:39:14 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\purge_non_ascii.py",
+    "size": 3192,
+    "loc": 88,
+    "hash": "0ffbc363a8b4aa2e1a669d64fd47f3dfd7db22cdaa22fd90f8de78af7330d6f6",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\reification_daughter_test.py",
+    "size": 1607,
+    "loc": 50,
+    "hash": "c449354bacd70addf6f69c0557ff9a9b0a0ca85ce68dbd67dbfde87467216410",
+    "last_modified": "Fri Feb 20 08:04:40 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\reification_launch.py",
+    "size": 3375,
+    "loc": 99,
+    "hash": "ffe0445c5f7c084f3e0d1adbd6dc8edabdb048d16f87dd235cfa1fcfdfbc113b",
+    "last_modified": "Fri Feb 20 02:11:05 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\repair_script.py",
+    "size": 7068,
+    "loc": 168,
+    "hash": "7566f1a29cf8a8dce55605597a9feafd72456551fd21297bca5ab6327ba3b338",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\run_ml_research.py",
+    "size": 1442,
+    "loc": 39,
+    "hash": "9962c60104d59dbbfa06ee7f29fb4d94e4fa5203a11fbdfbb7709f0589bacd78",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\toolsmith_genesis.py",
+    "size": 1592,
+    "loc": 47,
+    "hash": "b080ae00aa874097274f2dee37bac45aa3d4b46d2bfba75bdd1534ca04cbc805",
+    "last_modified": "Fri Feb 20 02:25:00 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\trigger_self_evolution.py",
+    "size": 1300,
+    "loc": 33,
+    "hash": "b986f88cd85d2f4bbf1a1d5cfc8effc2fac8127a3b3728e1155e865076f43159",
+    "last_modified": "Sat Feb 21 16:34:18 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "scripts\\ui_health_check.py",
+    "size": 1278,
+    "loc": 42,
+    "hash": "6bc835615918b58795091b001b87ae8432c55d6b4902f594cff372c516ead3df",
+    "last_modified": "Fri Feb 20 02:35:31 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\agents\\asset_generator.py",
+    "size": 1667,
+    "loc": 48,
+    "hash": "860ab2c3665b26d9e46ea9ca3c638251629006047e29c59a1282bf4cd9027f4f",
+    "last_modified": "Fri Feb 20 08:31:04 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\agents\\creative_engine.py",
+    "size": 5788,
+    "loc": 152,
+    "hash": "e68905ff6fd70078872c63d69f97db101acc105581f71eccf4312ca210c0f9b0",
+    "last_modified": "Fri Feb 20 07:40:32 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\agents\\daughter_factory.py",
+    "size": 1951,
+    "loc": 54,
+    "hash": "2b915d37770bfc4e6bb2f77d974820b3f89d50f9ebca0a035fc105ab4bf9dd84",
+    "last_modified": "Fri Feb 20 08:30:47 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\agents\\evolution_engine.py",
+    "size": 6510,
+    "loc": 120,
+    "hash": "8affb83b7acd538fff90d2ecdd3b964e1cf4bbfd308c0b6daad2abd5e39b66d4",
+    "last_modified": "Fri Feb 20 02:17:29 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\agents\\formal_precision.py",
+    "size": 1726,
+    "loc": 45,
+    "hash": "5155729a49d12459f8b4d7114394caaacb50203a0a580a8380aad82f9545a6f1",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\agents\\goal_engine.py",
+    "size": 4566,
+    "loc": 124,
+    "hash": "431753c4f105c17662191428522524a972edddd05e4195917eaf999b976caaec",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\agents\\hive_agent_adapter.py",
+    "size": 8839,
+    "loc": 235,
+    "hash": "0a1316d4c7de5b305743305a7a49bf01ab3941837d5490107444fd8fc63b72db",
+    "last_modified": "Sat Feb 21 14:59:39 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\agents\\leech_outer.py",
+    "size": 2226,
+    "loc": 60,
+    "hash": "04d571f6d36f00b79bad33d210eff8443281c863bf0999f3a82622c1bcec178e",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Rule 15 Validated"
+  },
+  {
+    "path": "src\\agents\\luminary_base.py",
+    "size": 3838,
+    "loc": 116,
+    "hash": "ffbe1eb5f20248b3b20aca145c05fd51a72c9804d36ab9fddb2e10ab76e35c0a",
+    "last_modified": "Fri Feb 20 02:04:45 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\agents\\market_oracle.py",
+    "size": 1986,
+    "loc": 59,
+    "hash": "30518cc91ca05c2f3094cbe780896841aaa5f0df118e0339c29d4cd8ff448ed1",
+    "last_modified": "Fri Feb 20 07:42:33 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\agents\\novelty_engine.py",
+    "size": 5196,
+    "loc": 101,
+    "hash": "000139c4b7bbdc90b9a191e715fe5f02daebb2a1b79e9e74931e021ce098e275",
+    "last_modified": "Fri Feb 20 02:17:31 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\agents\\opportunity_engine.py",
+    "size": 5378,
+    "loc": 104,
+    "hash": "e19a72196b5de8289708adf45cd0a706fed3de37186475edc7495df3dffd1085",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\agents\\optimization_agent.py",
+    "size": 2981,
+    "loc": 74,
+    "hash": "abda375bf3b8f4d5fa360a12816bd2d7c08055f03dc8485ad76af99b52f5f7f8",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\agents\\rsi_protocol.py",
+    "size": 4120,
+    "loc": 109,
+    "hash": "546368e4bc52d13ce5149c0dc84496d1db757e82e5e278dc50cc62a176feb2d2",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Rule 15 Validated"
+  },
+  {
+    "path": "src\\agents\\toolsmith_agent.py",
+    "size": 5935,
+    "loc": 130,
+    "hash": "dc41cc3c0fdd701867b044cbc44cc4e8b5b32ecd81148d28b713c1c76dcfead8",
+    "last_modified": "Fri Feb 20 02:25:56 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Rule 15 Validated"
+  },
+  {
+    "path": "src\\core\\active_inference.py",
+    "size": 3543,
+    "loc": 96,
+    "hash": "922ab616a8056b899a0d538978e47b8be01f7e9126daa39d30b4b63f2fdc2213",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\ai_bridge.py",
+    "size": 15556,
+    "loc": 395,
+    "hash": "449b96da54b27f9d9e1da59467fed97d8b783c020981ea6dfbe0a0deadf973c7",
+    "last_modified": "Sat Feb 21 17:36:57 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Rule 15 Validated"
+  },
+  {
+    "path": "src\\core\\app_generator.py",
+    "size": 4169,
+    "loc": 108,
+    "hash": "950ddf0f9393cced727a11b90c5c5cfade1138416e5495459e541024a853a58e",
+    "last_modified": "Sat Feb 21 16:12:19 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\audit_engine.py",
+    "size": 3597,
+    "loc": 96,
+    "hash": "80a24a353cb65a085afd58b5b829a6c73eb3d81e76b092a2e212ba3d9e3a550e",
+    "last_modified": "Sat Feb 21 18:11:43 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Rule 15 Validated"
+  },
+  {
+    "path": "src\\core\\auth_service.py",
+    "size": 3235,
+    "loc": 85,
+    "hash": "11de339b43a5824a19316778bd04aec25ce996a8deba30f52b4ad08ad1c211a6",
+    "last_modified": "Sat Feb 21 16:11:16 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\billing_service.py",
+    "size": 2547,
+    "loc": 64,
+    "hash": "9f6ba2ae29f1224a26a611a6a165d4fa3271432fcf5f84884f859b675c3690ff",
+    "last_modified": "Sat Feb 21 16:11:34 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\bootloader.py",
+    "size": 3833,
+    "loc": 108,
+    "hash": "b81df7f81ef6d6d5a9a7dd0d745be5caf9b962a69bf3630f57a6d5f9258086d6",
+    "last_modified": "Sat Feb 21 18:11:15 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\branding_service.py",
+    "size": 1896,
+    "loc": 50,
+    "hash": "13cfcb98e5d29f35640122a0fdbfab4c31031900dcd5470fb5c8fb9401730380",
+    "last_modified": "Sat Feb 21 16:12:03 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\clifford_rotors.py",
+    "size": 5268,
+    "loc": 140,
+    "hash": "9111c36ecbd4a77758e695dd0cfa4825fe43fe390aac07346d2f0fef46c74d20",
+    "last_modified": "Sat Feb 21 16:15:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\demo_service.py",
+    "size": 1987,
+    "loc": 53,
+    "hash": "ce86056678099e5f7f7cc4e9ceb071cbffde9aeecc45538034a38ef1521d4e25",
+    "last_modified": "Sat Feb 21 15:35:37 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\diagnostic_audit.py",
+    "size": 5013,
+    "loc": 140,
+    "hash": "c6eb739623dc21b20a3b9c44ad7f30382f31e3a2b5a9d64d1e7107aad17f82c8",
+    "last_modified": "Sat Feb 21 17:18:52 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\e8_core.py",
+    "size": 3912,
+    "loc": 100,
+    "hash": "6f413354928165ac77d53005bfe70c649f84d6c109ad445656f95575fcfdb2b0",
+    "last_modified": "Sat Feb 21 16:16:20 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\entropy_core.py",
+    "size": 969,
+    "loc": 28,
+    "hash": "5336b669bb965389d8367f6bede3f1013422de48dff38919f0f568a45c72274e",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\error_repair.py",
+    "size": 2462,
+    "loc": 68,
+    "hash": "70ef89aa9b3fee503c99607282ad42784c6a4252c1778aeec2030aae550de419",
+    "last_modified": "Sat Feb 21 18:12:58 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\evolution_vault.py",
+    "size": 8096,
+    "loc": 211,
+    "hash": "d5b63758e7586f5327582cf7bc325f04beee0d691334d65f32a16bcaa95023aa",
+    "last_modified": "Sat Feb 21 16:14:35 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\formal_precision.py",
+    "size": 4646,
+    "loc": 122,
+    "hash": "029e56a8dbf10bd10d9ea95ff8e75b90837ad31e5e9beffaa09fb94001a4d1af",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\hive_bridge.py",
+    "size": 30682,
+    "loc": 750,
+    "hash": "1ac9f0d81b737a1aced4234134deaa2634d915e87ff3770481a713f34f059d61",
+    "last_modified": "Sat Feb 21 17:45:51 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\leech_outer.py",
+    "size": 6105,
+    "loc": 151,
+    "hash": "3bec89e89888cb38f678c8269b34960a3afdbc4dcce9236cad75b6fb66121b6f",
+    "last_modified": "Sat Feb 21 16:15:44 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\ml_hub.py",
+    "size": 2797,
+    "loc": 66,
+    "hash": "225d833954430b0b455d41fb3f5ba349812d2f28c3261c8519944e95c9488b9b",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\module_service.py",
+    "size": 4151,
+    "loc": 108,
+    "hash": "dfa609f65f8987c3801854f1b443940721be953f4121a21e9025ed8b9a70da84",
+    "last_modified": "Sat Feb 21 16:34:37 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\ollama_mock.py",
+    "size": 1616,
+    "loc": 45,
+    "hash": "6ff1225fe423a12bfed86f648648c7a772e60d7e812b9019914c2af2fde7ee80",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\ollama_service.py",
+    "size": 3858,
+    "loc": 102,
+    "hash": "f1b1208fc249a7113f4860ed6febb5e48bca2049e60204ea9b13094a7152f1ab",
+    "last_modified": "Sat Feb 21 17:38:26 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\plugin_service.py",
+    "size": 2153,
+    "loc": 53,
+    "hash": "da04f02abc2f54aa5142dc9ca85f95816fc4a92a5e23d81898ee8e3939862cf5",
+    "last_modified": "Sat Feb 21 16:09:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\reproduction_layer.py",
+    "size": 3009,
+    "loc": 85,
+    "hash": "dda41fcc188668402e95158f9633eb2ef9e63518ee2220457ca2fd1759cd5bea",
+    "last_modified": "Fri Feb 20 08:15:19 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\research_engine.py",
+    "size": 5904,
+    "loc": 139,
+    "hash": "57e44ccedf9434a40f85c8169bb8c288bee4b25b464569bf7926d93f2c697a44",
+    "last_modified": "Sat Feb 21 16:13:48 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\revelation_engine.py",
+    "size": 2424,
+    "loc": 68,
+    "hash": "545a9085e0b074cf635eb4050d779520ef09ded5941289efa01e2188fd1c382c",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\rollback_system.py",
+    "size": 9885,
+    "loc": 254,
+    "hash": "fdc9702d3690fbf14f1ca2260af5aac9b42fca74cc91e151e0196b481b1969a7",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\search_service.py",
+    "size": 5203,
+    "loc": 125,
+    "hash": "0492da0940e3946ca568a5229d349550f6abed920587f1b06033d6acb57d5473",
+    "last_modified": "Sat Feb 21 16:12:28 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\settings_service.py",
+    "size": 2914,
+    "loc": 76,
+    "hash": "4a1f706c70bf818393111d7055a98d83462f540a66b070d762add7157cb44474",
+    "last_modified": "Sat Feb 21 16:09:43 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\core\\super_panel.py",
+    "size": 9891,
+    "loc": 210,
+    "hash": "1968ab4a92555700b6c3403c6922b3b71c3352828e8b86e4f899784c92cfef64",
+    "last_modified": "Sat Feb 21 17:56:29 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\governance\\apex_optimizer.py",
+    "size": 4082,
+    "loc": 106,
+    "hash": "f45303828058271fc36eba833f185e2ad2094a2b6cdecf57f6961e88113e035f",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Rule 15 Validated"
+  },
+  {
+    "path": "src\\governance\\c_level_board.py",
+    "size": 5049,
+    "loc": 118,
+    "hash": "1a43bf21f3d3bcf00d02a0f88cb6e95bb27f9711aa399c524024fc84c7f947d2",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\governance\\debate_engine.py",
+    "size": 3384,
+    "loc": 88,
+    "hash": "36b234146602a1795d807589a50b45add6067247eaf376d1ce29cc28b81ebbbe",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\governance\\monetization_oracle.py",
+    "size": 3394,
+    "loc": 91,
+    "hash": "e5ca10ac45cb76ee848b4bec748bb55279a0d19a110dbf5e51e5aa2b76c2e91b",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\logging\\structured_logger.py",
+    "size": 3802,
+    "loc": 104,
+    "hash": "e6c435b6f6741024db43ff583e2550cfb712509f9cb5703d32a78ae0ccb3b34f",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\modules\\aletheia_healer.py",
+    "size": 530,
+    "loc": 14,
+    "hash": "2fc0093d8639500da0b463e93d745187e4b499d79622c21e174b2ecb0f22c00b",
+    "last_modified": "Sat Feb 21 16:34:41 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\panels\\code_creation_panel.py",
+    "size": 3226,
+    "loc": 80,
+    "hash": "1c9a2138b40684ac8378e55f32477241a98aae606197b9cf4788aaece57649cf",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\panels\\code_logic_pioneering_panel.py",
+    "size": 3250,
+    "loc": 79,
+    "hash": "c658237921a29b749d92fc1d69bbfd6e1356dc778c44d34c85c728ebd9c9af58",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\panels\\code_optimization_panel.py",
+    "size": 3271,
+    "loc": 77,
+    "hash": "350b62f2eb322c39e3b8157c1faef18a0c8034adfc0f79370a64f0be4bc8e3bd",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\sdk\\sra_client.py",
+    "size": 2490,
+    "loc": 63,
+    "hash": "8a9b85a35fb303ef88bd1ba923071ad86ef8600a9504c6a94b892e8c6156df3c",
+    "last_modified": "Sat Feb 21 15:38:59 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\app.py",
+    "size": 13940,
+    "loc": 374,
+    "hash": "8f064fe8a55fa5ee5881b41a0e9a17e4e4fad683e34954a74b7a4a8bf8d6624d",
+    "last_modified": "Sat Feb 21 16:42:00 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\index.html",
+    "size": 8153,
+    "loc": 183,
+    "hash": "aac3f36f2b25c9da83732748b27f568bfc118bf67d2e402d68f9305197a8d0e9",
+    "last_modified": "Sat Feb 21 16:31:07 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\manifest.json",
+    "size": 607,
+    "loc": 21,
+    "hash": "15d4fbc56152868de0b4839a9ca4330c9083dbf8d06bd4b64caa8b4f96fd58fe",
+    "last_modified": "Sat Feb 21 15:32:29 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\sw.js",
+    "size": 1074,
+    "loc": 38,
+    "hash": "c372d6f475deb3739bd1e86c1e3b309e543354c2423851f8bf88b374199d7193",
+    "last_modified": "Sat Feb 21 15:32:37 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\css\\style.css",
+    "size": 12657,
+    "loc": 529,
+    "hash": "b037b632f4193dc0363e910e08e57a599466fb7aa7766edb24710eb9786f6e90",
+    "last_modified": "Sat Feb 21 16:27:48 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\js\\app.js",
+    "size": 5701,
+    "loc": 170,
+    "hash": "0a6ccd132caa092f0b8b3f5330949a73d5ea3b47dda341d2c6686b31acee230a",
+    "last_modified": "Sat Feb 21 16:32:01 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\js\\monetization.js",
+    "size": 4078,
+    "loc": 92,
+    "hash": "d10e90ab93576568b057348ffc72d531bcc833cf634d501fd9443e7a7445455d",
+    "last_modified": "Sat Feb 21 15:30:07 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\js\\nav.js",
+    "size": 2826,
+    "loc": 67,
+    "hash": "c96da859850f8d0baeaa8a550fc45eeb3e71c7f3a7bc037de2512b8326c50f41",
+    "last_modified": "Sat Feb 21 16:33:49 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\js\\offline_sync.js",
+    "size": 2046,
+    "loc": 59,
+    "hash": "07057fdeb4bf3f98bbeec9ffef3e0accde3e00aaf27ba9546428880f7c48b785",
+    "last_modified": "Sat Feb 21 15:32:58 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\js\\persistence.js",
+    "size": 2460,
+    "loc": 74,
+    "hash": "5d0ee3a9726bbd55ca575b3e70d9f029c73e654961f1a2c67ca3519f411488ba",
+    "last_modified": "Sat Feb 21 16:31:06 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\pages\\agents.html",
+    "size": 3313,
+    "loc": 60,
+    "hash": "15cee269369ad126d9348c5b2e381e3c083b1708e24ce77c15c14887bd1ae913",
+    "last_modified": "Sat Feb 21 16:29:36 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\pages\\aletheia_healer.html",
+    "size": 1058,
+    "loc": 18,
+    "hash": "2da6c3d8dd7abcacfea00956e7744dcc39260917b096fc7f1a02b716f51cf8ae",
+    "last_modified": "Sat Feb 21 16:34:41 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\pages\\billing.html",
+    "size": 4267,
+    "loc": 73,
+    "hash": "bbe9a8ed2da2ddd528b4239d8de0d1b926832146862339a44f7b5c689842cea9",
+    "last_modified": "Sat Feb 21 16:31:03 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\pages\\dashboard.html",
+    "size": 8316,
+    "loc": 137,
+    "hash": "170dcc4a11f96688c324500448d66e06074dfeb7419352f15850c2d592e91914",
+    "last_modified": "Sat Feb 21 16:31:50 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\pages\\ecosystem.html",
+    "size": 7417,
+    "loc": 135,
+    "hash": "24f425bfc4d5d3ec269540a0dc39e59631df02de97f366cb8902c29ba0eb3ae7",
+    "last_modified": "Sat Feb 21 16:30:58 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\pages\\evolution.html",
+    "size": 3043,
+    "loc": 47,
+    "hash": "aa721f55959ae6159a16682df83537d49d920f69a416275969934c5315d357d7",
+    "last_modified": "Sat Feb 21 16:29:44 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\pages\\goals.html",
+    "size": 3142,
+    "loc": 62,
+    "hash": "a09ae2ab9ce5cd8c8af271705139fb0edab139eed7df4bb4d759b38fc08b407b",
+    "last_modified": "Sat Feb 21 16:29:42 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\pages\\knowledge.html",
+    "size": 4780,
+    "loc": 83,
+    "hash": "a0c11352b0f92dedaa8d29046491da734368a0d112eecb617461cede8eb52000",
+    "last_modified": "Sat Feb 21 16:30:48 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\pages\\logs.html",
+    "size": 3297,
+    "loc": 62,
+    "hash": "68c3e6ae8ac940acec247d3f47a7e9ddf209d0c2d271634f12533dae16f68ccb",
+    "last_modified": "Sat Feb 21 16:29:28 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\pages\\marketplace.html",
+    "size": 3275,
+    "loc": 56,
+    "hash": "1948d303255372d7588b05b7b2f3aa64303a9e6efbb39892aa19bd812f34cd05",
+    "last_modified": "Sat Feb 21 16:29:02 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\pages\\ml_hub.html",
+    "size": 2182,
+    "loc": 43,
+    "hash": "3be82779b356b4c7aa5e2ca57c9b3fc53734ee16a0e736a5e1ebf1bfd6fe3033",
+    "last_modified": "Sat Feb 21 16:30:34 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\pages\\modules.html",
+    "size": 5979,
+    "loc": 103,
+    "hash": "ae5841eb463afd78022a0916c5d5dc8e0ae5c76e1eb5270e6eb8e95cd6449ba2",
+    "last_modified": "Sat Feb 21 16:33:44 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\pages\\research.html",
+    "size": 12520,
+    "loc": 224,
+    "hash": "d7736e72968b1db537d44c99d06aef594ad743ceb12fefc5bcbce6f6dd50b1fb",
+    "last_modified": "Sat Feb 21 16:28:52 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\server\\static\\pages\\settings.html",
+    "size": 4582,
+    "loc": 136,
+    "hash": "8c16b936cbf69ad463ddca89cab5f93b85dc46d0891d3a5574e2304e3ae30983",
+    "last_modified": "Sat Feb 21 16:28:59 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\tools\\browser_tool.py",
+    "size": 3733,
+    "loc": 100,
+    "hash": "d6a8c1311875ee50a28100aa83cec4e12695b0525bcdd35cfeb075f0ff191f7e",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\tools\\dynamic_tool_factory.py",
+    "size": 2611,
+    "loc": 71,
+    "hash": "5cc2d986d9e6b08c3312e80016910b3b16c960efda10bafdd9cef64158c3c6e5",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\tools\\fibonacci_tool.py",
+    "size": 322,
+    "loc": 14,
+    "hash": "cfe8d1ec3e5d87eb56d71a166640d61c9c3ac56989622084fe171c514e086f84",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\tools\\file_system_tool.py",
+    "size": 2742,
+    "loc": 66,
+    "hash": "e356c58c2b2d17f1b54efd03e000888b5fd6439247f666cf4693b0cd81ca6dee",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\tools\\hti_layer.py",
+    "size": 5250,
+    "loc": 128,
+    "hash": "efdf477a036272f408d6390ad894868381b84f73b67fe70b1b20bfbee115c95c",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\tools\\jit_test_tool.py",
+    "size": 176,
+    "loc": 7,
+    "hash": "1cdad6ee74ba1037cbed407b08b711d1181deb7582c15dae1ceea675242c41ee",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\tools\\multiplication_tool.py",
+    "size": 128,
+    "loc": 7,
+    "hash": "221a3fb6d5b2a97a1b9b4c1b561fba99b982f42cd4cce572e5b3388ab295a901",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\tools\\profiler_tool.py",
+    "size": 1517,
+    "loc": 47,
+    "hash": "61ad767bcda07fd8c6c3b35c4b527910d2cb8570fadc3acc6e6a7504d32a8fef",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\tools\\sandbox_wrapper.py",
+    "size": 2748,
+    "loc": 65,
+    "hash": "1302e8a230b916527d243b9d1641158c3fc215f57a5bc6de129db38abb87fc9c",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\tools\\shell_tool.py",
+    "size": 4467,
+    "loc": 131,
+    "hash": "fc18772d3c7672991ed2b7fdda620ca756e37938001179213637f0a25037d5c1",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\tools\\sovereign_logic_tool.py",
+    "size": 197,
+    "loc": 7,
+    "hash": "693e7278c5a43acfca776a09e399f94f5ff4856ae59dd2ca72af7a76976fe5af",
+    "last_modified": "Fri Feb 20 11:40:27 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\tools\\tool_execution_layer.py",
+    "size": 4434,
+    "loc": 100,
+    "hash": "b2d3fd79cdbc7b357ad0bf0d80423ba05d579ef1cc9a7d7f67ec4a6c210f4512",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\tools\\web_scraper_tool.py",
+    "size": 3156,
+    "loc": 73,
+    "hash": "4e0f11ce95395160008421f6ee75fa7eb75cc7eba949fde7e0abdc2ba866e2ec",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\tools\\web_search_tool.py",
+    "size": 2570,
+    "loc": 66,
+    "hash": "f9f1bf867834667f667260479bc49ef61919f0422d796a99dfd99496da2b4e32",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\ui\\dynamic_output_panel.py",
+    "size": 4307,
+    "loc": 106,
+    "hash": "601c5db7ecc7801b399a9710054fa7ac35235362502f64fe0d8f3ae4a99aeb1c",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\ui\\log_viewer.py",
+    "size": 2830,
+    "loc": 83,
+    "hash": "02d5e97dc6a668a255ae6f53a2ae55e2e5099f2f16ca035f7cb1653bde3ed059",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\ui\\ui_bridge.py",
+    "size": 2749,
+    "loc": 71,
+    "hash": "4838b92d61552a402b6abdeed43c5e5f92742caf6ce32a79382168ef81cb313d",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "src\\ui\\ui_design_team.py",
+    "size": 3969,
+    "loc": 108,
+    "hash": "7aa3d1c6b0653ed719fe6e75e8ea2cd050b3ef198f7c0585eb8e1fa1963e67b2",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\audit_implement_loop.py",
+    "size": 9143,
+    "loc": 241,
+    "hash": "fde3f47e25a8e5acbf981a28c27d44589df026877a6c49220717810d8bd3f1cf",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\final_ascii_check.py",
+    "size": 1260,
+    "loc": 35,
+    "hash": "1bb5a1714e060dccdee5b645a0ee0029a2bb48738a4d103c0a9f974499c2c41e",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\full_system_audit.py",
+    "size": 3648,
+    "loc": 94,
+    "hash": "79f24c237e46c2ada16b9f0c416cfdbf5e9a01a519921aa35598986521c70123",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\self_enhancement_loop.py",
+    "size": 13543,
+    "loc": 320,
+    "hash": "ef741a5db378227916e85d5586c5674991c1fa4aaa539a4fb70fbf4a09777d60",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Rule 15 Validated"
+  },
+  {
+    "path": "tests\\slow_fib_target.py",
+    "size": 375,
+    "loc": 14,
+    "hash": "45799c0bbac4942784674444c362f08a2a99c1d028e3f2ae574eab73464510bf",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\slow_fib_target_optimized.py",
+    "size": 962,
+    "loc": 24,
+    "hash": "03eb3891197ba0d7d4a0d238888205db5cc72dc84d2540ef288ae488dd2be62f",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\test_app_generator.py",
+    "size": 1527,
+    "loc": 43,
+    "hash": "8bb82c8af5a2c3f5c6ff686d20930302f41a8cac27c1d42e78534639cd33b454",
+    "last_modified": "Sat Feb 21 15:57:32 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\test_billing.py",
+    "size": 1186,
+    "loc": 37,
+    "hash": "3504de1a6aa7d47fa654d3b82152434e9e1defcc0e1994fb903a4252687965cd",
+    "last_modified": "Sat Feb 21 15:51:21 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\test_branding.py",
+    "size": 989,
+    "loc": 29,
+    "hash": "e5b7e810ed59bef27e03deaf55723f974557e1873ae33bb8fc5be98069bc77f6",
+    "last_modified": "Sat Feb 21 15:50:58 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\test_demo_service.py",
+    "size": 1463,
+    "loc": 36,
+    "hash": "310ffb0c7b0ab6587e2e2408d21450f638e3c09922d597e4f17f0833d69b9ab1",
+    "last_modified": "Sat Feb 21 15:36:40 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\test_multi_tenant_auth.py",
+    "size": 1486,
+    "loc": 42,
+    "hash": "55038b5e9b248c2838cbbccae4c87af0df4643467855627eaf7f040d8302d1c1",
+    "last_modified": "Sat Feb 21 15:53:20 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\test_pwa_routes.py",
+    "size": 961,
+    "loc": 29,
+    "hash": "d70322bbf641312bb869dac67b960b4ef0851c1385f4552426dd20f239efdf4b",
+    "last_modified": "Sat Feb 21 15:33:22 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\test_rate_limiting.py",
+    "size": 1829,
+    "loc": 47,
+    "hash": "a95862c2f687a7de547392504e5d64b482ae1050a242ae126e5679468faa728e",
+    "last_modified": "Sat Feb 21 15:53:22 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\test_research_engine.py",
+    "size": 2670,
+    "loc": 65,
+    "hash": "a5113792092e52ba5835a2cf41fca0853af1e369efbf166046a9ab6f7e6c2ca6",
+    "last_modified": "Sat Feb 21 15:26:51 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\test_sdk_connectivity.py",
+    "size": 1521,
+    "loc": 44,
+    "hash": "7462bf862c03a7a845b04759c954dd810eac69051002820eb77b49fd0ec95da3",
+    "last_modified": "Sat Feb 21 15:41:16 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\test_search_service.py",
+    "size": 1735,
+    "loc": 46,
+    "hash": "21bbd5820f4959dc2bea8c825d984ad30912feee9453ed3e3de28dccd661598e",
+    "last_modified": "Sat Feb 21 15:25:51 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\test_vault_billing",
+    "size": 267,
+    "loc": 12,
+    "hash": "588bf039bb99b219b597a6784a36c05c28bdda9a20ec4d9b59b0bd225aaf4ba0",
+    "last_modified": "Sat Feb 21 15:50:58 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\verify_advanced_tools.py",
+    "size": 1976,
+    "loc": 47,
+    "hash": "9e3c003986b9031065cc6d6916a4995c797db44d63848482941793494ff5de22",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\verify_governance.py",
+    "size": 4330,
+    "loc": 127,
+    "hash": "b99372ab8b9a042e9b53e89d0f93e695ab90d188fc84ce795d773b6723544e39",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\verify_hti_system.py",
+    "size": 1769,
+    "loc": 48,
+    "hash": "baecdc76ed5cab921ab0b5dbc42726591d0514f2aac921089cf4a94fea207cb2",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\verify_jit.py",
+    "size": 1556,
+    "loc": 52,
+    "hash": "dfc8556c273f9540133dd11e13364f089c4774a7158e787be9cef3bfcd67584c",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\verify_mock_service.py",
+    "size": 1598,
+    "loc": 48,
+    "hash": "634f1969f51176525ec69ad5548103fddb7e6d3f0106c697873dfb3f0369d20b",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\verify_ollama.py",
+    "size": 2325,
+    "loc": 64,
+    "hash": "a03ba33618513dda2843902743216d3bd7bbe991e188199563a6d99b59be5837",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\verify_optimization.py",
+    "size": 2266,
+    "loc": 68,
+    "hash": "88ee35fe56a4e76a5a7bc53292700879231ec4ce6d32c955529282be3ec316c3",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\verify_sandbox.py",
+    "size": 1727,
+    "loc": 54,
+    "hash": "7216db585c2021749d4c86648477c4212da5b7105a49f3f6dc2a1a80c6faeed3",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\verify_toolsmith.py",
+    "size": 1568,
+    "loc": 53,
+    "hash": "9aa3bac60f305e796bc9f94e96b26919d18d40d4ee7c53f7d57a400d71b5b977",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\verify_total_ml_suite.py",
+    "size": 2955,
+    "loc": 71,
+    "hash": "343534a0f8dbcf5a084636cceef229591137b44dc4b54d68678a3bb86550c5ec",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\verify_transparency.py",
+    "size": 2026,
+    "loc": 56,
+    "hash": "ae033e7f2dc0facdfcfeea43a44c042b30a4905a31d9c24b3773a1c0d8c9faf9",
+    "last_modified": "Fri Feb 20 02:04:46 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\integration\\test_integration.py",
+    "size": 4651,
+    "loc": 116,
+    "hash": "6c2418eb5e71e3cff00bcf92167d3427eefd89c5061ccec4aaa7fd4038883b47",
+    "last_modified": "Sat Feb 21 14:07:34 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Rule 15 Validated"
+  },
+  {
+    "path": "tests\\math_rigor\\lattice_proofs.py",
+    "size": 1304,
+    "loc": 38,
+    "hash": "b8a4718a226e750ee8151efedc31e41810792d2c54c91b9feb515cfb2865953e",
+    "last_modified": "Sat Feb 21 17:57:16 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\math_rigor\\sovereignty_proof_doc.md",
+    "size": 858,
+    "loc": 29,
+    "hash": "f4f6736446bd0281f612600dcf449172745da135bd83f83b5302a9ea05b807d2",
+    "last_modified": "Sat Feb 21 17:57:24 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\unit\\test_core_stack.py",
+    "size": 12404,
+    "loc": 328,
+    "hash": "9944803c14a4cb125ca763419537d32ce147d5c114bb235fa94d7c88f4b14878",
+    "last_modified": "Sat Feb 21 14:14:14 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Rule 15 Validated"
+  },
+  {
+    "path": "tests\\unit\\test_hive_bridge.py",
+    "size": 8554,
+    "loc": 237,
+    "hash": "7a532174536b3ce270affda6ca5982cc5df878996d3fe9db5052b0bb148aa1aa",
+    "last_modified": "Sat Feb 21 14:29:53 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  },
+  {
+    "path": "tests\\unit\\test_hive_bridge_v33.py",
+    "size": 4409,
+    "loc": 130,
+    "hash": "8414d1569b7c4241b12e18a93a61e4da1a316cb6944603b2828ed96fcd50f79a",
+    "last_modified": "Sat Feb 21 14:36:03 2026",
+    "status": "VERIFIED",
+    "rule_compliance": "Passive Content"
+  }
+]

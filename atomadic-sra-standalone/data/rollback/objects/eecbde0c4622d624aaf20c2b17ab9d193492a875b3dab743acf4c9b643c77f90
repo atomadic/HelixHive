@@ -1,0 +1,81 @@
+
+import json
+import os
+import time
+
+class StructuredLogger:
+    """
+    Structured Logger
+    JSONL + ELK-compatible structured logging to Evolution Vault.
+    All agent actions flow through here for full audit trail.
+    """
+    def __init__(self, log_dir="data/logs"):
+        self.log_dir = log_dir
+        self.log_file = os.path.join(log_dir, "sra_events.jsonl")
+        os.makedirs(log_dir, exist_ok=True)
+        self.session_id = f"SES-{int(time.time())}"
+        self.event_count = 0
+
+    def log_event(self, agent, action, details=None, level="INFO"):
+        """Log a structured event."""
+        self.event_count += 1
+        event = {
+            "@timestamp": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+            "session_id": self.session_id,
+            "event_id": f"EVT-{self.event_count:06d}",
+            "level": level,
+            "agent": agent,
+            "action": action,
+            "details": details or {},
+        }
+        
+        with open(self.log_file, "a") as f:
+            f.write(json.dumps(event) + "\n")
+        
+        prefix = {"INFO": "ℹ", "WARN": "⚠", "ERROR": "✗", "DEBUG": "◦"}.get(level, "•")
+        print(f"[Log {prefix}] {agent} → {action}")
+        return event
+
+    def log_agent_action(self, agent, action, input_data=None, output_data=None):
+        """Convenience for logging agent actions with I/O."""
+        return self.log_event(agent, action, {
+            "input": str(input_data)[:200] if input_data else None,
+            "output": str(output_data)[:200] if output_data else None
+        })
+
+    def log_error(self, agent, error, context=None):
+        """Log an error event."""
+        return self.log_event(agent, "ERROR", {
+            "error": str(error),
+            "context": context
+        }, level="ERROR")
+
+    def log_metric(self, agent, metric_name, value):
+        """Log a metric event."""
+        return self.log_event(agent, f"METRIC:{metric_name}", {
+            "value": value
+        }, level="INFO")
+
+    def get_recent(self, count=20):
+        """Get the most recent log entries."""
+        if not os.path.exists(self.log_file):
+            return []
+        
+        with open(self.log_file, "r") as f:
+            lines = f.readlines()
+        
+        entries = []
+        for line in lines[-count:]:
+            try:
+                entries.append(json.loads(line.strip()))
+            except json.JSONDecodeError:
+                pass
+        return entries
+
+    def get_stats(self):
+        """Get logging statistics."""
+        return {
+            "session_id": self.session_id,
+            "total_events": self.event_count,
+            "log_file": self.log_file
+        }

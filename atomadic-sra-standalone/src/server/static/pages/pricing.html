@@ -1,0 +1,190 @@
+<!-- SRA SaaS Pricing Page — M4 | SRA-HelixEvolver v7.0 | Atomadic Tech Inc. -->
+<!-- Fragment: inject into the main SPA via loadPage('pricing') -->
+<div class="pricing-page" style="max-width: 1100px; margin: 0 auto; padding: 2rem;">
+
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 3.5rem;">
+        <h1
+            style="font-family: 'Orbitron', sans-serif; font-size: 2.4rem; background: linear-gradient(135deg, #00f5ff, #a855f7, #10b981); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.75rem;">
+            SOVEREIGN RESEARCH PLATFORM
+        </h1>
+        <p style="color: #94a3b8; font-size: 1.05rem; max-width: 580px; margin: 0 auto; line-height: 1.7;">
+            12-agent autonomous research panels with E₈/Leech geometric coherence scoring.<br>
+            <span style="color: #10b981; font-weight: 600;">τ ≥ 0.94 guaranteed</span> or your revision is free.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+            <span class="badge badge-leech" style="font-size: 0.7rem;">ACI BENCHMARK CERTIFIED</span>
+            <span class="badge badge-e8" style="font-size: 0.7rem;">E₈/LEECH COHERENCE</span>
+            <span class="badge badge-hd" style="font-size: 0.7rem;">ΔL &gt; 0 ENFORCED</span>
+        </div>
+    </div>
+
+    <!-- Billing toggle -->
+    <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-bottom: 2.5rem;">
+        <span id="billing-monthly-label" style="color: #fff; font-weight: 600; font-size: 0.9rem;">Monthly</span>
+        <div id="billing-toggle" onclick="toggleBilling()"
+            style="width: 52px; height: 28px; background: var(--neon-blue, #00f5ff); border-radius: 14px; cursor: pointer; position: relative; transition: background 0.3s;">
+            <div id="billing-thumb"
+                style="width: 22px; height: 22px; background: #0f172a; border-radius: 50%; position: absolute; top: 3px; left: 3px; transition: left 0.3s;">
+            </div>
+        </div>
+        <span id="billing-annual-label" style="color: #94a3b8; font-size: 0.9rem;">
+            Annual <span style="color: #10b981; font-size: 0.8rem;">save 20%</span>
+        </span>
+    </div>
+
+    <!-- Pricing cards -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; margin-bottom: 3.5rem;">
+
+        <!-- Starter -->
+        <div class="card"
+            style="padding: 2rem; border-radius: 18px; border: 1px solid rgba(0,245,255,0.15); position: relative; transition: transform 0.2s; text-align: center;">
+            <div
+                style="color: #00f5ff; font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 0.75rem;">
+                STARTER</div>
+            <div style="font-size: 2.6rem; font-weight: 800; color: #fff; margin-bottom: 0.25rem;">
+                $<span class="price-val" data-monthly="99" data-annual="79">99</span>
+                <span style="font-size: 1rem; color: #64748b;">/mo</span>
+            </div>
+            <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 1.75rem;">For individuals &amp; small teams.
+            </p>
+            <ul
+                style="list-style: none; padding: 0; text-align: left; margin-bottom: 2rem; font-size: 0.88rem; color: #94a3b8; line-height: 2.2;">
+                <li>✓ <strong style="color:#fff;">5</strong> panel runs / month</li>
+                <li>✓ 12-agent panel (all specialists)</li>
+                <li>✓ Helical JSON + Markdown output</li>
+                <li>✓ ACI coherence score included</li>
+                <li>✓ Email delivery</li>
+                <li style="color:#475569;">✗ API access</li>
+                <li style="color:#475569;">✗ White-label</li>
+            </ul>
+            <button id="buy-starter" onclick="handleStripeCheckout('starter')" class="btn btn-evolution"
+                style="width: 100%; padding: 0.8rem; font-size: 0.9rem;">
+                GET STARTED
+            </button>
+        </div>
+
+        <!-- Pro — highlighted -->
+        <div class="card"
+            style="padding: 2rem; border-radius: 18px; border: 1px solid rgba(168,85,247,0.5); position: relative; background: linear-gradient(160deg, rgba(168,85,247,0.08), rgba(0,245,255,0.04)); text-align: center; transform: scale(1.03);">
+            <div
+                style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: linear-gradient(90deg, #a855f7, #00f5ff); color: #0f172a; font-size: 0.7rem; font-weight: 800; font-family: 'Orbitron'; padding: 4px 16px; border-radius: 20px; letter-spacing: 1px;">
+                MOST POPULAR</div>
+            <div
+                style="color: #a855f7; font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 0.75rem;">
+                PRO</div>
+            <div style="font-size: 2.6rem; font-weight: 800; color: #fff; margin-bottom: 0.25rem;">
+                $<span class="price-val" data-monthly="299" data-annual="239">299</span>
+                <span style="font-size: 1rem; color: #64748b;">/mo</span>
+            </div>
+            <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 1.75rem;">For research teams &amp; agencies.
+            </p>
+            <ul
+                style="list-style: none; padding: 0; text-align: left; margin-bottom: 2rem; font-size: 0.88rem; color: #94a3b8; line-height: 2.2;">
+                <li>✓ <strong style="color:#fff;">Unlimited</strong> panel runs</li>
+                <li>✓ 12-agent panel (all specialists)</li>
+                <li>✓ Helical JSON + PDF output</li>
+                <li>✓ ACI coherence score + raw data</li>
+                <li>✓ API access (REST + WebSocket)</li>
+                <li>✓ WaC orchestration scripts</li>
+                <li style="color:#475569;">✗ White-label</li>
+            </ul>
+            <button id="buy-pro" onclick="handleStripeCheckout('pro')" class="btn btn-evolution"
+                style="width: 100%; padding: 0.8rem; font-size: 0.9rem; background: linear-gradient(90deg, #a855f7, #00f5ff);">
+                START PRO TRIAL
+            </button>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="card"
+            style="padding: 2rem; border-radius: 18px; border: 1px solid rgba(16,185,129,0.15); position: relative; text-align: center;">
+            <div
+                style="color: #10b981; font-family: 'Orbitron'; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 0.75rem;">
+                ENTERPRISE</div>
+            <div style="font-size: 2.6rem; font-weight: 800; color: #fff; margin-bottom: 0.25rem;">
+                Custom
+                <span style="font-size: 1rem; color: #64748b;">/yr</span>
+            </div>
+            <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 1.75rem;">For institutions &amp; VC firms.</p>
+            <ul
+                style="list-style: none; padding: 0; text-align: left; margin-bottom: 2rem; font-size: 0.88rem; color: #94a3b8; line-height: 2.2;">
+                <li>✓ Unlimited panel runs + agents</li>
+                <li>✓ White-label deployment</li>
+                <li>✓ On-premise / private cloud</li>
+                <li>✓ ERC-4626 IP tokenization</li>
+                <li>✓ SR&ED documentation export</li>
+                <li>✓ Dedicated Mitacs support</li>
+                <li>✓ SLA + quantum Golay repair</li>
+            </ul>
+            <button id="buy-enterprise" onclick="openEnterpriseModal()" class="btn"
+                style="width: 100%; padding: 0.8rem; font-size: 0.9rem; border: 1px solid #10b981; color: #10b981; background: transparent;">
+                CONTACT US
+            </button>
+        </div>
+    </div>
+
+    <!-- Trust bar -->
+    <div
+        style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; color: #475569; font-size: 0.8rem; text-align: center; padding: 2rem 0; border-top: 1px solid rgba(255,255,255,0.05);">
+        <div>🔐 <strong style="color:#94a3b8;">Stripe Secured</strong></div>
+        <div>📄 <strong style="color:#94a3b8;">Cancel Anytime</strong></div>
+        <div>🇨🇦 <strong style="color:#94a3b8;">Canada-Incorporated</strong></div>
+        <div>🧮 <strong style="color:#94a3b8;">SR&ED Eligible</strong></div>
+        <div>🔬 <strong style="color:#94a3b8;">τ ≥ 0.94 Guaranteed</strong></div>
+    </div>
+
+    <!-- Enterprise modal (hidden) -->
+    <div id="enterprise-modal"
+        style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:9999; align-items:center; justify-content:center;">
+        <div class="card" style="padding:2.5rem; border-radius:20px; max-width:480px; width:90%; text-align:center;">
+            <h3 style="font-family:'Orbitron'; color:#10b981; margin-bottom:1rem;">Enterprise Inquiry</h3>
+            <p style="color:#94a3b8; font-size:0.9rem; margin-bottom:1.5rem;">Email us at <a
+                    href="mailto:enterprise@atomadic.ai" style="color:#00f5ff;">enterprise@atomadic.ai</a><br>or book a
+                call via Calendly.</p>
+            <a href="https://calendly.com/atomadic/enterprise" target="_blank" class="btn btn-evolution"
+                style="display:inline-block; padding:0.75rem 2rem; text-decoration:none;">BOOK A CALL</a>
+            <br><br>
+            <button onclick="closeEnterpriseModal()"
+                style="background:none;border:none;color:#475569;cursor:pointer;font-size:0.85rem;">Close</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let billingAnnual = false;
+
+    function toggleBilling() {
+        billingAnnual = !billingAnnual;
+        document.getElementById('billing-thumb').style.left = billingAnnual ? '27px' : '3px';
+        document.getElementById('billing-monthly-label').style.color = billingAnnual ? '#64748b' : '#fff';
+        document.getElementById('billing-annual-label').style.color = billingAnnual ? '#fff' : '#64748b';
+        document.querySelectorAll('.price-val').forEach(el => {
+            el.textContent = billingAnnual ? el.dataset.annual : el.dataset.monthly;
+        });
+    }
+
+    async function handleStripeCheckout(tier) {
+        const btn = document.getElementById('buy-' + tier);
+        if (btn) { btn.disabled = true; btn.textContent = 'LOADING…'; }
+        try {
+            const res = await fetch('/api/stripe/create-checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tier, annual: billingAnnual }),
+            });
+            const data = await res.json();
+            if (data.checkout_url) {
+                window.location.href = data.checkout_url;
+            } else {
+                showToast('Checkout unavailable — contact enterprise@atomadic.ai', 'error');
+                if (btn) { btn.disabled = false; btn.textContent = tier === 'starter' ? 'GET STARTED' : 'START PRO TRIAL'; }
+            }
+        } catch (e) {
+            showToast('Stripe connection error', 'error');
+            if (btn) { btn.disabled = false; }
+        }
+    }
+
+    function openEnterpriseModal() { document.getElementById('enterprise-modal').style.display = 'flex'; }
+    function closeEnterpriseModal() { document.getElementById('enterprise-modal').style.display = 'none'; }
+</script>

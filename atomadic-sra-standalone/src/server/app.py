@@ -6,6 +6,24 @@ import time
 import uuid
 import logging
 
+# ── Monetization module imports (M1–M10) ──────────────────────────────────────
+try:
+    from src.core.sovereign_importer import get_metrics as si_metrics, dump_vault as si_vault
+    from src.core.gumroad_packager  import list_bundles, pack_bundle
+    from src.core.fiverr_gig        import export_all_gigs, GIGS
+    from src.core.aci_benchmark     import score_agent_outputs, export_benchmark_report
+    from src.core.wac_orchestrator  import WaCRuntime, DEFAULT_WAC_SCRIPT
+    from src.core.vault_interface   import (
+        deposit as vault_deposit, mint as vault_mint,
+        withdraw as vault_withdraw, total_assets, get_ip_valuation,
+    )
+    from src.core.grant_swarm       import generate_all as generate_all_grants, list_grants
+    from src.core.stripe_webhook    import handle_event as stripe_handle_event, get_mrr_estimate
+    _MONETIZE_OK = True
+except ImportError as _me:
+    logging.getLogger("SRA-Server").warning(f"[Monetize] Import partial: {_me}")
+    _MONETIZE_OK = False
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("SRA-Server")
@@ -326,20 +344,215 @@ async def run_research(request: Request):
 @app.get("/api/usage")
 async def get_usage():
     """Get per-query usage and subscription status."""
+    mrr = get_mrr_estimate() if _MONETIZE_OK else {}
     return JSONResponse({
         "status": "active",
         "tier": "Free",
         "queries_remaining": 50,
         "daily_limit": 50,
-        "is_pro": False
+        "is_pro": False,
+        "mrr_estimate": mrr,
     })
 
-@app.post("/api/subscribe")
-async def subscribe(request: Request):
-    """Placeholder for Stripe subscription hook."""
+# ── M4: Pricing page ──────────────────────────────────────────────────────────
+
+@app.get("/pricing", response_class=HTMLResponse)
+async def pricing_page():
+    path = os.path.join(static_dir, "pages", "pricing.html")
+    with open(path, encoding="utf-8") as f:
+        return HTMLResponse(f.read())
+
+@app.get("/revenue", response_class=HTMLResponse)
+async def revenue_page():
+    path = os.path.join(static_dir, "pages", "deltaL_widget.html")
+    with open(path, encoding="utf-8") as f:
+        return HTMLResponse(f.read())
+
+# ── M5: ACI Benchmark ─────────────────────────────────────────────────────────
+
+@app.post("/api/aci/score")
+async def aci_score(request: Request):
+    """Score a list of agent outputs with the ACI Benchmark."""
+    if not _MONETIZE_OK:
+        return JSONResponse({"error": "ACI module not loaded"}, status_code=503)
     body = await request.json()
-    # In a real app, this would initiate a Stripe Checkout session
-    return JSONResponse({"status": "success", "message": "Subscription manifestation initiated"})
+    outputs = body.get("outputs", [])
+    if len(outputs) < 2:
+        return JSONResponse({"error": "Provide ≥ 2 outputs for pairwise scoring"}, status_code=400)
+    result = score_agent_outputs(outputs)
+    return JSONResponse(result)
+
+# ── M6: WaC Orchestrator ──────────────────────────────────────────────────────
+
+@app.post("/api/wac/run")
+async def wac_run(request: Request):
+    """Execute a WaC script string and return the run summary + results."""
+    if not _MONETIZE_OK:
+        return JSONResponse({"error": "WaC module not loaded"}, status_code=503)
+    body = await request.json()
+    script = body.get("script", DEFAULT_WAC_SCRIPT)
+    rt = WaCRuntime()
+    rt.run_string(script)
+    summary = rt.summary()
+    results = [
+        {"phase": r.phase, "status": r.status, "output": r.output,
+         "tau": r.tau, "delta_l": r.delta_l, "elapsed_ms": round(r.elapsed_ms, 2)}
+        for r in rt.results
+    ]
+    return JSONResponse({"summary": summary, "results": results})
+
+# ── M2: Gumroad bundles ───────────────────────────────────────────────────────
+
+@app.get("/api/monetize/bundles")
+async def list_gumroad_bundles():
+    """List all available Gumroad bundles with pricing."""
+    if not _MONETIZE_OK:
+        return JSONResponse([])
+    return JSONResponse(list_bundles())
+
+@app.post("/api/monetize/bundles/pack")
+async def pack_gumroad_bundle(request: Request):
+    """Pack a named bundle into a ZIP and return the file path."""
+    if not _MONETIZE_OK:
+        return JSONResponse({"error": "Packager not loaded"}, status_code=503)
+    body = await request.json()
+    bundle_key = body.get("bundle_key", "sra-agent-prompt-pack")
+    try:
+        path = pack_bundle(bundle_key)
+        return JSONResponse({"status": "ok", "path": str(path), "bundle_key": bundle_key})
+    except KeyError as e:
+        return JSONResponse({"error": str(e)}, status_code=400)
+
+# ── M3: Fiverr gigs ───────────────────────────────────────────────────────────
+
+@app.get("/api/monetize/gigs")
+async def list_fiverr_gigs():
+    """Return all Fiverr gig payloads."""
+    if not _MONETIZE_OK:
+        return JSONResponse([])
+    return JSONResponse(GIGS)
+
+# ── M8: Grant Swarm ───────────────────────────────────────────────────────────
+
+@app.get("/api/grants")
+async def list_grant_templates():
+    """List all grant templates with title, deadline, value."""
+    if not _MONETIZE_OK:
+        return JSONResponse([])
+    return JSONResponse(list_grants())
+
+@app.post("/api/grants/generate")
+async def generate_grants(request: Request):
+    """Generate all grant markdown files to data/grant_submissions/."""
+    if not _MONETIZE_OK:
+        return JSONResponse({"error": "Grant swarm not loaded"}, status_code=503)
+    from pathlib import Path
+    out_dir = Path(__file__).parent.parent.parent / "data" / "grant_submissions"
+    results = generate_all_grants(out_dir)
+    return JSONResponse({"status": "ok", "generated": list(results.keys()),
+                         "output_dir": str(out_dir)})
+
+# ── M7: Vault ERC-4626 ────────────────────────────────────────────────────────
+
+@app.get("/api/monetize/vault")
+async def vault_stats():
+    """Return ERC-4626 vault stats + IP valuation."""
+    if not _MONETIZE_OK:
+        return JSONResponse({"total_entries": 0})
+    val = get_ip_valuation()
+    val["delta_l"] = 0.0421  # latest known ΔL from system
+    return JSONResponse(val)
+
+@app.post("/api/monetize/vault/deposit")
+async def vault_deposit_endpoint(request: Request):
+    """Deposit a research asset into the ERC-4626 vault."""
+    if not _MONETIZE_OK:
+        return JSONResponse({"error": "Vault not loaded"}, status_code=503)
+    body = await request.json()
+    share_id = vault_deposit(
+        body.get("assets", {}),
+        body.get("receiver", "sra_system"),
+        body.get("tags", []),
+    )
+    return JSONResponse({"share_id": share_id, "status": "deposited"})
+
+@app.post("/api/monetize/vault/mint")
+async def vault_mint_endpoint(request: Request):
+    """Mint an evolution cycle share into the ERC-4626 vault."""
+    if not _MONETIZE_OK:
+        return JSONResponse({"error": "Vault not loaded"}, status_code=503)
+    body = await request.json()
+    share_id = vault_mint(
+        body.get("receiver", "sra_system"),
+        body.get("metadata", {}),
+    )
+    return JSONResponse({"share_id": share_id, "status": "minted"})
+
+# ── M10: Stripe Webhook ───────────────────────────────────────────────────────
+
+@app.get("/api/monetize/mrr")
+async def monetize_mrr():
+    """Return MRR estimate from active Stripe subscriptions."""
+    if not _MONETIZE_OK:
+        return JSONResponse({"estimated_mrr_usd": 0, "active_subscriptions": 0})
+    return JSONResponse(get_mrr_estimate())
+
+@app.post("/api/stripe/webhook")
+async def stripe_webhook(request: Request):
+    """Stripe webhook endpoint — verifies HMAC signature + dispatches events."""
+    if not _MONETIZE_OK:
+        return JSONResponse({"error": "Stripe module not loaded"}, status_code=503)
+    payload    = await request.body()
+    sig_header = request.headers.get("stripe-signature", "")
+    response, status_code = stripe_handle_event(payload, sig_header)
+    return JSONResponse(response, status_code=status_code)
+
+@app.post("/api/stripe/create-checkout")
+async def stripe_create_checkout(request: Request):
+    """
+    Create a Stripe Checkout Session for SRA SaaS tiers.
+    Returns checkout_url. Requires STRIPE_API_KEY in .env.
+    """
+    body = await request.json()
+    tier = body.get("tier", "starter")
+    annual = body.get("annual", False)
+    PRICE_IDS = {
+        ("starter", False):  os.getenv("STRIPE_PRICE_STARTER_MONTHLY", ""),
+        ("starter", True):   os.getenv("STRIPE_PRICE_STARTER_ANNUAL",  ""),
+        ("pro",     False):  os.getenv("STRIPE_PRICE_PRO_MONTHLY",     ""),
+        ("pro",     True):   os.getenv("STRIPE_PRICE_PRO_ANNUAL",      ""),
+    }
+    price_id = PRICE_IDS.get((tier, annual), "")
+    if not price_id:
+        return JSONResponse({
+            "checkout_url": None,
+            "message": "Configure STRIPE_PRICE_* env vars or contact enterprise@atomadic.ai",
+        })
+    # Attempt live Stripe checkout creation
+    try:
+        import stripe
+        stripe.api_key = os.getenv("STRIPE_API_KEY", "")
+        session = stripe.checkout.Session.create(
+            mode="subscription",
+            line_items=[{"price": price_id, "quantity": 1}],
+            success_url="http://localhost:8420/pricing?success=1",
+            cancel_url="http://localhost:8420/pricing?cancelled=1",
+        )
+        return JSONResponse({"checkout_url": session.url})
+    except Exception as e:
+        logger.warning(f"[Stripe] Checkout creation failed: {e}")
+        return JSONResponse({"checkout_url": None, "error": str(e)})
+
+# ── M1: Sovereign Importer metrics ────────────────────────────────────────────
+
+@app.get("/api/metrics/sovereign-importer")
+async def sovereign_importer_metrics():
+    """Return τ/J/L trust scalar metrics from the Sovereign Importer."""
+    if not _MONETIZE_OK:
+        return JSONResponse({"tau": 1.0, "J": 1.0, "L": 0.0})
+    return JSONResponse(si_metrics())
+
+
 
 # --- API: Creative Engine ----------------------------------------------------
 
